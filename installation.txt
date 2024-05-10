@@ -1,8 +1,0 @@
-Windows
--------
-
-1. Download and install Anaconda Python environment from https://www.anaconda.com/download/success
-2. Launch Anaconda Prompt shell from Windows Start menu
-3. Install streamlit and plotly packages by executing "conda install streamlit plotly" command in Anaconda Prompt
-4. Copy crystchemlib folder into your "C:\Users\USERNAME" folder
-5. Launch crystchemlibGUI by executing "streamlit run crystchemlib/crystchemlibGUI.py" command in Anaconda Prompt
