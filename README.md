@@ -1,5 +1,5 @@
 # crystchemlib
-Python library for crystallographic and crystal chemical analysis (core.py) with streamlit GUI. Contact author at rashchenkos@gmail.com for bug reports, questions and suggestions.
+Python library for crystallographic and crystal chemical analysis with streamlit GUI. Contact author at rashchenkos@gmail.com for bug reports, questions and suggestions.
 
 # Installation
 
