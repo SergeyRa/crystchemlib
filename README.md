@@ -12,4 +12,4 @@ Python library for crystallographic and crystal chemical analysis with streamlit
 5. Launch graphical user interface (GUI) by executing "streamlit run crystchemlib-main/crystchemlibGUI.py" command in Anaconda Prompt
 
 # Known limitations and bugs
-## Estimated standard deviations (esd) of bond lengths and angles are calculated without symmetry constraints
+* Estimated standard deviations (esd) of bond lengths and angles are calculated without symmetry constraints
