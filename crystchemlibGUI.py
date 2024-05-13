@@ -6,7 +6,8 @@ import streamlit as st
 
 @st.cache_data
 def parsefiles(files, fullparsing=False):
-    parsed = {'source': [], 'structure': [], 'data': [], 'loops': []}
+    parsed = {'source': [], 'structure': [], 'data': [],
+              'loops': [], 'poly': []}
     addkeys = ['_cell_volume',
                "_cell_measurement_temperature",
                "_cell_measurement_pressure",
@@ -28,6 +29,25 @@ def parsefiles(files, fullparsing=False):
             parsed['data'].append(d)
             parsed['loops'].append(lp)
     return parsed
+
+
+@st.cache_data
+def findpoly(_structures, centrals, ligands, dmin, dmax, nmax):
+    """Finds specified polyhedra in list of Structure instances"""
+
+    result = []
+    for i in _structures:
+        p = []
+        if i is None:
+            pass
+        else:
+            lig = i.filter('label', ligands)
+            for j in centrals:
+                c = i.filter('label', [j])
+                if c != []:
+                    p.append(i.poly(c[0], lig, dmax, dmin, nmax))
+        result.append(p)
+    return result
 
 
 # Functions on datablocks (single-value):
@@ -67,9 +87,11 @@ def pgpa(parsed):
     result = []
     for c, d, s in zip(cell, diffrn, parsed['source']):
         if c[2] is not None:
-            result.append([(s, 'P, GPa', c[2], c[3])])
+            result.append([(s, 'P, GPa', c[2]/1e6, c[3]/1e6)])
+        elif d[2] is not None:
+            result.append([(s, 'P, GPa', d[2]/1e6, d[3]/1e6)])
         else:
-            result.append([(s, 'P, GPa', d[2], d[3])])
+            result.append([(s, 'P, GPa', None, None)])
     return result
 
 
@@ -81,9 +103,11 @@ def tcelsius(parsed):
     result = []
     for c, d, s in zip(cell, diffrn, parsed['source']):
         if c[2] is not None:
-            result.append([(s, 'T, deg C', c[2], c[3])])
+            result.append([(s, 'T, deg C', c[2]-273.15, c[3])])
+        elif d[2] is not None:
+            result.append([(s, 'T, deg C', d[2]-273.15, d[3])])
         else:
-            result.append([(s, 'T, deg C', d[2], d[3])])
+            result.append([(s, 'T, deg C', None, None)])
     return result
 
 
@@ -292,19 +316,6 @@ centrals = col5.multiselect("Choose central site",
 ligands = col6.multiselect("Choose ligands",
                            sorted(list(labels)))
 
-parsed['poly'] = []
-for i in parsed['structure']:
-    p = []
-    if i is None:
-        pass
-    else:
-        lig = i.filter('label', ligands)
-        for j in centrals:
-            c = i.filter('label', [j])
-            if c != []:
-                p.append(i.poly(c[0], lig, dmax, dmin, nmax))
-    parsed['poly'].append(p)
-
 # functions with single value output:
 fsingle = {'T, C': tcelsius, 'P, GPa': pgpa,
            'Central site occupancy': occup,
@@ -338,16 +349,22 @@ if ty == 'CIF loops':
     lb = col4.selectbox("Choose loop label key", sorted(list(yloop)))
     yopt[ty][fy] = lambda x, key=fy, label=lb: cifloop(x, key, label)
 
-xdata = xopt[tx][fx](parsed) if (fx is not None) else []
-ydata = yopt[ty][fy](parsed) if (fy is not None) else []
-hdata = hidden_lig(parsed)  # check for hidden ligands
+if st.button('Run', type="primary", use_container_width=True):
+    parsed['poly'] = findpoly(parsed['structure'], centrals, ligands,
+                              dmin, dmax, nmax)
+    xdata = xopt[tx][fx](parsed) if (fx is not None) else []
+    ydata = yopt[ty][fy](parsed) if (fy is not None) else []
+    hdata = hidden_lig(parsed)  # check for hidden ligands
+else:
+    xdata = []
+    ydata = []
+    hdata = []
 
 x1d = []
 y1d = []
 
 xwarn = False
-hwarn = False
-for x, y, h in zip(xdata, ydata, hdata):
+for x, y in zip(xdata, ydata):
     if x != []:
         if len(x) == 1:
             for y1 in y:
@@ -359,6 +376,8 @@ for x, y, h in zip(xdata, ydata, hdata):
                 y1d.append(y1)
         else:
             xwarn = True
+hwarn = False
+for h in hdata:
     for h1 in h:
         if h1[2] > 1:
             hwarn = True
@@ -398,6 +417,8 @@ if len(df['source']) != 0:
         fig.update_xaxes(showgrid=True)
         fig.update_yaxes(showgrid=True)
         fig.update_layout(legend={'title_text': ''})
+        if fy in fmulti.keys():
+            fig.update_layout(legend_traceorder="reversed")
         st.divider()
         st.plotly_chart(fig)
     st.divider()

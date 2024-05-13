@@ -13,3 +13,4 @@ Python library for crystallographic and crystal chemical analysis with streamlit
 
 ## Known limitations and bugs
 * Estimated standard deviations (esd) of bond lengths and angles are calculated without symmetry constraints
+* The use of GUI in a browser instance with a large number of open tabs may result in restricted access to memory and slow work

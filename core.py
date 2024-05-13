@@ -1087,6 +1087,7 @@ def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):
     parsed[-1].update(group(keys, values))
     if (len(keys) > 1) and (flags["ignore"] is False):
         loops[-1].append(keys)
+    # note that loop with single key converts into simple key-value pair
     return {"name": datablocks, "data": parsed, "loops": loops}
 
 
@@ -1199,11 +1200,19 @@ def readstruct(data):
             struct.sites[i].u = b*3/8/pi**2
             struct.sites[i].u_esd = b_esd*3/8/pi**2
     if "_space_group_symop_operation_xyz" in data:
-        struct.symops = [matrixform(j) for j
-                         in data["_space_group_symop_operation_xyz"]]
+        if type(data["_space_group_symop_operation_xyz"]) is str:
+            struct.symops = [matrixform(
+                data["_space_group_symop_operation_xyz"])]
+        else:
+            struct.symops = [matrixform(j) for j
+                             in data["_space_group_symop_operation_xyz"]]
     elif "_symmetry_equiv_pos_as_xyz" in data:
-        struct.symops = [matrixform(j) for j
-                         in data["_symmetry_equiv_pos_as_xyz"]]
+        if type(data["_symmetry_equiv_pos_as_xyz"]) is str:
+            struct.symops = [matrixform(
+                data["_symmetry_equiv_pos_as_xyz"])]
+        else:
+            struct.symops = [matrixform(j) for j
+                             in data["_symmetry_equiv_pos_as_xyz"]]
     return struct
 
 
