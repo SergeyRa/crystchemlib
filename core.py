@@ -829,13 +829,30 @@ def clearkeys(data, loops=None):
 
 
 def dhkl(cell, indices):
-    # For cell = [a, b, c, al, be, ga] and indices = [h, k, l]
-    # returns d-spacing (after Vainshteyn, 1979).
+    """Returns interplanar distance
+
+    After Vainshteyn (1979)
+
+    Parameters
+    ----------
+    cell : list
+        [a, b, c, alpha, beta, gamma]
+    indices : list
+        [h, k, l]
+
+    Returns
+    -------
+    float
+        d-spacing
+    """
+
     from math import cos, sin, sqrt, pi
 
     a, b, c = cell[:3]
     al, be, ga = [i/180*pi for i in cell[3:]]
     h, k, l = indices
+    if h == 0 and k == 0 and l == 0:
+        return None
     return sqrt(
         (1 - cos(al)**2 - cos(be)**2 - cos(ga)**2
          + 2*cos(al)*cos(be)*cos(ga)) / (
@@ -1228,7 +1245,21 @@ def stringform(w_aug):
 
 
 def vol(cell, cell_esd=[0, 0, 0, 0, 0, 0]):
-    # returns (cell volume, esd)
+    """Returns unit cell volume
+
+    Parameters
+    ----------
+    cell : list
+        [a, b, c, alpha, beta, gamma]
+    cell_esd : list
+        esds of cell (default zeroes)
+
+    Returns
+    -------
+    tuple
+        (volume, esd)
+    """
+
     from math import cos, sin, sqrt, pi
 
     a, b, c, a_esd, b_esd, c_esd = cell[:3]+cell_esd[:3]

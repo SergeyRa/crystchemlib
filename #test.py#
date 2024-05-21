@@ -1,0 +1,47 @@
+from core import *
+from nets import *
+
+with open("./tests/k2ca3.cif") as file:
+    parsed = parsecif(file)
+
+a = parsed["data"][1]
+struct = readstruct(a)
+struct
+struct.hklproj([0,0,1])
+
+nets(struct.sublatt([0,1,2,3,4]), [0,0,1])
+flatten(struct)
+
+
+struct.formula(4)
+struct.p1()
+p = struct.poly(0, range(3, 8), 3.8)
+p
+p.listdist()
+p.bondweights()
+p.econ()
+p.central
+for i in p.ligands:
+    print(i)
+
+
+p.central.fract
+
+print((data['global']))
+print((loops['global']))
+print((data['I']))
+print(clearkeys(data['global'], loops=loops['global']))
+print(clearkeys(data['I'], loops=loops['I']))
+print(data['I']['_exptl_absorpt_process_details'])
+
+struct = readstruct(data[list(data.keys())[1]])
+for i in range(len(struct.sites)):
+    print(i, struct.sites[i].label, struct.sites[i].symbol)
+
+poly1 = struct.poly(0, list(range(5,17)), 4.5)
+for i in poly1.ligands:
+    print(i.label)
+poly1.listdist()
+poly1.polyvol()
+poly1.listangl()['name']
+poly1.hidden()
