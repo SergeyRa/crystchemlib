@@ -8,22 +8,22 @@ densenets : dict
     Returns nets with max eff. density for given hkl
     (monkeypatched as Structure method)
 flatten:
-
+    Groups sites on a plane
+    (monkeypatched as Structure method)
 hklclust : list
     Returns clustering matrix for given hkl
     (monkeypatched as Structure method)
 hklproj : list
     Returns projection of unit cell content on hkl vector
     (monkeypatched as Structure method)
-med : float
-    Returns mean effective density of nets
+mmed : float
+    Returns max and mean effective density of nets
     (monkeypatched as Structure method)
-netscif : None
-
-netsearch :
-
 readz : dict
     Reads clustering matrix
+searchnets : dict
+    Returns hkls of nets with max effective density
+    (monkeypatched as Structure method)
 spreadbasis :
     Returns 'spread' basis for given Miller indices
 """
@@ -55,7 +55,7 @@ def csd(x, y, d=1.):
     return min(abs(x - y), abs(x - y + d), abs(x - y - d))
 
 
-def densenets(self, indices):
+def densenets(self, indices, structures=True):
     """Returns nets with max eff. density for given hkl
 
     Parameters
@@ -63,15 +63,17 @@ def densenets(self, indices):
     self : Structure
     indices : list
         [h, k, l]
+    structures : bool
+        whether create Structure for each cluster (default True)
 
     Returns
     -------
     dict
         {'cluster': [[...], [...], [...], ...],
          'width': [w1, w2, w3, ...],
-         'density': [d1, d2, d3, ...]}
+         'density': [d1, d2, d3, ...]
+         'structure': [Structure1, Structure2, Structure3, ...]}
         sorted from max eff. density down
-
     """
 
     N = len(self.p1().sites)
@@ -98,41 +100,48 @@ def densenets(self, indices):
             result['width'].append(w)
             result['density'].append(d)
             clustered += c
+    if structures:
+        result['structure'] = []
+        P = spreadbasis(indices, self.cell)
+        for i in result['cluster']:
+            result['structure'].append(
+                self.p1().sublatt(i).transform(P).flatten())
     return result
 
 
 Structure.densenets = densenets
 
 
-def flatten(struct):
-    """Translate sites along c axis to build contiguous nets
+def flatten(self, ax=2):
+    """Groups sites on a plane
 
     Modifies input Structure instance!
 
     Parameters
     ----------
-    struct : Structure
+    self : Structure
+    ax : int
+        axis for coordinate comparison (0: x, 1: y, 2: z)
 
     Returns
     -------
-    z_ave
-        average z coordinate of resulting net
+    Structure
     """
-    """
-    z0 = struct.sites[0].fract[2]
-    for s in struct.sites:
-        z = s.fract[2]
-        m = min(abs(z-z0), abs(z+1-z0), abs(z-1-z0))
-        if m == abs(z-z0):
-            continue
-        elif m == abs(z+1-z0):
-            s.fract[2] += 1
-        else:
-            Z[i] = z-1
 
-    print(Z)
-    """
-    return
+    if len(self.sites) < 2:
+        return self
+    x0 = self.sites[0].fract[ax] % 1
+    for s in self.sites[1:]:
+        s.fract[ax] = s.fract[ax] % 1
+        x = s.fract[ax]
+        for i in (x+1, x-1):
+            if abs(i-x0) < abs(x-x0):
+                x = i
+        s.fract[ax] = x
+    return self
+
+
+Structure.flatten = flatten
 
 
 def hklclust(self, indices):
@@ -153,7 +162,9 @@ def hklclust(self, indices):
 
     from scipy.cluster.hierarchy import linkage
 
-    if (indices == [0, 0, 0]) or (len(self.p1().sites) < 2):
+    if len(self.p1().sites) == 1:
+        return []
+    elif len(self.p1().sites) == 0:
         return None
     return linkage(self.hklproj(indices), method='single',
                    metric=lambda x, y: csd(x, y, dhkl(self.cell, indices)))
@@ -185,8 +196,8 @@ def hklproj(self, indices):
 Structure.hklproj = hklproj
 
 
-def med(self, indices):
-    """Returns mean effective density of nets
+def mmed(self, indices):
+    """Returns max and mean effective density of nets
 
     Parameters
     ----------
@@ -196,70 +207,17 @@ def med(self, indices):
 
     Returns
     -------
-    float
-        mean eff. density
+    tuple
+        (max, mean)
     """
 
-    nets = self.densenets(indices)
-    return (sum([len(c)*d for c, d in zip(nets['cluster'], nets['density'])])
+    nets = self.densenets(indices, structures=False)
+    return (max(nets['density']),
+            sum([len(c)*d for c, d in zip(nets['cluster'], nets['density'])])
             / len(self.p1().sites))
 
 
-Structure.med = med
-
-
-def netscif(struct, indices, path):
-    # saves at 'path' basename cifs of individual nets
-    # in spread basis
-    n = 1
-    for i in struct.nets(indices):
-        name = path + f"_{indices[0]}{indices[1]}{indices[2]}_{n}.cif"
-        struct.p1().sublatt(i[0]).transform(
-            spreadbasis(indices, struct.cell)
-        ).cif(name)
-        n += 1
-
-
-def netsearch(struct, groups=[], hklmax=[5, 5, 5]):
-    # for each independent and coprime hkl (<= hklmax)
-    # and sublattices listed in [groups]
-    # returns [[hkl], smean, [smax]]
-    # where smean is average effective density of nets
-    # (averaged between sublattices), [smax] - max
-    # eff density for each sublattice;
-    # output sorted descending from max smean
-    from math import gcd
-
-    substr = []
-    if groups == []:
-        substr = [struct]
-    else:
-        for i in groups:
-            substr.append(struct.sublatt(i))
-
-    result = []
-    for h in range(-hklmax[0], hklmax[0]+1):
-        for k in range(-hklmax[1], hklmax[1]+1):
-            for l in range(-hklmax[2], hklmax[2]+1):
-                indices = [h, k, l]
-                if gcd(*indices) != 1:
-                    continue
-                elif len([x for x in equivhkl(struct.symops,
-                                              indices, laue=True)
-                          if x in [y[0] for y in result]]) != 0:
-                    continue
-                else:
-                    hklnets = []
-                    smax = []
-                    for i in substr:
-                        inets = nets(i, indices)
-                        hklnets += inets
-                        smax.append(max([j[2] for j in inets]))
-                    smean = (sum([len(i[0])*i[2] for i in hklnets])
-                             / sum([len(i[0]) for i in hklnets]))
-                    result.append([indices, smean, smax])
-    result.sort(key=lambda x: x[1], reverse=True)
-    return result
+Structure.mmed = mmed
 
 
 def readz(Z):
@@ -307,6 +265,8 @@ def readz(Z):
         return (singletons, width)
 
     result = {'cluster': [], 'width': []}
+    if len(Z) == 0:
+        return {'cluster': [[0]], 'width': [0]}
     for i in range(int(Z[-1][3])):
         result['cluster'].append([i])
         result['width'].append(0)
@@ -318,10 +278,102 @@ def readz(Z):
     return result
 
 
-def spreadbasis(indices, cell=[1, 1, 1, 90, 90, 90], m=10):
-    # returns 4*4 P-matrix for transfer into
-    # spread basis of hkl nets
-    # (search within +-m unit cells)
+def searchnets(self, groups=None, mode='mean', hklmax=[5, 5, 5]):
+    """Returns hkls of nets with max effective density
+
+    Parameters
+    ----------
+    self : Structure
+    groups : list
+        [[sitesA], [sitesB], ...] list of sublattices (default None)
+    mode : str
+        sorting of results (downward): 'mean' for mean eff. density,
+        'max' for max eff. density (default 'mean')
+    hklmax : list
+        max abs of used h, k, l (default [5, 5, 5])
+
+    Returns
+    -------
+    dict
+        {'hkl': [[h1, k1, l1], [h2, k2, l2], ...],
+         'max': [dmax1, dmax2, ...], 'mean': [dmean1, dmean2, ...]}
+    """
+
+    from math import gcd
+
+    substr = []
+    if groups is None:
+        substr = [self]
+    else:
+        for i in groups:
+            if i != []:
+                substr.append(self.sublatt(i))
+
+    dhkls = []  # tuples (dhkl, [h, k, l])
+    for h in range(hklmax[0], -hklmax[0]-1, -1):
+        for k in range(hklmax[1], -hklmax[1]-1, -1):
+            for l in range(hklmax[2], -hklmax[2]-1, -1):
+                indices = [h, k, l]
+                if gcd(*indices) != 1:
+                    continue
+                elif len([x for x in equivhkl(self.symops, indices, laue=True)
+                          if x in [i[1] for i in dhkls]]) != 0:
+                    continue
+                else:
+                    dhkls.append((dhkl(self.cell, indices), indices))
+    dhkls.sort(reverse=True)
+    hkls = []
+    maxs = []
+    means = []
+    dmin = 0.
+    V = vol(self.cell)[0]
+    for d, indices in dhkls:
+        if d < dmin:
+            continue
+        submax = []
+        submean = []
+        for s in substr:
+            mx, mn = s.mmed(indices)
+            submax.append(mx)
+            submean.append(mn)
+        maxs.append(max(submax))
+        Nsub = [len(s.p1().sites) for s in substr]
+        mean = sum([d*N for d, N in zip(submean, Nsub)]) / sum(Nsub)
+        means.append(mean)
+        hkls.append(indices)
+        if mean * V / sum(Nsub) > dmin:
+            dmin = mean * V / sum(Nsub) > dmin
+    if mode == 'max':
+        maxs_new, hkls_new, means_new = zip(
+            *sorted(zip(maxs, hkls, means), reverse=True))
+    else:
+        means_new, hkls_new, maxs_new = zip(
+            *sorted(zip(means, hkls, maxs), reverse=True))
+    return {'hkl': hkls_new, 'max': maxs_new, 'mean': means_new}
+
+
+Structure.searchnets = searchnets
+
+
+def spreadbasis(indices, cell, m=10):
+    """Returns 'spread' basis for given Miller indices
+
+    Parameters
+    ----------
+    indices : list
+        [h, k, l]
+    cell : list
+        [a, b, c, al, be, ga]
+    m : int
+        range of lattice points along a, b, and c for search
+        of new basis vectors (default 10)
+
+    Returns
+    -------
+    list
+        4*4 P-matrix for basis transformation
+    """
+
     from math import gcd
     from numpy.linalg import det
 
@@ -348,6 +400,6 @@ def spreadbasis(indices, cell=[1, 1, 1, 90, 90, 90], m=10):
     if det([P1, P2, P3]) < 0:
         P1, P2 = P2, P1
     return ([[P1[0], P2[0], P3[0], 0],
-            [P1[1], P2[1], P3[1], 0],
-            [P1[2], P2[2], P3[2], 0],
-            [0, 0, 0, 1]])
+             [P1[1], P2[1], P3[1], 0],
+             [P1[2], P2[2], P3[2], 0],
+             [0, 0, 0, 1]])

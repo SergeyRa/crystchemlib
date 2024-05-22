@@ -474,7 +474,7 @@ class Structure:
             sites += (f'{s.label} {s.symbol} {x} {y} {z} '
                       f'{writesd(s.occ, s.occ_esd)} {writesd(s.u, s.u_esd)}\n')
         result = (
-            f"_data_{datablock}\n"
+            f"data_{datablock}\n"
             f"_cell_length_a {writesd(self.cell[0], self.cell_esd[0])}\n"
             f"_cell_length_b {writesd(self.cell[1], self.cell_esd[1])}\n"
             f"_cell_length_c {writesd(self.cell[2], self.cell_esd[2])}\n"
@@ -557,6 +557,7 @@ class Structure:
         symkeys : bool
             whether symmetry key (symop #) will be added to
             equivalent site labels (default False)
+
         Returns
         -------
         Structure
@@ -569,10 +570,9 @@ class Structure:
         for i in self.sites:
             equiv = []
             for j in range(len(self.symops)):
+                symkey = ""
                 if symkeys:
                     symkey = "_"+str(j+1)
-                else:
-                    symkey = ""
                 newsite = deepcopy(i)
                 newsite.fract = [sum([row[k]*newsite.fract[k]
                                       for k in range(4)]) % 1
@@ -604,6 +604,10 @@ class Structure:
                         break
             sites_p1 += equiv
         result = deepcopy(self)
+        result.symops = [[[1, 0, 0, 0],
+                          [0, 1, 0, 0],
+                          [0, 0, 1, 0],
+                          [0, 0, 0, 1]]]
         result.sites = sites_p1
         return result
 
@@ -730,6 +734,7 @@ class Structure:
             s.fract_esd = [(row**2).sum()**0.5
                            for row in matmul(Pinv, diag(s.fract_esd))]
             # TODO: check!
+            new_sites.append(s)
         return Structure(new_cell, new_cell_esd, new_sites, new_symops)
 
 
@@ -867,7 +872,23 @@ def dhkl(cell, indices):
 
 
 def equivhkl(symops, indices, laue=False):
-    # returns list of equivalent hkl (optionally for Laue class)
+    """Returns list of equivalent Miller indices
+
+    Parameters
+    ----------
+    symops : list
+        list of symmetry operations (4*4 augmented matrices)
+    indices : list
+        [h, k, l]
+    laue : bool
+        whether Friedel pairs are considered as equivalents (default False)
+
+    Returns
+    -------
+    list
+        [[h1, k1, l1], [h2, k2, l2], ...]
+    """
+
     result = []
     for i in symops:
         hkl = [sum([indices[j]*i[j][k] for j in range(3)]) for k in range(3)]
@@ -931,8 +952,23 @@ def matrixform(symop):
 
 
 def newbasis(cell, P, cell_esd=[0, 0, 0, 0, 0, 0]):
-    # returns new [a, b, c, al, be, ga] and their esds
-    # from P matrix (note column by column order)
+    """Returns transformed basis [a, b, c, al, be, ga] and esds
+
+    Parameters
+    ----------
+    cell : list
+        [a, b, c, al, be, ga]
+    P : list
+        4*4 P-matrix (note column by column order)
+    cell_esd : list
+        esds of cell parameters
+
+    Returns
+    -------
+    list
+        new [a, b, c, al, be, ga] and esds
+    """
+
     a = [i[0] for i in P[:3]]
     b = [i[1] for i in P[:3]]
     c = [i[2] for i in P[:3]]

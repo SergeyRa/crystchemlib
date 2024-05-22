@@ -1,3 +1,4 @@
+from core import Structure
 import core as ccl
 import pandas as pd
 import plotly.express as px
@@ -31,12 +32,16 @@ def parsefiles(files, fullparsing=False):
     return parsed
 
 
-@st.cache_data
-def findpoly(_structures, centrals, ligands, dmin, dmax, nmax):
+def hash_func(obj):
+    return obj.cif()
+
+
+@st.cache_data(hash_funcs={Structure: hash_func})
+def findpoly(structures, centrals, ligands, dmin, dmax, nmax):
     """Finds specified polyhedra in list of Structure instances"""
 
     result = []
-    for i in _structures:
+    for i in structures:
         p = []
         if i is None:
             pass
