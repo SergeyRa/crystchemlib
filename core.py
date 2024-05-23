@@ -423,7 +423,10 @@ class Structure:
         Changes basis
     """
 
-    def __init__(self, cell, cell_esd=[0, 0, 0, 0, 0, 0], sites=[],
+    def __init__(self,
+                 cell=[1, 1, 1, 90, 90, 90],
+                 cell_esd=[0, 0, 0, 0, 0, 0],
+                 sites=[],
                  symops=[[[1, 0, 0, 0],
                           [0, 1, 0, 0],
                           [0, 0, 1, 0],
@@ -433,6 +436,7 @@ class Structure:
         ----------
         cell : list
             [a, b, c, alpha, beta, gamma]
+            (default cube of unit size)
         cell_esd : list
             [a_esd, b_esd, c_esd, alpha_esd, beta_esd, gamma_esd]
             (default all 0)
