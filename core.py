@@ -415,6 +415,8 @@ class Structure:
         Returns stoichiometry Structure instance
     p1 : Structure
         Returns geometrically equivalent structure with P1 space group
+    p1_list : list
+        Returns numbers of p1() sites equivalent to the original ones
     poly : Polyhedron
         Returns Polyhedron instance with given central site and ligands
     sublatt : Structure
@@ -613,6 +615,65 @@ class Structure:
                           [0, 0, 1, 0],
                           [0, 0, 0, 1]]]
         result.sites = sites_p1
+        return result
+
+    def p1_list(self, delta=0.01):
+        """Returns numbers of p1() sites equivalent to the original ones
+
+        Parameters
+        ----------
+        delta : float
+            min difference between symmetrically equivalent sites
+            in angstroms (default 0.01)
+
+        Returns
+        -------
+        list
+            [[p1, p2, ...], [pn, pn+1, ...], ...]
+            with list for each of self.sites
+        """
+
+        from copy import deepcopy
+        from numpy import array, diag, matmul
+
+        result = []
+        for i in self.sites:
+            equiv = []
+            for j in range(len(self.symops)):
+                newsite = deepcopy(i)
+                newsite.fract = [sum([row[k]*newsite.fract[k]
+                                      for k in range(4)]) % 1
+                                 # reducing to single cell
+                                 for row in self.symops[j]]
+                newsite.fract_esd = [(row**2).sum()**0.5
+                                     for row in
+                                     matmul(array(self.symops[j]),
+                                            diag(newsite.fract_esd))]
+                equiv.append(newsite)
+            counter = len(equiv)
+            for j in range(len(equiv) - 1, 0, -1):
+                kill = False
+                for k in range(j - 1, -1, -1):
+                    for dx in [-1, 0, 1]:
+                        for dy in [-1, 0, 1]:
+                            for dz in [-1, 0, 1]:
+                                x, y, z = equiv[k].fract[:3]
+                                if length(self.cell, equiv[j].fract,
+                                          [x+dx, y+dy, z+dz, 1])[0] < delta:
+                                    kill = True
+                                    break
+                            if kill:
+                                break
+                        if kill:
+                            break
+                    if kill:
+                        counter -= 1
+                        break
+            if len(result) == 0:
+                result.append(list(range(counter)))
+            else:
+                result.append(list(range(result[-1][-1]+1,
+                                         result[-1][-1]+1 + counter)))
         return result
 
     def poly(self, centr, ligands, dmax, dmin=0.0,

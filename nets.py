@@ -2,27 +2,17 @@
 
 Functions
 ---------
-csd : float
-    Returns 'Combs Shift Distance'
 densenets : dict
     Clusterizes atomic nets for given hkl
     (monkeypatched as Structure method)
 flatten:
     Groups sites on a plane
     (monkeypatched as Structure method)
-hklclust : list
-    Returns clustering matrix for given hkl
+med : float
+    Returns mean effective density of nets
     (monkeypatched as Structure method)
-hklproj : list
-    Returns projection of unit cell content on hkl vector
-    (monkeypatched as Structure method)
-mmed : float
-    Returns mean and max effective density of nets
-    (monkeypatched as Structure method)
-readz : dict
-    Reads clustering matrix
 searchnets : dict
-    Returns mean and max eff. density for hkls in range
+    Returns mean eff. density for hkls in range
     (monkeypatched as Structure method)
 spreadbasis :
     Returns 'spread' basis for given Miller indices
@@ -31,31 +21,7 @@ spreadbasis :
 from core import dhkl, equivhkl, length, Structure, vol
 
 
-def csd(x, y, d=1.):
-    """Returns 'Combs Shift Distance'
-
-    Parameters
-    ----------
-    x : float
-        point from the first comb
-    y : float
-        point from the second comb
-    d : float
-        periodicity of combs
-
-    Returns
-    -------
-    delta : float
-        minimum distance between points of sets
-        (x, x+-d, x+-2d, ...) and (y, y+-d, y+-2d, ...)
-    """
-
-    x = x % d
-    y = y % d
-    return min(abs(x - y), abs(x - y + d), abs(x - y - d))
-
-
-def densenets(self, indices, structures=True):
+def densenets(self, indices, structures=True, fig=False):
     """Clusterizes atomic nets for given hkl
 
     Parameters
@@ -65,36 +31,68 @@ def densenets(self, indices, structures=True):
         [h, k, l]
     structures : bool
         whether create Structure for each cluster (default True)
+    fig : bool
+        whether include dendrogram in the output (default False)
 
     Returns
     -------
     dict
         {'cluster': [[...], [...], [...], ...],
          'width': [w1, w2, w3, ...],
-         'density': [d1, d2, d3, ...]
-         'structure': [Structure1, Structure2, Structure3, ...]}
+         'density': [d1, d2, d3, ...],
+         'structure': [Structure1, Structure2, Structure3, ...],
+         'fig': matplotlib.pyplot.Figure()}
         sorted from max eff. density down. When structures=True
-        also creates list of Structure instances corresponding
-        to each cluster in spread cell.
+        creates list of Structure instances corresponding
+        to each cluster in spread cell. When fig=True
+        creates a dendrogram.
     """
 
-    from scipy.spatial.distance import pdist
+    from scipy.cluster.hierarchy import dendrogram, fcluster, linkage
+    from scipy.spatial.distance import pdist, squareform
+    import matplotlib.pyplot as plt
+
+    def csd(x, y, d=1.):
+        x = x % d
+        y = y % d
+        return min(abs(x - y), abs(x - y + d), abs(x - y - d))
 
     N = len(self.p1().sites)
     d = dhkl(self.cell, indices)
     V = vol(self.cell)[0]
+    proj = [[(sum([j.fract[i]*indices[i] for i in range(3)]) % 1) * d]
+            for j in self.p1().sites]
+    distvec = pdist(proj,
+                    metric=lambda x, y: csd(x, y, dhkl(self.cell, indices)))
+    if len(self.p1().sites) == 1:
+        Z = []
+    else:
+        Z = linkage(distvec, method='single')
+    t = d / N
+    clusters = []
+    if len(Z) == 0:
+        clusters = [[0]]
+    else:
+        leaves = fcluster(Z, t*0.999, criterion='distance')
+        # 0.999 used to exclude clustering at threshold
+        nclust = max(leaves)
+        for i in range(1, nclust+1):
+            cluster = []
+            for j in range(len(leaves)):
+                if leaves[j] == i:
+                    cluster.append(j)
+            clusters.append(cluster)
 
-    x = readz(self.hklclust(indices), d / N)
-    clusters = x['cluster']
     widths = []
     for i in clusters:
-        proj = self.p1().sublatt(i).hklproj(indices)
-        dist = pdist(proj,
-                     metric=lambda x, y: csd(x, y, dhkl(self.cell, indices)))
-        if len(dist) == 0:
-            widths.append(0.)
-        else:
-            widths.append(max(dist))
+        matrix = squareform(distvec)
+        width = 0
+        for j in i:
+            for k in i:
+                if matrix[j][k] > width:
+                    width = matrix[j][k]
+        widths.append(width)
+
     densities = []
     for c, w in zip(clusters, widths):
         densities.append(
@@ -102,16 +100,28 @@ def densenets(self, indices, structures=True):
         # implementation of effective density metrics
         # (for cluster of M sites equals M*d/V for zero width,
         # and 0 for width of d/N*(M-1))
-    densities_new, clusters_new, widths_new = zip(
-        *sorted(zip(densities, clusters, widths), reverse=True))
-    result = {'cluster': clusters_new, 'width': widths_new,
-              'density': densities_new}
+    result = {'cluster': clusters, 'density': densities, 'width': widths}
+
     if structures:
         result['structure'] = []
         P = spreadbasis(indices, self.cell)
         for i in result['cluster']:
             result['structure'].append(
                 self.p1().sublatt(i).transform(P).flatten())
+    if fig:
+        if len(Z) == 0:
+            result['fig'] = None
+        else:
+            figure, axes = plt.subplots()
+            t = dhkl(self.cell, indices) / len(self.p1().sites)
+            dendrogram(Z, color_threshold=t*0.999,
+                       labels=[i.label for i in self.p1().sites],
+                       leaf_rotation=-90)
+            axes.hlines(t, axes.viewLim.bounds[0],
+                        axes.viewLim.bounds[0] + axes.viewLim.bounds[2],
+                        linestyles='dashed')
+            axes.set_ylim(-t*0.05, t*2)
+            result['fig'] = figure
     return result
 
 
@@ -150,123 +160,62 @@ def flatten(self, ax=2):
 Structure.flatten = flatten
 
 
-def hklclust(self, indices):
-    """Returns clustering matrix for given hkl
-
-    Parameters
-    ----------
-    self : Structure
-    indices : list
-        [h, k ,l]
-
-    Returns
-    -------
-    list
-        clustering matrix Z = [[node1, node2, distance, size], ...]
-        sequentially describing merging of nodes
-    """
-
-    from scipy.cluster.hierarchy import linkage
-
-    if len(self.p1().sites) == 1:
-        return []
-    elif len(self.p1().sites) == 0:
-        return None
-    return linkage(self.hklproj(indices), method='single',
-                   metric=lambda x, y: csd(x, y, dhkl(self.cell, indices)))
-
-
-Structure.hklclust = hklclust
-
-
-def hklproj(self, indices):
-    """Returns projection of unit cell content on hkl vector
-
-    Parameters
-    ----------
-    self : Structure
-    indices : list
-        [h, k ,l]
-
-    Returns
-    -------
-    list
-        [[x1], [x2], [x3], ...] (2D array for clusterization)
-    """
-
-    d = dhkl(self.cell, indices)
-    return [[(sum([j.fract[i]*indices[i] for i in range(3)]) % 1) * d]
-            for j in self.p1().sites]
-
-
-Structure.hklproj = hklproj
-
-
-def mnmxed(self, indices):
-    """Returns mean and max effective density of nets
+def med(self, indices, sublatt=None):
+    """Returns mean effective density of nets
 
     Parameters
     ----------
     self : Structure
     indices : list or tuple
         [h, k ,l]
+    sublatt : list
+        [[a1, a2, ...], [b1, b2, ...], ...]
+        sublattices to use (default None)
 
     Returns
     -------
-    tuple
-        (mean, max)
+    float
     """
 
-    nets = self.densenets(indices, structures=False)
-    return (sum([len(c)*d for c, d in zip(nets['cluster'], nets['density'])])
-            / len(self.p1().sites), max(nets['density']))
+    if sublatt is None:
+        sublatt = [[i for i in range(len(self.sites))]]
+    full = []
+    for i in sublatt:
+        full += i
+    full.sort()
+    nets = self.sublatt(full).densenets(indices, structures=False)
+    code = self.sublatt(full).p1_list()
+
+    groups = []
+    for s in sublatt:
+        group = []
+        for i in s:
+            for j, k in enumerate(full):
+                if i == k:
+                    group += code[j]
+        groups.append(group)
+
+    partnets = []
+    for g in groups:
+        for c, d in zip(nets['cluster'], nets['density']):
+            X = len(set(g) & set(c))
+            partnets.append((X, d * X/len(c)))
+    return (sum([X*dpart for X, dpart in partnets])
+            / sum([X for X, dpart in partnets]))
 
 
-Structure.mnmxed = mnmxed
+Structure.med = med
 
 
-def readz(Z, t):
-    """Reads clustering matrix WITH THRESHOLD
-
-    Parameters
-    ----------
-    Z : list
-        clustering matrix
-    t : float
-        max distance between clusters
-
-    Returns
-    -------
-    dict
-        {'cluster': [[...], [...], [...], ...]}
-    """
-
-    from scipy.cluster.hierarchy import fcluster
-
-    result = {'cluster': [], 'width': []}
-    if len(Z) == 0:
-        return {'cluster': [[0]], 'width': [0]}
-
-    leaves = fcluster(Z, t, criterion='distance')
-    nclust = max(leaves)
-    for i in range(1, nclust+1):
-        cluster = []
-        for j in range(len(leaves)):
-            if leaves[j] == i:
-                cluster.append(j)
-        result['cluster'].append(cluster)
-    return result
-
-
-def searchnets(self, filt=None, hklmax=[5, 5, 5]):
-    """Returns mean and max eff. density for hkls in range
+def searchnets(self, sublatt=None, hklmax=[5, 5, 5]):
+    """Returns mean eff. density for hkls in range
 
     Parameters
     ----------
     self : Structure
-    filt : list
-        [site1, site2, ...] list of sites to use, if None all will be used
-        (default None)
+    sublatt : list
+        [[a1, a2, ...], [b1, b2, ...], ...]
+        sublattices to use (default None)
     hklmax : list
         max abs of used h, k, l (default [5, 5, 5])
 
@@ -274,7 +223,9 @@ def searchnets(self, filt=None, hklmax=[5, 5, 5]):
     -------
     DataFrame
         {'hkl': [[h1, k1, l1], [h2, k2, l2], ...],
-         'mean': [dmean1, dmean2, ...], 'max': [dmax1, dmax2, ...]}
+         'mean': [dmean1, dmean2, ...],
+         'equiv': [[[h, k, l], [...], ...], [[...], [...], ...], ...]}
+        (equiv corresponds to equivalent hkls)
     """
 
     from math import gcd
@@ -285,32 +236,33 @@ def searchnets(self, filt=None, hklmax=[5, 5, 5]):
     starttime = time.time()
 
     hkls = []
+    equivs = []
     for h in range(hklmax[0], -hklmax[0]-1, -1):
         for k in range(hklmax[1], -hklmax[1]-1, -1):
             for l in range(hklmax[2], -hklmax[2]-1, -1):
                 indices = (h, k, l)
+                # tuple used for further handling in pandas DataFrame
                 if gcd(*indices) != 1:
                     continue
-                elif len([x for x in equivhkl(self.symops, indices, laue=True)
-                          if tuple(x) in hkls]) != 0:
+                equiv = equivhkl(self.symops, indices, laue=True)
+                if len([x for x in equiv if tuple(x) in hkls]) != 0:
                     continue
                 else:
                     hkls.append(indices)
-    print(f'prepared hkl list ({len(hkls)} items, '
-          f'{time.time()-starttime:.2f} s elapsed)')
+                    equivs.append(equiv)
+    print(f'hkl list prepared ({len(hkls)} indices)')
 
     means = []
-    maxs = []
     counter = 1  # used only in messages
     for indices in hkls:
-        print(f'working with {indices} ({counter} of {len(hkls)}, '
-              f'{time.time()-starttime:.2f} s elapsed)\r', end='')
+        means.append(self.med(indices, sublatt))
+        elapsed = time.time() - starttime
+        remaining = int(elapsed/counter * len(hkls) - elapsed)
+        print(f'\x1b[2K{indices} completed ({counter} of {len(hkls)}): '
+              f'{elapsed:.1f} s elapsed, ~{remaining} s remaining\r', end='')
         counter += 1
-        mn, mx = self.sublatt(filt).mnmxed(indices)
-        means.append(mn)
-        maxs.append(mx)
-    print(f'\nsearchnets completed, {time.time()-starttime:.2f} s elapsed\n')
-    return DataFrame({'hkl': hkls, 'mean': means, 'max': maxs})
+    print(f'\nsearchnets completed in {time.time()-starttime:.1f} s\n')
+    return DataFrame({'hkl': hkls, 'mean': means, 'equiv': equivs})
 
 
 Structure.searchnets = searchnets
