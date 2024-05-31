@@ -5,9 +5,6 @@ Functions
 densenets : dict
     Clusterizes atomic nets for given hkl
     (monkeypatched as Structure method)
-flatten:
-    Groups sites on a plane
-    (monkeypatched as Structure method)
 med : float
     Returns mean effective density of nets
     (monkeypatched as Structure method)
@@ -40,9 +37,10 @@ def densenets(self, indices, structures=True, fig=False):
         {'cluster': [[...], [...], [...], ...],
          'width': [w1, w2, w3, ...],
          'density': [d1, d2, d3, ...],
+         'z': [z1, z2, ...]
          'structure': [Structure1, Structure2, Structure3, ...],
          'fig': matplotlib.pyplot.Figure()}
-        sorted from max eff. density down. When structures=True
+        sorted by z in spread cell. When structures=True
         creates list of Structure instances corresponding
         to each cluster in spread cell. When fig=True
         creates a dendrogram.
@@ -83,8 +81,21 @@ def densenets(self, indices, structures=True, fig=False):
                     cluster.append(j)
             clusters.append(cluster)
 
+    zs = []  # z-coordinate of net in spread cell
     widths = []
     for i in clusters:
+        z = []
+        for j in i:
+            if abs(proj[j][0] + d
+                    - proj[i[0]][0]) < abs(proj[j][0] - proj[i[0]][0]):
+                z.append(proj[j][0] + d)
+            elif abs(proj[j][0] - d
+                     - proj[i[0]][0]) < abs(proj[j][0] - proj[i[0]][0]):
+                z.append(proj[j][0] - d)
+            else:
+                z.append(proj[j][0])
+        zs.append(((sum(z) / len(z)) / d) % 1)
+
         matrix = squareform(distvec)
         width = 0
         for j in i:
@@ -100,14 +111,17 @@ def densenets(self, indices, structures=True, fig=False):
         # implementation of effective density metrics
         # (for cluster of M sites equals M*d/V for zero width,
         # and 0 for width of d/N*(M-1))
-    result = {'cluster': clusters, 'density': densities, 'width': widths}
+    zs_sort, clusters_sort, densities_sort, widths_sort = zip(
+        *sorted(list(zip(zs, clusters, densities, widths))))
+    result = {'cluster': clusters_sort, 'density': densities_sort,
+              'width': widths_sort, 'z': zs_sort}
 
     if structures:
         result['structure'] = []
         P = spreadbasis(indices, self.cell)
         for i in result['cluster']:
             result['structure'].append(
-                self.p1().sublatt(i).transform(P).flatten())
+                self.p1().sublatt(i).transform(P))
     if fig:
         if len(Z) == 0:
             result['fig'] = None
@@ -117,47 +131,15 @@ def densenets(self, indices, structures=True, fig=False):
             dendrogram(Z, color_threshold=t*0.999,
                        labels=[i.label for i in self.p1().sites],
                        leaf_rotation=-90)
+            axes.set_ylim(-t*0.05, t*2)
             axes.hlines(t, axes.viewLim.bounds[0],
                         axes.viewLim.bounds[0] + axes.viewLim.bounds[2],
                         linestyles='dashed')
-            axes.set_ylim(-t*0.05, t*2)
             result['fig'] = figure
     return result
 
 
 Structure.densenets = densenets
-
-
-def flatten(self, ax=2):
-    """Groups sites on a plane
-
-    Modifies input Structure instance!
-
-    Parameters
-    ----------
-    self : Structure
-    ax : int
-        axis for coordinate comparison (0: x, 1: y, 2: z)
-
-    Returns
-    -------
-    Structure
-    """
-
-    if len(self.sites) < 2:
-        return self
-    x0 = self.sites[0].fract[ax] % 1
-    for s in self.sites[1:]:
-        s.fract[ax] = s.fract[ax] % 1
-        x = s.fract[ax]
-        for i in (x+1, x-1):
-            if abs(i-x0) < abs(x-x0):
-                x = i
-        s.fract[ax] = x
-    return self
-
-
-Structure.flatten = flatten
 
 
 def med(self, indices, sublatt=None):
@@ -174,11 +156,15 @@ def med(self, indices, sublatt=None):
 
     Returns
     -------
-    float
+    tuple
+        (med, k_mix)
+        k_mix (mixing coefficient) calculated in case of 2 sublattices
     """
 
     if sublatt is None:
         sublatt = [[i for i in range(len(self.sites))]]
+    else:
+        sublatt = [i for i in sublatt if i != []]
     full = []
     for i in sublatt:
         full += i
@@ -199,9 +185,15 @@ def med(self, indices, sublatt=None):
     for g in groups:
         for c, d in zip(nets['cluster'], nets['density']):
             X = len(set(g) & set(c))
-            partnets.append((X, d * X/len(c)))
-    return (sum([X*dpart for X, dpart in partnets])
-            / sum([X for X, dpart in partnets]))
+            partnets.append((X, len(c), d * X/len(c)))
+    if len(sublatt) == 2:
+        k_mix = (sum([(X/M)*((M-X)/M) / 0.25 * M for X, M, dpart
+                      in partnets[:len(partnets)//2]])
+                 / sum([M for X, M, dpart in partnets[:len(partnets)//2]]))
+    else:
+        k_mix = None
+    return ((sum([X*dpart for X, M, dpart in partnets])
+             / sum([X for X, M, dpart in partnets])), k_mix)
 
 
 Structure.med = med
@@ -253,16 +245,20 @@ def searchnets(self, sublatt=None, hklmax=[5, 5, 5]):
     print(f'hkl list prepared ({len(hkls)} indices)')
 
     means = []
+    k_mixs = []
     counter = 1  # used only in messages
     for indices in hkls:
-        means.append(self.med(indices, sublatt))
+        m, k = self.med(indices, sublatt)
+        means.append(m)
+        k_mixs.append(k)
         elapsed = time.time() - starttime
         remaining = int(elapsed/counter * len(hkls) - elapsed)
         print(f'\x1b[2K{indices} completed ({counter} of {len(hkls)}): '
               f'{elapsed:.1f} s elapsed, ~{remaining} s remaining\r', end='')
         counter += 1
     print(f'\nsearchnets completed in {time.time()-starttime:.1f} s\n')
-    return DataFrame({'hkl': hkls, 'mean': means, 'equiv': equivs})
+    return DataFrame({'hkl': hkls, 'mean': means, 'k_mix': k_mixs,
+                      'equiv': equivs})
 
 
 Structure.searchnets = searchnets

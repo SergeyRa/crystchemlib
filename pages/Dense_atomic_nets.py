@@ -93,8 +93,8 @@ if ready:
         [structAB.p1().sites[j].label for j in i] for i in netsAB['cluster']]
     df['d_eff, 1/A^2'] = netsAB['density']
     df['width, A'] = netsAB['width']
-    st.dataframe(df.sort_values(by='d_eff, 1/A^2', ascending=False),
-                 hide_index=True)
+    df['z'] = netsAB['z']
+    st.dataframe(df, hide_index=True)
     if netsAB['fig'] is not None:
         st.pyplot(netsAB['fig'])
     for i, s in enumerate(netsAB['structure']):
