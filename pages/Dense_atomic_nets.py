@@ -58,8 +58,8 @@ else:
 
 st.divider()
 colA, colB = st.columns(2)
-slA = colA.multiselect('Sublattice A', labels)
-slB = colB.multiselect('Sublattice B', labels)
+slA = colA.multiselect('Substructure A', labels)
+slB = colB.multiselect('Substructure B', labels)
 run = st.button('Run', type="primary", use_container_width=True)
 ready = False
 
