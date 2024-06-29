@@ -78,21 +78,21 @@ class Polyhedron:
 
     Methods
     -------
-    bondweights()
+    bondweights : dict
         Returns bond weights in CHARDI approach
-    econ()
-        Returns effective coordination number
-    hidden()
+    econ : tuple
+        Returns effective coordination number and its esd
+    hidden : int
         Returns number of hidden ligands
-    listangl()
+    listangl : dict
         Returns angles and their esds in polyhedron
-    listdist()
+    listdist : dict
         Returns distances and their esds in polyhedron
-    listdist_corr()
+    listdist_corr : dict
         Returns U-corrected distances and their esds in polyhedron
-    polyvol()
+    polyvol : tuple
         Returns polyhedron volume and its esd
-    polyvol_corr(self):
+    polyvol_corr : tuple
         Returns U-corrected polyhedron volume and its esd
     """
 
@@ -335,7 +335,7 @@ class Site:
     fract : list
         fractional coordinates in augmented form ([x, y, z, 1])
     fract_esd : list
-        esd of fractional coordinates in augmented form ([x, y, z, 0]),
+        esd of fractional coordinates in augmented form ([x, y, z, 0])
     label : str
         site label ('_atom_site_label' CIF key)
     symbol : str
@@ -407,12 +407,12 @@ class Structure:
 
     Methods
     -------
-    cif : None
+    cif : str
         Outputs content of Structure instance in CIF format
     filter : list
         Returns numbers of sites satisfying given condition
     formula : dict
-        Returns stoichiometry Structure instance
+        Returns formula unit
     p1 : Structure
         Returns geometrically equivalent structure with P1 space group
     p1_list : list
@@ -1265,7 +1265,7 @@ def readformula(f):
 
 
 def readstruct(data):
-    """Returns Structure object from CIF-based dict
+    """Returns Structure instance from CIF-based dict
 
     Parameters
     ----------
