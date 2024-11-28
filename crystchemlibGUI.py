@@ -1,5 +1,6 @@
 from core import Structure
 import core as ccl
+import numpy as np
 import pandas as pd
 import plotly.express as px
 import streamlit as st
@@ -117,14 +118,15 @@ def tcelsius(parsed):
 
 
 # Functions on datablocks (multivalue):
-def cifloop(parsed, key, label):
+def cifloop(parsed, key, labels):
     """Numerical values of looped CIF key"""
 
     result = []
     for d, s in zip(parsed['data'], parsed['source']):
-        if (key in d.keys()) and (label in d.keys()):
+        if (key in d.keys()) and (set(labels) <= set(d.keys())):
+            labels_data = np.array([d[i] for i in labels]).T
             tmp = []
-            for k, lb in zip(d[key], d[label]):
+            for k, lb in zip(d[key], ['-'.join(i) for i in labels_data]):
                 tmp.append((s, lb, *ccl.readesd(k)))
             result.append(tmp)
         else:
@@ -153,6 +155,18 @@ def econ(parsed):
         tmp = []
         for i in p:
             tmp.append((s, i.central.label, *i.econ()))
+        result.append(tmp)
+    return result
+
+
+def mdist(parsed):
+    """Mean distance"""
+
+    result = []
+    for p, s in zip(parsed['poly'], parsed['source']):
+        tmp = []
+        for i in p:
+            tmp.append((s, i.central.label, *i.meandist()))
         result.append(tmp)
     return result
 
@@ -263,7 +277,10 @@ def distances_corr(parsed):
     return result
 
 
-files = st.file_uploader("Choose CIF file(s)", accept_multiple_files=True)
+files = st.file_uploader(
+    "Choose CIF file(s) (refresh page to clear selection)",
+    accept_multiple_files=True
+)
 fullparsing = st.toggle('Read all CIF keys (may be time and memory consuming)')
 parsed = parsefiles(files, fullparsing)
 st.text(f"{len(parsed['data'])} datablock(s) and "
@@ -326,6 +343,7 @@ fsingle = {'T, C': tcelsius, 'P, GPa': pgpa,
            'Central site occupancy': occup,
            'Effective coordination number': econ,
            'Coordination number': cn,
+           'Mean distance, A': mdist,
            'Number of hidden ligands': hidden_lig,
            'Polyhedron volume, A^3': volume,
            'Polyhedron volume (corr.), A^3': volume_corr}
@@ -351,8 +369,8 @@ if ty == 'CIF loops':
         for j in i:
             if fy in j:
                 yloop = yloop.union(j)
-    lb = col4.selectbox("Choose loop label key", sorted(list(yloop)))
-    yopt[ty][fy] = lambda x, key=fy, label=lb: cifloop(x, key, label)
+    lb = col4.multiselect("Choose loop label keys", sorted(list(yloop)))
+    yopt[ty][fy] = lambda x, key=fy, labels=lb: cifloop(x, key, labels)
 
 if st.button('Run', type="primary", use_container_width=True):
     parsed['poly'] = findpoly(parsed['structure'], centrals, ligands,
@@ -425,6 +443,8 @@ if len(df['source']) != 0:
         if fy in fmulti.keys():
             fig.update_layout(legend_traceorder="reversed")
         st.divider()
+        st.text('Single click on legend symbol: show/hide data;\n'
+                'double click on legend symbol: hide other data')
         st.plotly_chart(fig)
     st.divider()
     df

@@ -53,6 +53,6 @@ for s, d in zip(parsed['source'], parsed['data']):
         df[i].append(val)
 df = pd.DataFrame(df)
 
-if len(df['source']) !=0:
+if len(df['source']) != 0:
     st.divider()
     df

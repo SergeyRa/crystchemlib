@@ -90,6 +90,8 @@ class Polyhedron:
         Returns distances and their esds in polyhedron
     listdist_corr : dict
         Returns U-corrected distances and their esds in polyhedron
+    meandist : tuple
+        Returns mean distance and its esd in polyhedron
     polyvol : tuple
         Returns polyhedron volume and its esd
     polyvol_corr : tuple
@@ -262,6 +264,20 @@ class Polyhedron:
             result["value"][i] = dcorr
             result["esd"][i] = dcorr_esd
         return result
+
+    def meandist(self):
+        """Returns mean distance and its esd in polyhedron
+
+        Returns
+        -------
+        tuple
+            (mean distance, esd)
+        """
+
+        from statistics import mean, stdev
+
+        return (mean(self.listdist()['value']),
+                stdev(self.listdist()['value']))
 
     def polyvol(self):
         """Returns polyhedron volume and its esd
