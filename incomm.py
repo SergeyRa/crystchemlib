@@ -9,10 +9,12 @@ Modf
 
 Functions
 ---------
-readmodf : list
-    Extracts modulation functions
+harmcomp : int
+    Component of modulation vector in harmonic
 modv : tuple or None
     Extracts modulation vectors
+readmodf : list
+    Extracts modulation functions
 """
 
 # CIF keys used
@@ -210,7 +212,7 @@ def modv(data, prefix='_cell'):
         for k in items[isin(items, list(data.keys()), invert=True)]:
             table[k] = '0'
 
-        return readesd_v(array(table))
+        return readesd_v(array(table[items]))
 
 
 def readmodf(data, label, par):

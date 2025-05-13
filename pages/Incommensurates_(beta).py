@@ -24,9 +24,9 @@ st.text(
     \t- harmonics and crenel for occupancy
     \t- harmonics and Legendre polynomials (in crenel interval) for position
 
-    Site labels and axes must be present in loops with modulation parameters
-    (modulation id keys are not yet supported); use of multiple apostrophes
-    in site labels (e.g. Si1'') is not supported."""
+    Loops with site labels and axes must correspond to loops with modulation
+    parameters; use of multiple apostrophes in site labels (e.g. Si1'')
+    is not supported."""
 )
 
 col1, col2 = st.columns(2)
