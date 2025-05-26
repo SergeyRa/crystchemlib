@@ -100,8 +100,12 @@ if ready:
     for i, s in enumerate(netsAB['structure']):
         cif += s.cif(f"{i+1}") + '\n\n'
 
-    st.download_button('Download CIF with nets in spread cell',
-                       cif,
-                       file_name=f"{file.name[:-4]}_nets_"
-                       f"{indices[0]}{indices[1]}{indices[2]}.cif",
-                       use_container_width=True)
+    @st.fragment
+    def download():
+        st.download_button('Download CIF with nets in spread cell',
+                           cif,
+                           file_name=f"{file.name[:-4]}_nets_"
+                           f"{indices[0]}{indices[1]}{indices[2]}.cif",
+                           use_container_width=True)
+    download()
+        

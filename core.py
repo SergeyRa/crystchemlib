@@ -96,6 +96,8 @@ class Polyhedron:
         Returns polyhedron volume and its esd
     polyvol_corr : tuple
         Returns U-corrected polyhedron volume and its esd
+    wmd : float
+        Returns weighted mean distance (CHARDI)
     """
 
     def __init__(self, central, ligands, cell,
@@ -341,6 +343,32 @@ class Polyhedron:
         r = sum(self.listdist()['value'])
         r_corr = sum(self.listdist_corr()['value'])
         return (V * (1 + 3*(r_corr - r)/r), esd)
+
+    def wmd(self):
+        """Weighted mean distance (CHARDI)
+
+        Returns
+        -------
+        tuple
+            value, esd
+        """
+
+        from numpy import exp
+        from pandas import DataFrame
+
+        ld = DataFrame(self.listdist())
+        if len(ld['value']) == 0:
+            return None, None
+        d0 = min(ld['value'])
+        for i in range(100):
+            ld['weight'] = exp(1 - (ld['value']/d0)**6)
+            d0_new = (ld['value']*ld['weight']).sum() / ld['weight'].sum()
+            if abs(d0 - d0_new) < 0.001:
+                # weights' esds are ignored:
+                return d0_new, (((ld['esd']*ld['weight'])**2).sum())**0.5
+            d0 = d0_new
+        print('Error in wmd: convergence not reached!')
+        return None, None
 
 
 class Site:
@@ -1437,7 +1465,7 @@ def writesd(val, esd, f=None):
     if power >= 0:
         return str(int(round(val, -power))) + "(" + str(base * 10**power) + ")"
     else:
-        val_str = str(float(round(val, -power)))
+        val_str = format(float(round(val, -power)), f'.{-power}f')
         return (val_str
                 + "0" * (-power - (len(val_str) - 1 - val_str.find(".")))
                 + "(" + str(base) + ")")

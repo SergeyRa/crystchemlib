@@ -1,0 +1,1 @@
+venv\Scripts\streamlit.exe run crystchemlibGUI.py

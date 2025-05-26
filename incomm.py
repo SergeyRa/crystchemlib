@@ -171,6 +171,12 @@ def harmcomp(data, id, q):
             '_jana_atom_site_fourier_wave_vector_q'+str(q)+'_coeff'
         ][i])
 
+    elif '_atom_site_fourier_wave_vector_q1_coeff' in data:
+        i = data['_atom_site_fourier_wave_vector_seq_id'].index(str(id))
+        return int(data[
+            '_atom_site_fourier_wave_vector_q'+str(q)+'_coeff'
+        ][i])
+
     else:
         from numpy.linalg import lstsq
 

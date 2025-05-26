@@ -1,7 +1,9 @@
 from core import Structure
 import core as ccl
+import eos
 import numpy as np
 import pandas as pd
+import plotly.graph_objects as go
 import plotly.express as px
 import streamlit as st
 
@@ -77,9 +79,9 @@ def formcont(parsed, symbol):
         if '_chemical_formula_sum' in d.keys():
             formula = ccl.readformula(d['_chemical_formula_sum'])
             if symbol in formula.keys():
-                result.append([(s, symbol+'sum', formula[symbol], 0)])
+                result.append([(s, symbol+'sum', formula[symbol], None)])
             else:
-                result.append([(s, symbol+'sum', 0, 0)])
+                result.append([(s, symbol+'sum', 0, None)])
         else:
             result.append([(s, symbol+'sum', None, None)])
     return result
@@ -142,7 +144,7 @@ def cn(parsed):
     for p, s in zip(parsed['poly'], parsed['source']):
         tmp = []
         for i in p:
-            tmp.append((s, i.central.label, len(i.ligands), 0))
+            tmp.append((s, i.central.label, len(i.ligands), None))
         result.append(tmp)
     return result
 
@@ -178,7 +180,7 @@ def hidden_lig(parsed):
     for p, s in zip(parsed['poly'], parsed['source']):
         tmp = []
         for i in p:
-            tmp.append((s, i.central.label, i.hidden(), 0))
+            tmp.append((s, i.central.label, i.hidden(), None))
         result.append(tmp)
     return result
 
@@ -216,6 +218,18 @@ def volume_corr(parsed):
         tmp = []
         for i in p:
             tmp.append((s, i.central.label, *i.polyvol_corr()))
+        result.append(tmp)
+    return result
+
+
+def wmd(parsed):
+    """Weighted mean distance (CHARDI)"""
+
+    result = []
+    for p, s in zip(parsed['poly'], parsed['source']):
+        tmp = []
+        for i in p:
+            tmp.append((s, i.central.label, *i.wmd()))
         result.append(tmp)
     return result
 
@@ -346,7 +360,8 @@ fsingle = {'T, C': tcelsius, 'P, GPa': pgpa,
            'Mean distance, A': mdist,
            'Number of hidden ligands': hidden_lig,
            'Polyhedron volume, A^3': volume,
-           'Polyhedron volume (corr.), A^3': volume_corr}
+           'Polyhedron volume (corr.), A^3': volume_corr,
+           'Weighted mean distance (CHARDI), A': wmd}
 # functions with multivalue output:
 fmulti = {'Polyhedron angles, deg': angles,
           'Polyhedron bond weights': bond_weights,
@@ -358,18 +373,19 @@ yopt = {'CIF keys': fkey, 'Formula content': fchem, 'CIF loops': floop,
         'Other': {**fsingle, **fmulti}}
 
 st.divider()
-col3, col4 = st.columns(2)
-tx = col3.selectbox("Choose X variable type", sorted(list(xopt.keys())))
-fx = col3.selectbox("Choose X variable", sorted(list(xopt[tx].keys())))
-ty = col4.selectbox("Choose Y variable type", sorted(list(yopt.keys())))
-fy = col4.selectbox("Choose Y variable", sorted(list(yopt[ty].keys())))
+col7, col8 = st.columns(2)
+tx = col7.selectbox("Choose X variable type", sorted(list(xopt.keys())))
+fx = col7.selectbox("Choose X variable", sorted(list(xopt[tx].keys())))
+fiteos = col7.toggle('Activate EoS')
+ty = col8.selectbox("Choose Y variable type", sorted(list(yopt.keys())))
+fy = col8.selectbox("Choose Y variable", sorted(list(yopt[ty].keys())))
 if ty == 'CIF loops':
     yloop = set([])  # keys from the selected loop
     for i in parsed['loops']:
         for j in i:
             if fy in j:
                 yloop = yloop.union(j)
-    lb = col4.multiselect("Choose loop label keys", sorted(list(yloop)))
+    lb = col8.multiselect("Choose loop label keys", sorted(list(yloop)))
     yopt[ty][fy] = lambda x, key=fy, labels=lb: cifloop(x, key, labels)
 
 if st.button('Run', type="primary", use_container_width=True):
@@ -448,3 +464,48 @@ if len(df['source']) != 0:
         st.plotly_chart(fig)
     st.divider()
     df
+
+    @st.fragment
+    def fitting():
+        col9, col10 = st.columns(2)
+        tofit = col9.selectbox('Select data to fit',
+                               sorted(set(df['name'])))
+        cubes = col9.toggle('Fit cubes')
+        kind = col9.selectbox('Select function to fit',
+                              ['BM2', 'BM3', 'BM4'])
+        xfit = df[df.name == tofit]['x']
+        xfit_esd = df[df.name == tofit]['esd_x']
+        if cubes:
+            yfit = df[df.name == tofit]['y']**3
+            yfit_esd = (3 * df[df.name == tofit]['esd_y']
+                        * df[df.name == tofit]['y']**2)
+            fy_new = '[' + fy + ']^3'
+        else:
+            yfit = df[df.name == tofit]['y']
+            yfit_esd = df[df.name == tofit]['esd_y']
+            fy_new = fy
+
+        fit = eos.pvfit(kind, xfit, yfit, xfit_esd, yfit_esd)
+        col9.text(fit[0].info())
+        if fit[1] != '':
+            col9.text(fit[1])
+        col9.text(f'Residual variance {fit[2]:.2f}')
+
+        y_model = np.linspace(yfit.min(), yfit.max(), 100)
+        x_model = np.vectorize(fit[0].fu())(y_model)  # eos returns P(V)
+
+        fig2 = go.Figure(layout={'xaxis': {'title': {'text': fx}},
+                                 'yaxis': {'title': {'text': fy_new}}})
+        fig2.add_trace(go.Scatter(x=x_model, y=y_model,
+                                  showlegend=False))
+        fig2.add_trace(go.Scatter(x=xfit, y=yfit,
+                                  error_x={'array': xfit_esd},
+                                  error_y={'array': yfit_esd},
+                                  showlegend=False,
+                                  mode='markers'))
+        fig2.update_xaxes(showgrid=True)
+        fig2.update_yaxes(showgrid=True)
+        col10.plotly_chart(fig2)
+
+    if fiteos:
+        fitting()
