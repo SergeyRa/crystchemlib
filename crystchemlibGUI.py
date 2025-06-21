@@ -470,19 +470,21 @@ if len(df['source']) != 0:
         col9, col10 = st.columns(2)
         tofit = col9.selectbox('Select data to fit',
                                sorted(set(df['name'])))
+        start, end = col9.slider('Data range (points)',
+                                 1, len(df[df.name == tofit].index),
+                                 (1, len(df[df.name == tofit].index)), 1)
+        xfit = df[df.name == tofit]['x'][start-1:end]
+        xfit_esd = df[df.name == tofit]['esd_x'][start-1:end]
         cubes = col9.toggle('Fit cubes')
-        kind = col9.selectbox('Select function to fit',
-                              ['BM2', 'BM3', 'BM4'])
-        xfit = df[df.name == tofit]['x']
-        xfit_esd = df[df.name == tofit]['esd_x']
+        kind = col9.selectbox('Select function to fit', eos.eoslist)
         if cubes:
-            yfit = df[df.name == tofit]['y']**3
-            yfit_esd = (3 * df[df.name == tofit]['esd_y']
-                        * df[df.name == tofit]['y']**2)
+            yfit = df[df.name == tofit]['y'][start-1:end]**3
+            yfit_esd = (3 * df[df.name == tofit][start-1:end]['esd_y']
+                        * df[df.name == tofit][start-1:end]['y']**2)
             fy_new = '[' + fy + ']^3'
         else:
-            yfit = df[df.name == tofit]['y']
-            yfit_esd = df[df.name == tofit]['esd_y']
+            yfit = df[df.name == tofit]['y'][start-1:end]
+            yfit_esd = df[df.name == tofit]['esd_y'][start-1:end]
             fy_new = fy
 
         fit = eos.pvfit(kind, xfit, yfit, xfit_esd, yfit_esd)

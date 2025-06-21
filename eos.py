@@ -16,7 +16,8 @@ pvfit : tuple
 # labels and parameter names:
 eoslist = {'BM2': ['2nd order Birch-Murnaghan', 'V0', 'K0'],
            'BM3': ['3rd order Birch-Murnaghan', 'V0', 'K0', 'Kp'],
-           'BM4': ['4th order Birch-Murnaghan', 'V0', 'K0', 'Kp', 'Kpp']}
+           'BM4': ['4th order Birch-Murnaghan', 'V0', 'K0', 'Kp', 'Kpp'],
+           'linear': ['y = a*x + b', 'a', 'b']}
 
 
 class Eos:
@@ -96,6 +97,12 @@ class Eos:
                     3*k0*f * (1+2*f)**(5/2)
                 )
 
+        # linear
+        elif self.kind == 'linear':
+            def eos(B, v):
+                a, b = B
+                return (v - b) / a
+
         else:
             raise Exception('EoS type unknown for Eos!')
 
@@ -146,7 +153,10 @@ def pvguess(kind, P, V):
                 B = pvfit('BM3', P, V)[0].params[:]
                 k0, kp = B[1:]
                 B.append(-1/k0 * ((3-kp)*(4-kp) + 35/9))
-
+    elif kind == 'linear':
+        a = (V[P.argmax()].mean() - V[P.argmin()].mean()) / (P.max() - P.min())
+        b = V.mean()
+        B = [a, b]
     else:
         raise Exception('EoS type unknown for pvguess!')
 

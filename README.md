@@ -1,10 +1,10 @@
-# *crystchemlib* v.0.9.1
+# *crystchemlib* v.0.9
 Python library for crystallographic and crystal chemical analysis with *streamlit* GUI
 
 ## Maintainer
 Sergey V. Rashchenko (rashchenkos@gmail.com)
 
-## v.0.9.1 features
+## v.0.9 features
 * Installation scripts
 * Handling of incommensurate structures
 * Birch-Murnaghan equations of state fitting
@@ -23,7 +23,7 @@ Sergey V. Rashchenko (rashchenkos@gmail.com)
 3. Launch Linux_run.sh to open GUI (for the first time you may be asked to provide optional e-mail - just leave it blank and press Enter)
 
 ## Manual
-A brief manual is available in *J. Appl. Cryst.* paper (see author manuscript in JAC2025.pdf)
+A brief manual is available in *J. Appl. Cryst.* paper (see author manuscript in JAC2025.pdf). The algorithm of dense plain nets searching is described in *J. Struct. Chem.* paper (see author manuscript in JSC2025.pdf).
 
 ## Citing
 If you use *crystchemlib* in any part of your project, please cite it in your publications: S.V. Rashchenko (2025). *J. Appl. Cryst.* **58**, https://doi.org/10.1107/S1600576724011956.
