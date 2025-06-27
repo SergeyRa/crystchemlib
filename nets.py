@@ -199,7 +199,7 @@ def med(self, indices, sublatt=None):
 Structure.med = med
 
 
-def searchnets(self, sublatt=None, hklmax=[5, 5, 5]):
+def searchnets(self, sublatt=None, hklmax=None):
     """Returns mean eff. density for hkls in range
 
     Parameters
@@ -209,7 +209,8 @@ def searchnets(self, sublatt=None, hklmax=[5, 5, 5]):
         [[a1, a2, ...], [b1, b2, ...], ...]
         sublattices to use (default None)
     hklmax : list
-        max abs of used h, k, l (default [5, 5, 5])
+        max abs of used h, k, l (default None
+        interpreted as [5, 5, 5])
 
     Returns
     -------
@@ -219,6 +220,9 @@ def searchnets(self, sublatt=None, hklmax=[5, 5, 5]):
          'equiv': [[[h, k, l], [...], ...], [[...], [...], ...], ...]}
         (equiv corresponds to equivalent hkls)
     """
+
+    if hklmax is None:
+        hklmax = [5, 5, 5]
 
     from math import gcd
     from pandas import DataFrame

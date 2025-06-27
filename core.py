@@ -15,10 +15,14 @@ angle
     Returns angle and its esd
 clearkeys
     Removes empty keys from CIF-based dict
+cumdiff
+    Calculates difference between cumulative curves
 dhkl
     Returns interplanar distance
 equivhkl
     Returns list of equivalent Miller indices
+lattrange
+    Returns lattice range covering sphere of given radius
 length
     Returns length and its esd
 matrixform
@@ -29,6 +33,8 @@ orthonorm
     Returns orthonormal coordinates of point
 parsecif
     Returns CIF content
+qimport
+    Quick wrapper for parsecif
 readesd
     Returns value and its esd from string with parentheses
 readformula
@@ -101,7 +107,7 @@ class Polyhedron:
     """
 
     def __init__(self, central, ligands, cell,
-                 cell_esd=[0, 0, 0, 0, 0, 0], bvp=[]):
+                 cell_esd=None):
         """
         Parameters
         ----------
@@ -113,12 +119,16 @@ class Polyhedron:
             [a, b, c, alpha, beta, gamma]
         cell_esd : list
             [a_esd, b_esd, c_esd, alpha_esd, beta_esd, gamma_esd]
+            (default None interpreted as [0, 0, 0, 0, 0, 0])
         """
 
         self.central = central
         self.ligands = ligands
         self.cell = cell
-        self.cell_esd = cell_esd
+        if cell_esd is None:
+            self.cell_esd = [0, 0, 0, 0, 0, 0]
+        else:
+            self.cell_esd = cell_esd
 
     def __repr__(self):
         lig = ''
@@ -223,8 +233,13 @@ class Polyhedron:
                     result["esd"].append(a[1])
         return result
 
-    def listdist(self):
+    def listdist(self, skipesd=False):
         """Returns distances and their esds in polyhedron
+
+        Parameters
+        ----------
+        skipesd : bool
+            if True, skips esd evaluation (default False)
 
         Returns
         -------
@@ -236,7 +251,8 @@ class Polyhedron:
         for i in self.ligands:
             result["name"].append(f"{self.central.label}-{i.label}")
             d = length(self.cell, self.central.fract, i.fract,
-                       self.cell_esd, self.central.fract_esd, i.fract_esd)
+                       self.cell_esd, self.central.fract_esd, i.fract_esd,
+                       skipesd=skipesd)
             result["value"].append(d[0])
             result["esd"].append(d[1])
         return result
@@ -394,7 +410,7 @@ class Site:
         esd of Uso / Uequiv
     """
 
-    def __init__(self, fract, fract_esd=[0, 0, 0, 0],
+    def __init__(self, fract, fract_esd=None,
                  label="H1", symbol="H", occ=1.0, occ_esd=0.0,
                  u=0.0, u_esd=0.0):
         """
@@ -404,7 +420,7 @@ class Site:
             fractional coordinates in augmented form ([x, y, z, 1])
         fract_esd : list
             esd of fractional coordinates in augmented form ([x, y, z, 0]),
-            default [0, 0, 0, 0]
+            default None interpreted as [0, 0, 0, 0]
         label : str
             site label ('_atom_site_label' CIF key), default 'H1'
         symbol : str
@@ -418,8 +434,12 @@ class Site:
         u_esd : float
             esd of Uso / Uequiv
         """
+
         self.fract = fract
-        self.fract_esd = fract_esd
+        if fract_esd is None:
+            self.fract_esd = [0, 0, 0, 0]
+        else:
+            self.fract_esd = fract_esd
         self.label = label
         self.symbol = symbol
         self.occ = occ
@@ -461,6 +481,8 @@ class Structure:
         Returns geometrically equivalent structure with P1 space group
     p1_list : list
         Returns numbers of p1() sites equivalent to the original ones
+    pairs : list
+        Returns distances in structure
     poly : Polyhedron
         Returns Polyhedron instance with given central site and ligands
     sublatt : Structure
@@ -470,33 +492,45 @@ class Structure:
     """
 
     def __init__(self,
-                 cell=[1, 1, 1, 90, 90, 90],
-                 cell_esd=[0, 0, 0, 0, 0, 0],
-                 sites=[],
-                 symops=[[[1, 0, 0, 0],
-                          [0, 1, 0, 0],
-                          [0, 0, 1, 0],
-                          [0, 0, 0, 1]]]):
+                 cell=None,
+                 cell_esd=None,
+                 sites=None,
+                 symops=None):
         """
         Parameters
         ----------
         cell : list
             [a, b, c, alpha, beta, gamma]
-            (default cube of unit size)
+            (default None interpreted as cube of unit size)
         cell_esd : list
             [a_esd, b_esd, c_esd, alpha_esd, beta_esd, gamma_esd]
-            (default all 0)
+            (default None interpretes as [0, 0, 0, 0, 0, 0])
         sites : list
-            list of Site instances (default [])
+            list of Site instances (default None interpreted as [])
         symops : list
             list of symmetry operations (4*4 augmented matrices)
-            (default identity)
+            (default None interpreted as identity)
         """
 
-        self.cell = cell
-        self.cell_esd = cell_esd
-        self.sites = sites
-        self.symops = symops
+        if cell is None:
+            self.cell = [1, 1, 1, 90, 90, 90]
+        else:
+            self.cell = cell
+        if cell_esd is None:
+            self.cell_esd = [0, 0, 0, 0, 0, 0]
+        else:
+            self.cell_esd = cell_esd
+        if sites is None:
+            self.sites = []
+        else:
+            self.sites = sites
+        if symops is None:
+            self.symops = [[[1, 0, 0, 0],
+                            [0, 1, 0, 0],
+                            [0, 0, 1, 0],
+                            [0, 0, 0, 1]]]
+        else:
+            self.symops = symops
 
     def __repr__(self):
         return self.cif()
@@ -720,8 +754,73 @@ class Structure:
                                          result[-1][-1]+1 + counter)))
         return result
 
+    def pairs(self, dmax, plain=False, norm=False, cumulative=False):
+        """Returns distances in structure
+
+        Parameters
+        ----------
+        dmax : float
+            max distance
+        plain : bool
+            if True, only distances in (001) plane
+            will be calculated (default False)
+        norm : bool
+            either to normalize per 1 atom (default False)
+        cumulative : bool
+            if True, returns cumulative distribution
+            instead of frequencies (default False)
+
+        Returns
+        -------
+        list
+            sorted list of distances
+        """
+
+        from pandas import concat, DataFrame
+
+        struct = self.p1()
+        N = len(struct.sites)
+        for i in range(N):
+            struct.sites[i].label = str(i)  # unique labels
+            if plain:
+                struct.sites[i].fract[2] = 0  # projecting on (001)
+
+        if norm:
+            if plain:
+                f = (
+                    N / vol(self.cell)[0] * dhkl(self.cell, [0, 0, 1])
+                ) ** 0.5
+            else:
+                f = (N / vol(self.cell)[0]) ** (1/3)
+        else:
+            f = 1
+
+        result = [
+            DataFrame(
+                struct.poly(
+                    i, list(range(N)), dmax/f, plain=plain, suffixes=True
+                ).listdist(skipesd=True))[['name', 'value']]
+            for i in range(N)
+        ]
+
+        result = concat(result, ignore_index=True)
+        result.value = (result.value * f).round(3)  # precision
+
+        blacklist = []
+        for i in range(N):
+            blacklist.append(f'{i}-{i}_1_000')
+
+        freq = result[
+            ~result.name.isin(blacklist)
+        ]['value'].value_counts().sort_index() / (N if norm else 1)
+
+        if cumulative:
+            return freq.cumsum()
+        else:
+            return freq
+
     def poly(self, centr, ligands, dmax, dmin=0.0,
-             nmax=None, N=1, suffixes=False):
+             nmax=None, suffixes=False, plain=False):
         """Returns Polyhedron
 
         Parameters
@@ -737,12 +836,12 @@ class Structure:
         nmax : int
             limits max number of ligands to nmax closest ones
             unless None (default)
-        N : int
-            defines unit cells (+-N in each direction) attached
-            to first one when searching bonds (default 1)
         suffixes : bool
             if True, suffixes with symmetry operations will be
             attached to ligands' labels (default False)
+        plain : bool
+            if True, Nc will be set to zero for plain nets
+            analysis (default False)
 
         Returns
         -------
@@ -755,10 +854,13 @@ class Structure:
         centr_site.fract = [i % 1 for i in centr_site.fract]
         # reduction to the first cell
         liglist = []
+        Na, Nb, Nc = lattrange(self.cell, dmax)
+        if plain:
+            Nc = 0
         for s in self.sublatt(ligands).p1(symkeys=suffixes).sites:
-            for i in range(-N, N+1):
-                for j in range(-N, N+1):
-                    for k in range(-N, N+1):
+            for i in range(-Na, Na+1):
+                for j in range(-Nb, Nb+1):
+                    for k in range(-Nc, Nc+1):
                         if suffixes:
                             suffix = f"_{i}{j}{k}"
                         else:
@@ -772,9 +874,7 @@ class Structure:
                         dist = length(self.cell,
                                       centr_site.fract,
                                       newsite.fract,
-                                      self.cell_esd,
-                                      centr_site.fract_esd,
-                                      newsite.fract_esd)
+                                      skipesd=True)
                         if dmin <= dist[0] <= dmax:
                             liglist.append(
                                 [newsite, dist,
@@ -848,10 +948,10 @@ class Structure:
 
 
 def angle(cell, u, v, w,
-          cell_esd=[0, 0, 0, 0, 0, 0],
-          u_esd=[0, 0, 0, 0],
-          v_esd=[0, 0, 0, 0],
-          w_esd=[0, 0, 0, 0]):
+          cell_esd=None,
+          u_esd=None,
+          v_esd=None,
+          w_esd=None):
     """Returns angle between v-u and w-u vectors in given basis
 
     Parameters
@@ -865,19 +965,32 @@ def angle(cell, u, v, w,
     w : list
         fractional coordinates of w
     cell_esd : list
-        esds of cell (default zeroes)
+        esds of cell (default None interpreted
+        as [0, 0, 0, 0, 0, 0])
     u_esd : list
-        esds of u (default zeroes)
+        esds of u (default None interpreted
+        as [0, 0, 0, 0])
     v_esd : list
-        esds of v (default zeroes)
+        esds of v (default None interpreted
+        as [0, 0, 0, 0])
     w_esd : list
-        esds of w (default zeroes)
+        esds of w (default None interpreted
+        as [0, 0, 0, 0])
 
     Returns
     -------
     tuple
         (angle, esd)
     """
+
+    if cell_esd is None:
+        cell_esd = [0, 0, 0, 0, 0, 0]
+    if u_esd is None:
+        u_esd = [0, 0, 0, 0]
+    if v_esd is None:
+        v_esd = [0, 0, 0, 0]
+    if w_esd is None:
+        w_esd = [0, 0, 0, 0]
 
     from math import acos, pi, sqrt
 
@@ -940,6 +1053,38 @@ def clearkeys(data, loops=None):
             if i == []:
                 loops_cleared.remove(i)
     return (data_cleared, loops_cleared)
+
+
+def cumdiff(S1, S2):
+    """Calculates difference between cumulative curves
+
+    Parameters
+    ----------
+    S1 : pandas.Series
+        cumulative output from Structure.pairs()
+    S2 : pandas.Series
+        cumulative output from Structure.pairs()
+
+    Returns
+    -------
+    float
+        difference between cumulative curves
+    """
+
+    from pandas import DataFrame
+
+    A = S1.copy()
+    B = S2.copy()
+    A.name = 'A'
+    B.name = 'B'
+    df = DataFrame([A, B]).transpose().sort_index()
+    df['d'] = df.index
+    df['d_next'] = df['d'].shift(-1)
+    df.ffill(inplace=True)
+    df.fillna(0, inplace=True)
+    df['diff'] = (df['d_next'] - df['d']) * (df['A'] - df['B']).abs()
+
+    return df['diff'].sum()
 
 
 def dhkl(cell, indices):
@@ -1008,27 +1153,77 @@ def equivhkl(symops, indices, laue=False):
     return result
 
 
-def length(cell, v1, v2=[0, 0, 0, 1],
-           cell_esd=[0, 0, 0, 0, 0, 0],
-           v1_esd=[0, 0, 0, 0],
-           v2_esd=[0, 0, 0, 0]):
-    # Calculates (length, esd) for (v1 - v2) vector
-    # defined in cell basis. Does not calculate esd
-    # for d=0 (returns zero esd).
+def lattrange(cell, r):
+    """Returns lattice half-range covering sphere of given radius
+
+    Parameters
+    ----------
+    cell : list
+        [a, b, c, al, be, ga]
+    r : float
+        radius
+
+    Returns
+    -------
+    numpy.ndarray
+        [Na, Nb, Nc]
+    """
+
+    from numpy import array, ceil
+
+    d1 = array([dhkl(cell, hkl) for hkl in ([1, 0, 0],
+                                            [0, 1, 0],
+                                            [0, 0, 1])])
+    return ceil(r / d1).astype(int)
+
+
+def length(cell, v1, v2=(0, 0, 0, 1),
+           cell_esd=(0, 0, 0, 0, 0, 0),
+           v1_esd=(0, 0, 0, 0),
+           v2_esd=(0, 0, 0, 0),
+           skipesd=False):
+    """Returns length and its esd
+
+    Parameters
+    ----------
+    cell : list
+        [a, b, c, al, be, ga]
+    v1 : list
+        first vector in [x, y, z, 1] notation
+    v2 : list
+        second vector in [x, y, z, 1] notation
+        (default (0, 0, 0, 1))
+    cell_esd : list
+        esds of cell, default zero
+    v1_esd : list
+        esds of v1 components (default zero)
+    v2_esd : list
+        esds of v2 components (default zero)
+    skipesd : bool
+        if True, skips esd evaluation (default False)
+
+    Returns
+    -------
+    tuple
+        length of v1-v2 vector in cell basis
+        together with esd
+    """
+
     from math import cos, sin, sqrt, pi
 
-    a, b, c, a_esd, b_esd, c_esd = cell[:3]+cell_esd[:3]
-    al, be, ga, al_esd, be_esd, ga_esd = [
-        i/180*pi for i in cell[3:]+cell_esd[3:]]
+    a, b, c = cell[:3]
+    al, be, ga = [i/180*pi for i in cell[3:]]
     u, v, w = [v1[i] - v2[i] for i in range(3)]
-    u_esd, v_esd, w_esd = [sqrt(v1_esd[i]**2 + v2_esd[i]**2)
-                           for i in range(3)]
     d = sqrt(a**2*u**2 + b**2*v**2 + c**2*w**2
              + 2*b*c*v*w*cos(al) + 2*a*c*u*w*cos(be) + 2*a*b*u*v*cos(ga))
 
-    if d == 0:
+    if (d == 0) or skipesd:
         d_esd = 0
     else:
+        a_esd, b_esd, c_esd = cell_esd[:3]
+        al_esd, be_esd, ga_esd = [i/180*pi for i in cell_esd[3:]]
+        u_esd, v_esd, w_esd = [sqrt(v1_esd[i]**2 + v2_esd[i]**2)
+                               for i in range(3)]
         d_esd = sqrt((a**2*b**2*ga_esd**2*u**2*v**2*sin(ga)**2
                       + a**2*be_esd**2*c**2*u**2*w**2*sin(be)**2
                       + a**2*u_esd**2*(a*u + b*v*cos(ga) + c*w*cos(be))**2
@@ -1060,7 +1255,7 @@ def matrixform(symop):
     return w_aug
 
 
-def newbasis(cell, P, cell_esd=[0, 0, 0, 0, 0, 0]):
+def newbasis(cell, P, cell_esd=(0, 0, 0, 0, 0, 0)):
     """Returns transformed basis [a, b, c, al, be, ga] and esds
 
     Parameters
@@ -1253,6 +1448,28 @@ def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):
     return {"name": datablocks, "data": parsed, "loops": loops}
 
 
+def qimport(path):
+    """Quick wrapper for parsecif
+
+    Parameters
+    ----------
+    path : string
+        location of cif
+
+    Returns
+    -------
+    list
+        list of Structure instances
+    """
+
+    from numpy import array
+
+    with open(path) as f:
+        data = parsecif(f)['data']
+        structures = array([readstruct(i) for i in data])
+    return structures[structures != array(None)]
+
+
 def readesd(s):
     # returns floats (val, esd) from string "val(esd)"
     val = s.split("(")[0]
@@ -1389,7 +1606,7 @@ def stringform(w_aug):
     return ",".join([str(i) for i in expr]).replace(" ", "")
 
 
-def vol(cell, cell_esd=[0, 0, 0, 0, 0, 0]):
+def vol(cell, cell_esd=(0, 0, 0, 0, 0, 0)):
     """Returns unit cell volume
 
     Parameters
@@ -1407,9 +1624,10 @@ def vol(cell, cell_esd=[0, 0, 0, 0, 0, 0]):
 
     from math import cos, sin, sqrt, pi
 
-    a, b, c, a_esd, b_esd, c_esd = cell[:3]+cell_esd[:3]
-    al, be, ga, al_esd, be_esd, ga_esd = [
-        i/180*pi for i in cell[3:]+cell_esd[3:]]
+    a, b, c = cell[:3]
+    a_esd, b_esd, c_esd = cell_esd[:3]
+    al, be, ga = [i/180*pi for i in cell[3:]]
+    al_esd, be_esd, ga_esd = [i/180*pi for i in cell_esd[3:]]
     v = a*b*c*sqrt(sin(al)**2 + sin(be)**2 + sin(ga)**2
                    + 2*cos(al)*cos(be)*cos(ga) - 2)
     v_esd = sqrt(
