@@ -1,0 +1,42 @@
+data_3000016
+loop_
+_publ_author_name
+xiamingjun
+Li
+R.K.
+_publ_section_title
+;
+ Crystal structure and Optical Properties of a Noncentrosymmetric Borate
+ RbSr4(BO3)3
+;
+_journal_name_full               'To be published in J.Solid State Chem'
+_chemical_formula_sum            'B3 O9 Rb Sr4'
+_chemical_name_systematic
+; 
+ ? 
+;
+_symmetry_space_group_name_Hall  'A 2 -2a'
+_symmetry_space_group_name_H-M   'A m a 2'
+_cell_angle_alpha                90.00
+_cell_angle_beta                 90.00
+_cell_angle_gamma                90.00
+_cell_length_a                   11.128(10)
+_cell_length_b                   12.155(15)
+_cell_length_c                   6.952(7)
+_cell_measurement_temperature    298(2)
+_cell_volume                     940.3(17)
+_diffrn_ambient_temperature      298(2)
+_diffrn_radiation_type           MoK\a
+_diffrn_radiation_wavelength     0.71073
+_refine_ls_goodness_of_fit_ref   1.092
+_refine_ls_R_factor_all          0.0669
+_refine_ls_R_factor_gt           0.0632
+_refine_ls_wR_factor_gt          0.1465
+_refine_ls_wR_factor_ref         0.1497
+_cod_hold_until_date             2012-10-18
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+? ? ? ?

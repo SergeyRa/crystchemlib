@@ -1,0 +1,100 @@
+#------------------------------------------------------------------------------
+#$Date: 2024-05-06 10:39:41 +0300 (Mon, 06 May 2024) $
+#$Revision: 291735 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/9/00/84/9008435.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided the American Mineralogist Crystal Structure Database,
+# http://rruff.geo.arizona.edu/AMS/amcsd.php
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_9008435
+loop_
+_publ_author_name
+'Kubel, F.'
+'Crottaz, O.'
+_publ_section_title
+;
+ Crystal structure of manganese chlorine boracite, Mn3B7O13Cl
+;
+_journal_name_full               'Zeitschrift fur Kristallographie'
+_journal_page_first              924
+_journal_page_last               924
+_journal_volume                  211
+_journal_year                    1996
+_chemical_compound_source        Synthetic
+_chemical_formula_sum            'B7 Cl Mn3 O13'
+_chemical_name_mineral           Chambersite
+_space_group_IT_number           29
+_symmetry_space_group_name_Hall  'P 2c -2ac'
+_symmetry_space_group_name_H-M   'P c a 21'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_length_a                   8.678
+_cell_length_b                   8.688
+_cell_length_c                   12.290
+_cell_formula_units_Z            4
+_cell_volume                     926.598
+_database_code_amcsd             0011067
+_exptl_crystal_density_diffrn    3.469
+_cod_original_formula_sum        'Mn3 B7 O13 Cl'
+_cod_database_code               9008435
+loop_
+_space_group_symop_operation_xyz
+x,y,z
+1/2+x,-y,z
+1/2-x,y,1/2+z
+-x,-y,1/2+z
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Mn1 0.00770 0.00810 0.01590 0.00040 0.00150 0.00000
+Mn2 0.01370 0.01290 0.00830 -0.00450 -0.00010 -0.00030
+Mn3 0.01530 0.01260 0.00740 0.00420 -0.00020 -0.00010
+Cl 0.01640 0.01510 0.01600 0.00000 0.00140 0.00200
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+Mn1 0.76170 0.25200 0.22110 ?
+Mn2 0.48230 0.53330 0.49940 ?
+Mn3 -0.01620 0.03340 0.50280 ?
+B1 0.50300 0.49600 0.24900 0.01000
+B2 0.25610 0.24900 0.49580 0.00900
+B3 0.00200 -0.00500 0.24950 0.00900
+B4 0.45610 0.24900 0.35060 0.01000
+B5 0.24740 0.40100 0.16900 0.00800
+B6 0.90450 0.75100 0.82090 0.01000
+B7 0.75280 0.90200 0.66900 0.00700
+O1 0.22830 0.25000 0.23600 0.00900
+O2 0.54010 0.33170 0.27580 0.00900
+O3 0.38270 0.32410 0.43430 0.00900
+O4 0.97170 0.15990 0.27440 0.00900
+O5 0.31710 0.36290 0.06530 0.00800
+O6 0.16570 0.97500 0.22540 0.00900
+O7 0.14320 0.18100 0.42220 0.01000
+O8 0.33900 0.51360 0.22750 0.00900
+O9 0.17650 0.12430 0.06390 0.01000
+O10 0.95150 0.59330 0.83950 0.00900
+O11 0.53470 0.90880 0.85130 0.00700
+O12 0.90810 0.53650 0.65280 0.00800
+O13 0.58970 0.94290 0.65880 0.00800
+Cl 0.76910 0.25040 0.50870 ?
+loop_
+_cod_related_entry_id
+_cod_related_entry_database
+_cod_related_entry_code
+1 AMCSD 0011067

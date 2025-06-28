@@ -1,0 +1,794 @@
+#------------------------------------------------------------------------------
+#$Date: 2022-05-19 01:41:04 +0300 (Thu, 19 May 2022) $
+#$Revision: 275527 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/7/24/49/7244951.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_7244951
+loop_
+_publ_author_name
+'Volkov, Sergey'
+'Charkin, Dmitri O.'
+'Arsentev, Maxim'
+'Aksenov, Sergey'
+'Manelis, Lev'
+'Krzhizhanovskaya, Maria'
+'Sinelshikova, Olga'
+'Ugolkov, Valeriy Leonidovich'
+'Povolotskiy, Alexey'
+'Shilovskikh, Vladimir'
+'Antonov, Andrey'
+'Bubnova, Rimma'
+_publ_section_title
+;
+ Where the extraordinaries meet: a cascade of isosymmetrical superionic
+ phase transitions and negative thermal expansion in a novel silver
+ salt-inclusion borate halide
+;
+_journal_name_full               CrystEngComm
+_journal_paper_doi               10.1039/D2CE00307D
+_journal_year                    2022
+_chemical_formula_structural     'Ag3 B6 I1 O10'
+_chemical_formula_sum            'Ag3 B6 I O10'
+_chemical_formula_weight         675.4
+_space_group_IT_number           62
+_space_group_name_Hall           '-P 2ac 2n'
+_space_group_name_H-M_alt        'P n m a'
+_symmetry_cell_setting           orthorhombic
+_symmetry_Int_Tables_number      62
+_symmetry_space_group_name_Hall  '-P 2ac 2n'
+_symmetry_space_group_name_H-M   'P n m a'
+_audit_block_doi                 10.5517/ccdc.csd.cc2b9v8s
+_audit_update_record
+;
+2022-05-12 deposited with the CCDC.	2022-05-18 downloaded from the CCDC.
+;
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_formula_units_Z            4
+_cell_length_a                   12.7504(5)
+_cell_length_b                   9.5370(3)
+_cell_length_c                   8.5317(3)
+_cell_measurement_reflns_used    2026
+_cell_measurement_temperature    383(4)
+_cell_measurement_theta_max      29.42
+_cell_measurement_theta_min      3.57
+_cell_volume                     1037.46(6)
+_computing_cell_refinement       'CrysAlisPro 1.171.41.93a (Rigaku OD, 2020)'
+_computing_data_collection       'CrysAlisPro 1.171.41.93a (Rigaku OD, 2020)'
+_computing_data_reduction        'CrysAlisPro 1.171.41.93a (Rigaku OD, 2020)'
+_diffrn_ambient_temperature      383
+_diffrn_detector                 'Hybrid Pixel Array Detector'
+_diffrn_detector_area_resol_mean 10.0000
+_diffrn_measured_fraction_theta_full 0.98
+_diffrn_measured_fraction_theta_max 0.88
+_diffrn_measurement_device       'four-circle diffractometer'
+_diffrn_measurement_device_type
+'XtaLAB Synergy, Single source at home/near, HyPix'
+_diffrn_measurement_method       '\w scans'
+_diffrn_radiation_monochromator  mirror
+_diffrn_radiation_probe          x-ray
+_diffrn_radiation_source         'X-ray tube'
+_diffrn_radiation_type           'Mo K\a'
+_diffrn_radiation_wavelength     0.71073
+_diffrn_reflns_av_R_equivalents  0.0439
+_diffrn_reflns_av_unetI/netI     0.0301
+_diffrn_reflns_limit_h_max       16
+_diffrn_reflns_limit_h_min       -17
+_diffrn_reflns_limit_k_max       8
+_diffrn_reflns_limit_k_min       -12
+_diffrn_reflns_limit_l_max       11
+_diffrn_reflns_limit_l_min       -8
+_diffrn_reflns_number            4815
+_diffrn_reflns_theta_full        27.23
+_diffrn_reflns_theta_max         29.19
+_diffrn_reflns_theta_min         3.58
+_diffrn_source                   'micro-focus sealed X-ray tube'
+_exptl_absorpt_coefficient_mu    8.627
+_exptl_absorpt_correction_T_max  0.795
+_exptl_absorpt_correction_T_min  0.334
+_exptl_absorpt_correction_type   gaussian
+_exptl_absorpt_process_details
+;
+CrysAlisPro 1.171.41.93a (Rigaku Oxford Diffraction, 2020)
+Numerical absorption correction based on gaussian integration over
+a multifaceted crystal model
+Empirical absorption correction using spherical harmonics,
+implemented in SCALE3 ABSPACK scaling algorithm.
+;
+_exptl_crystal_colour            colorless
+_exptl_crystal_density_diffrn    4.3239
+_exptl_crystal_description       plate
+_exptl_crystal_F_000             1216
+_exptl_crystal_size_max          0.188
+_exptl_crystal_size_mid          0.149
+_exptl_crystal_size_min          0.056
+_refine_diff_density_max         1.65
+_refine_diff_density_min         -1.42
+_refine_ls_extinction_method     none
+_refine_ls_goodness_of_fit_gt    3.69
+_refine_ls_goodness_of_fit_ref   3.16
+_refine_ls_number_constraints    0
+_refine_ls_number_parameters     163
+_refine_ls_number_reflns         1300
+_refine_ls_number_restraints     0
+_refine_ls_R_factor_all          0.0798
+_refine_ls_R_factor_gt           0.0596
+_refine_ls_shift/su_max          0.0154
+_refine_ls_shift/su_mean         0.0033
+_refine_ls_structure_factor_coef F
+_refine_ls_weighting_details     w=1/(\s^2^(F)+0.0001F^2^)
+_refine_ls_weighting_scheme      sigma
+_refine_ls_wR_factor_gt          0.0716
+_refine_ls_wR_factor_ref         0.0732
+_reflns_number_gt                961
+_reflns_number_total             1300
+_reflns_threshold_expression     I>3\s(I)
+_cod_data_source_file            d2ce00307d2.cif
+_cod_data_source_block           Ag3B6O10I_383K
+_cod_depositor_comments
+;
+The following automatic conversions were performed:
+
+data item '_diffrn_radiation_probe' value 'X-ray' was changed to
+'x-ray' in accordance with the
+/home/data/users/saulius/crontab/automatic-downloads/rss-feeds/RSC/lib/dictionaries/cif_core.dic
+dictionary named 'cif_core.dic' version 2.4.2 last updated on
+2011-04-26.
+
+Automatic conversion script
+Id: cif_fix_values 7556 2019-12-06 15:28:31Z antanas 
+;
+_cod_original_sg_symbol_Hall     '-P -2xabc;-2yb;-2zac'
+_cod_original_formula_sum        'Ag3 B6 O10 I'
+_cod_database_code               7244951
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 x,y,z
+2 -x+1/2,-y,z+1/2
+3 -x,y+1/2,-z
+4 x+1/2,-y+1/2,-z+1/2
+5 -x,-y,-z
+6 x+1/2,y,-z+1/2
+7 x,-y+1/2,z
+8 -x+1/2,y+1/2,z+1/2
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_adp_type
+_atom_site_U_iso_or_equiv
+_atom_site_site_symmetry_multiplicity
+_atom_site_occupancy
+_atom_site_calc_flag
+_atom_site_refinement_flags
+_atom_site_disorder_assembly
+_atom_site_disorder_group
+I1 I 0.43235(20) 0.25 0.3457(2) Uani 0.0687(5) 4 1 d . . .
+Ag1 Ag 0.10937(16) 0.25 0.0073(4) Uani 0.0694(13) 4 0.808(5) d . . .
+Ag2 Ag 0.4945(4) 0.0736(4) 0.1054(13) Uani 0.091(2) 8 0.359(7) d . . .
+Ag3 Ag 0.6762(6) 0.25 0.2344(5) Uani 0.1015(15) 4 0.5522 d . . .
+Ag4 Ag 0.029(3) 0.031(3) -0.044(3) Uani 0.101(9) 8 0.1685 d . . .
+Ag5 Ag 0.5511(9) 0.1202(8) 0.1802(7) Uani 0.107(3) 8 0.292(7) d . . .
+O1 O 0.5802(3) -0.1274(4) 0.1781(6) Uani 0.0258(15) 8 1 d . . .
+O2 O 0.4223(5) -0.25 0.2234(8) Uani 0.0215(19) 4 1 d . . .
+O3 O 0.8273(4) -0.1264(4) 0.4733(5) Uani 0.0208(14) 8 1 d . . .
+O4 O 0.7348(5) -0.25 0.2672(7) Uani 0.0106(16) 4 1 d . . .
+O5 O 0.2448(4) -0.0932(4) 0.4493(5) Uani 0.0193(14) 8 1 d . . .
+O6 O 0.7132(4) -0.0004(4) 0.3062(5) Uani 0.0231(15) 8 1 d . . .
+B1 B 0.2332(6) 0.0130(6) 0.5566(8) Uani 0.016(2) 8 1 d . . .
+B2 B 0.6933(6) -0.1127(6) 0.1965(8) Uani 0.0127(19) 8 1 d . . .
+B3 B 0.5268(9) -0.25 0.1950(11) Uani 0.013(3) 4 1 d . . .
+B4 B 0.3305(8) -0.25 0.1287(12) Uani 0.013(3) 4 1 d . . .
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_type_symbol
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+I1 I 0.0546(9) 0.0953(10) 0.0564(10) 0 -0.0039(7) 0
+Ag1 Ag 0.0403(11) 0.098(4) 0.0698(12) 0 0.0294(8) 0
+Ag2 Ag 0.0444(18) 0.0477(14) 0.179(5) 0.0202(13) 0.0108(17) 0.0230(12)
+Ag3 Ag 0.202(4) 0.0385(11) 0.0646(16) 0 0.011(2) 0
+Ag4 Ag 0.111(19) 0.103(10) 0.087(16) 0.075(10) -0.016(10) -0.012(9)
+Ag5 Ag 0.148(8) 0.117(4) 0.056(3) 0.107(5) 0.040(4) 0.018(3)
+O1 O 0.008(2) 0.022(2) 0.047(3) 0.0004(19) -0.008(2) 0.0067(19)
+O2 O 0.008(3) 0.039(3) 0.017(3) 0 -0.002(3) 0
+O3 O 0.018(3) 0.021(2) 0.024(3) 0.0046(19) -0.010(2) -0.0114(18)
+O4 O 0.010(3) 0.012(3) 0.010(3) 0 -0.002(2) 0
+O5 O 0.026(3) 0.0134(19) 0.019(2) 0.0058(18) -0.002(2) -0.0079(17)
+O6 O 0.031(3) 0.021(2) 0.018(2) 0.005(2) -0.009(2) -0.0032(18)
+B1 B 0.020(4) 0.017(3) 0.012(3) -0.003(3) 0.002(3) 0.003(3)
+B2 B 0.009(3) 0.006(3) 0.023(4) 0.002(3) -0.006(3) 0.002(3)
+B3 B 0.015(5) 0.016(5) 0.009(5) 0 -0.003(4) 0
+B4 B 0.006(5) 0.018(5) 0.016(5) 0 0.003(4) 0
+loop_
+_atom_type_symbol
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+Ag -0.8971 1.1015 'International Tables Vol C tables 4.2.6.8 and 6.1.1.1'
+B 0.0013 0.0007 'International Tables Vol C tables 4.2.6.8 and 6.1.1.1'
+I -0.4742 1.8119 'International Tables Vol C tables 4.2.6.8 and 6.1.1.1'
+O 0.0106 0.0060 'International Tables Vol C tables 4.2.6.8 and 6.1.1.1'
+loop_
+_diffrn_standard_refln_index_h
+_diffrn_standard_refln_index_k
+_diffrn_standard_refln_index_l
+? ? ?
+loop_
+_exptl_crystal_face_index_h
+_exptl_crystal_face_index_k
+_exptl_crystal_face_index_l
+_exptl_crystal_face_perp_dist
+? ? ? ?
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_2
+_geom_angle_site_symmetry_3
+_geom_angle
+_geom_angle_publ_flag
+Ag1 I1 Ag2 4_555 . . 96.29(16) ?
+Ag1 I1 Ag2 4_555 . 7_555 96.29(16) ?
+Ag1 I1 Ag3 4_555 . . 46.03(12) ?
+Ag1 I1 Ag3 4_555 . 4_455 162.77(13) ?
+Ag1 I1 Ag4 4_555 . 2_555 72.1(7) ?
+Ag1 I1 Ag4 4_555 . 4_555 50.0(6) ?
+Ag1 I1 Ag4 4_555 . 6_555 50.0(6) ?
+Ag1 I1 Ag4 4_555 . 8_555 72.1(7) ?
+Ag1 I1 Ag5 4_555 . . 74.7(2) ?
+Ag1 I1 Ag5 4_555 . 7_555 74.7(2) ?
+Ag2 I1 Ag2 . . 7_555 74.8(2) ?
+Ag2 I1 Ag3 . . . 60.65(12) ?
+Ag2 I1 Ag3 . . 4_455 97.38(14) ?
+Ag2 I1 Ag4 . . 2_555 68.1(6) ?
+Ag2 I1 Ag4 . . 4_555 137.2(7) ?
+Ag2 I1 Ag4 . . 6_555 82.9(6) ?
+Ag2 I1 Ag4 . . 8_555 139.2(6) ?
+Ag2 I1 Ag5 . . . 22.3(3) ?
+Ag2 I1 Ag5 . . 7_555 72.4(2) ?
+Ag2 I1 Ag3 7_555 . . 60.65(12) ?
+Ag2 I1 Ag3 7_555 . 4_455 97.38(14) ?
+Ag2 I1 Ag4 7_555 . 2_555 139.2(6) ?
+Ag2 I1 Ag4 7_555 . 4_555 82.9(6) ?
+Ag2 I1 Ag4 7_555 . 6_555 137.2(7) ?
+Ag2 I1 Ag4 7_555 . 8_555 68.1(6) ?
+Ag2 I1 Ag5 7_555 . . 72.4(2) ?
+Ag2 I1 Ag5 7_555 . 7_555 22.3(3) ?
+Ag3 I1 Ag3 . . 4_455 151.20(14) ?
+Ag3 I1 Ag4 . . 2_555 86.1(7) ?
+Ag3 I1 Ag4 . . 4_555 76.6(6) ?
+Ag3 I1 Ag4 . . 6_555 76.6(6) ?
+Ag3 I1 Ag4 . . 8_555 86.1(7) ?
+Ag3 I1 Ag5 . . . 39.5(2) ?
+Ag3 I1 Ag5 . . 7_555 39.5(2) ?
+Ag3 I1 Ag4 4_455 . 2_555 103.5(7) ?
+Ag3 I1 Ag4 4_455 . 4_555 121.7(6) ?
+Ag3 I1 Ag4 4_455 . 6_555 121.7(6) ?
+Ag3 I1 Ag4 4_455 . 8_555 103.5(7) ?
+Ag3 I1 Ag5 4_455 . . 119.6(2) ?
+Ag3 I1 Ag5 4_455 . 7_555 119.6(2) ?
+Ag4 I1 Ag4 2_555 . 4_555 113.5(8) ?
+Ag4 I1 Ag4 2_555 . 6_555 24.0(8) ?
+Ag4 I1 Ag4 2_555 . 8_555 136.9(8) ?
+Ag4 I1 Ag5 2_555 . . 66.8(6) ?
+Ag4 I1 Ag5 2_555 . 7_555 124.1(7) ?
+Ag4 I1 Ag4 4_555 . 6_555 89.7(8) ?
+Ag4 I1 Ag4 4_555 . 8_555 24.0(8) ?
+Ag4 I1 Ag5 4_555 . . 115.8(7) ?
+Ag4 I1 Ag5 4_555 . 7_555 73.3(6) ?
+Ag4 I1 Ag4 6_555 . 8_555 113.5(8) ?
+Ag4 I1 Ag5 6_555 . . 73.3(6) ?
+Ag4 I1 Ag5 6_555 . 7_555 115.8(7) ?
+Ag4 I1 Ag5 8_555 . . 124.1(7) ?
+Ag4 I1 Ag5 8_555 . 7_555 66.8(6) ?
+Ag5 I1 Ag5 . . 7_555 61.7(3) ?
+I1 Ag1 Ag3 4_455 . 4_455 82.1(2) ?
+I1 Ag1 Ag4 4_455 . . 73.3(8) ?
+I1 Ag1 Ag4 4_455 . 3_555 58.3(5) ?
+I1 Ag1 Ag4 4_455 . 5_555 58.3(5) ?
+I1 Ag1 Ag4 4_455 . 7_555 73.3(8) ?
+I1 Ag1 Ag5 4_455 . 4_455 50.1(2) ?
+I1 Ag1 Ag5 4_455 . 6_455 50.1(2) ?
+I1 Ag1 O2 4_455 . 2_554 109.61(18) ?
+I1 Ag1 O5 4_455 . 2_554 139.98(12) ?
+I1 Ag1 O5 4_455 . 8_554 139.98(12) ?
+Ag3 Ag1 Ag4 4_455 . . 109.3(7) ?
+Ag3 Ag1 Ag4 4_455 . 3_555 96.1(5) ?
+Ag3 Ag1 Ag4 4_455 . 5_555 96.1(5) ?
+Ag3 Ag1 Ag4 4_455 . 7_555 109.3(7) ?
+Ag3 Ag1 Ag5 4_455 . 4_455 43.0(2) ?
+Ag3 Ag1 Ag5 4_455 . 6_455 43.0(2) ?
+Ag3 Ag1 O2 4_455 . 2_554 168.3(2) ?
+Ag3 Ag1 O5 4_455 . 2_554 85.07(19) ?
+Ag3 Ag1 O5 4_455 . 8_554 85.07(19) ?
+Ag4 Ag1 Ag4 . . 3_555 121.0(10) ?
+Ag4 Ag1 Ag4 . . 5_555 17.9(9) ?
+Ag4 Ag1 Ag4 . . 7_555 123.7(11) ?
+Ag4 Ag1 Ag5 . . 4_455 114.7(7) ?
+Ag4 Ag1 Ag5 . . 6_455 72.4(7) ?
+Ag4 Ag1 O2 . . 2_554 75.2(7) ?
+Ag4 Ag1 O5 . . 2_554 75.6(8) ?
+Ag4 Ag1 O5 . . 8_554 146.5(8) ?
+Ag4 Ag1 Ag4 3_555 . 5_555 112.5(8) ?
+Ag4 Ag1 Ag4 3_555 . 7_555 17.9(9) ?
+Ag4 Ag1 Ag5 3_555 . 4_455 56.0(5) ?
+Ag4 Ag1 Ag5 3_555 . 6_455 96.8(5) ?
+Ag4 Ag1 O2 3_555 . 2_554 90.4(5) ?
+Ag4 Ag1 O5 3_555 . 2_554 161.3(6) ?
+Ag4 Ag1 O5 3_555 . 8_554 85.8(6) ?
+Ag4 Ag1 Ag4 5_555 . 7_555 121.0(10) ?
+Ag4 Ag1 Ag5 5_555 . 4_455 96.8(5) ?
+Ag4 Ag1 Ag5 5_555 . 6_455 56.0(5) ?
+Ag4 Ag1 O2 5_555 . 2_554 90.4(5) ?
+Ag4 Ag1 O5 5_555 . 2_554 85.8(6) ?
+Ag4 Ag1 O5 5_555 . 8_554 161.3(6) ?
+Ag4 Ag1 Ag5 7_555 . 4_455 72.4(7) ?
+Ag4 Ag1 Ag5 7_555 . 6_455 114.7(7) ?
+Ag4 Ag1 O2 7_555 . 2_554 75.2(7) ?
+Ag4 Ag1 O5 7_555 . 2_554 146.5(8) ?
+Ag4 Ag1 O5 7_555 . 8_554 75.6(8) ?
+Ag5 Ag1 Ag5 4_455 . 6_455 48.2(2) ?
+Ag5 Ag1 O2 4_455 . 2_554 145.8(2) ?
+Ag5 Ag1 O5 4_455 . 2_554 128.0(2) ?
+Ag5 Ag1 O5 4_455 . 8_554 96.6(2) ?
+Ag5 Ag1 O2 6_455 . 2_554 145.8(2) ?
+Ag5 Ag1 O5 6_455 . 2_554 96.6(2) ?
+Ag5 Ag1 O5 6_455 . 8_554 128.0(2) ?
+O2 Ag1 O5 2_554 . 2_554 85.69(18) ?
+O2 Ag1 O5 2_554 . 8_554 85.69(18) ?
+O5 Ag1 O5 2_554 . 8_554 75.68(15) ?
+I1 Ag2 Ag2 . . 5_655 166.8(3) ?
+I1 Ag2 Ag2 . . 7_555 52.6(2) ?
+I1 Ag2 Ag3 . . . 67.5(2) ?
+I1 Ag2 Ag4 . . 2_555 57.7(5) ?
+I1 Ag2 Ag5 . . . 59.6(7) ?
+I1 Ag2 Ag5 . . 5_655 152.5(3) ?
+I1 Ag2 Ag5 . . 7_555 48.42(18) ?
+I1 Ag2 O1 . . . 116.4(4) ?
+I1 Ag2 O1 . . 5_655 117.11(19) ?
+I1 Ag2 O3 . . 2_654 117.2(2) ?
+Ag2 Ag2 Ag2 5_655 . 7_555 127.9(5) ?
+Ag2 Ag2 Ag3 5_655 . . 125.0(3) ?
+Ag2 Ag2 Ag4 5_655 . 2_555 123.6(5) ?
+Ag2 Ag2 Ag5 5_655 . . 133.6(7) ?
+Ag2 Ag2 Ag5 5_655 . 5_655 14.3(2) ?
+Ag2 Ag2 Ag5 5_655 . 7_555 137.1(4) ?
+Ag2 Ag2 O1 5_655 . . 70.7(3) ?
+Ag2 Ag2 O1 5_655 . 5_655 54.8(3) ?
+Ag2 Ag2 O3 5_655 . 2_654 73.9(3) ?
+Ag2 Ag2 Ag3 7_555 . . 56.75(15) ?
+Ag2 Ag2 Ag4 7_555 . 2_555 108.4(6) ?
+Ag2 Ag2 Ag5 7_555 . . 65.2(5) ?
+Ag2 Ag2 Ag5 7_555 . 5_655 126.4(4) ?
+Ag2 Ag2 Ag5 7_555 . 7_555 18.3(2) ?
+Ag2 Ag2 O1 7_555 . . 146.8(3) ?
+Ag2 Ag2 O1 7_555 . 5_655 78.8(3) ?
+Ag2 Ag2 O3 7_555 . 2_654 78.79(18) ?
+Ag3 Ag2 Ag4 . . 2_555 84.6(6) ?
+Ag3 Ag2 Ag5 . . . 16.4(5) ?
+Ag3 Ag2 Ag5 . . 5_655 138.4(3) ?
+Ag3 Ag2 Ag5 . . 7_555 39.4(2) ?
+Ag3 Ag2 O1 . . . 90.1(2) ?
+Ag3 Ag2 O1 . . 5_655 119.5(3) ?
+Ag3 Ag2 O3 . . 2_654 52.13(16) ?
+Ag4 Ag2 Ag5 2_555 . . 68.2(9) ?
+Ag4 Ag2 Ag5 2_555 . 5_655 122.2(5) ?
+Ag4 Ag2 Ag5 2_555 . 7_555 97.3(6) ?
+Ag4 Ag2 O1 2_555 . . 61.7(6) ?
+Ag4 Ag2 O1 2_555 . 5_655 152.7(6) ?
+Ag4 Ag2 O3 2_555 . 2_654 123.8(7) ?
+Ag5 Ag2 Ag5 . . 5_655 147.8(7) ?
+Ag5 Ag2 Ag5 . . 7_555 47.0(5) ?
+Ag5 Ag2 O1 . . . 82.2(6) ?
+Ag5 Ag2 O1 . . 5_655 135.5(6) ?
+Ag5 Ag2 O3 . . 2_654 65.4(6) ?
+Ag5 Ag2 Ag5 5_655 . 7_555 140.4(4) ?
+Ag5 Ag2 O1 5_655 . . 78.7(3) ?
+Ag5 Ag2 O1 5_655 . 5_655 48.2(2) ?
+Ag5 Ag2 O3 5_655 . 2_654 86.5(4) ?
+Ag5 Ag2 O1 7_555 . . 128.8(4) ?
+Ag5 Ag2 O1 7_555 . 5_655 95.2(2) ?
+Ag5 Ag2 O3 7_555 . 2_654 72.5(2) ?
+O1 Ag2 O1 . . 5_655 125.5(4) ?
+O1 Ag2 O3 . . 2_654 82.1(2) ?
+O1 Ag2 O3 5_655 . 2_654 83.1(3) ?
+I1 Ag3 I1 . . 4_555 174.85(17) ?
+I1 Ag3 Ag1 . . 4_555 51.87(15) ?
+I1 Ag3 Ag2 . . . 51.85(19) ?
+I1 Ag3 Ag2 . . 7_555 51.85(19) ?
+I1 Ag3 Ag5 . . . 47.8(3) ?
+I1 Ag3 Ag5 . . 7_555 47.8(3) ?
+I1 Ag3 O3 . . 2_654 103.9(2) ?
+I1 Ag3 O3 . . 8_654 103.9(2) ?
+I1 Ag3 O6 . . . 96.2(2) ?
+I1 Ag3 O6 . . 7_555 96.2(2) ?
+I1 Ag3 Ag1 4_555 . 4_555 123.0(2) ?
+I1 Ag3 Ag2 4_555 . . 131.74(19) ?
+I1 Ag3 Ag2 4_555 . 7_555 131.74(19) ?
+I1 Ag3 Ag5 4_555 . . 135.1(3) ?
+I1 Ag3 Ag5 4_555 . 7_555 135.1(3) ?
+I1 Ag3 O3 4_555 . 2_654 80.59(19) ?
+I1 Ag3 O3 4_555 . 8_654 80.59(19) ?
+I1 Ag3 O6 4_555 . . 82.3(2) ?
+I1 Ag3 O6 4_555 . 7_555 82.3(2) ?
+Ag1 Ag3 Ag2 4_555 . . 93.6(3) ?
+Ag1 Ag3 Ag2 4_555 . 7_555 93.6(3) ?
+Ag1 Ag3 Ag5 4_555 . . 86.0(3) ?
+Ag1 Ag3 Ag5 4_555 . 7_555 86.0(3) ?
+Ag1 Ag3 O3 4_555 . 2_654 144.8(2) ?
+Ag1 Ag3 O3 4_555 . 8_654 144.8(2) ?
+Ag1 Ag3 O6 4_555 . . 80.81(15) ?
+Ag1 Ag3 O6 4_555 . 7_555 80.81(15) ?
+Ag2 Ag3 Ag2 . . 7_555 66.50(19) ?
+Ag2 Ag3 Ag5 . . . 8.3(3) ?
+Ag2 Ag3 Ag5 . . 7_555 70.5(3) ?
+Ag2 Ag3 O3 . . 2_654 54.0(2) ?
+Ag2 Ag3 O3 . . 8_654 85.7(3) ?
+Ag2 Ag3 O6 . . . 72.99(18) ?
+Ag2 Ag3 O6 . . 7_555 138.7(3) ?
+Ag2 Ag3 Ag5 7_555 . . 70.5(3) ?
+Ag2 Ag3 Ag5 7_555 . 7_555 8.3(3) ?
+Ag2 Ag3 O3 7_555 . 2_654 85.7(3) ?
+Ag2 Ag3 O3 7_555 . 8_654 54.0(2) ?
+Ag2 Ag3 O6 7_555 . . 138.7(3) ?
+Ag2 Ag3 O6 7_555 . 7_555 72.99(18) ?
+Ag5 Ag3 Ag5 . . 7_555 73.4(4) ?
+Ag5 Ag3 O3 . . 2_654 60.6(2) ?
+Ag5 Ag3 O3 . . 8_654 93.9(3) ?
+Ag5 Ag3 O6 . . . 68.3(3) ?
+Ag5 Ag3 O6 . . 7_555 140.1(4) ?
+Ag5 Ag3 O3 7_555 . 2_654 93.9(3) ?
+Ag5 Ag3 O3 7_555 . 8_654 60.6(2) ?
+Ag5 Ag3 O6 7_555 . . 140.1(4) ?
+Ag5 Ag3 O6 7_555 . 7_555 68.3(3) ?
+O3 Ag3 O3 2_654 . 8_654 55.77(16) ?
+O3 Ag3 O6 2_654 . . 76.93(15) ?
+O3 Ag3 O6 2_654 . 7_555 131.6(2) ?
+O3 Ag3 O6 8_654 . . 131.6(2) ?
+O3 Ag3 O6 8_654 . 7_555 76.93(15) ?
+O6 Ag3 O6 . . 7_555 144.2(3) ?
+I1 Ag4 I1 2_554 . 4_455 156.0(11) ?
+I1 Ag4 Ag1 2_554 . . 143.8(14) ?
+I1 Ag4 Ag1 2_554 . 3_545 49.6(4) ?
+I1 Ag4 Ag2 2_554 . 2_554 54.2(5) ?
+I1 Ag4 Ag4 2_554 . 5_555 81.4(17) ?
+I1 Ag4 Ag5 2_554 . 2_554 48.9(5) ?
+I1 Ag4 Ag5 2_554 . 6_455 122.8(9) ?
+I1 Ag4 Ag1 4_455 . . 56.7(6) ?
+I1 Ag4 Ag1 4_455 . 3_545 107.6(10) ?
+I1 Ag4 Ag2 4_455 . 2_554 136.5(11) ?
+I1 Ag4 Ag4 4_455 . 5_555 74.6(18) ?
+I1 Ag4 Ag5 4_455 . 2_554 131.3(12) ?
+I1 Ag4 Ag5 4_455 . 6_455 45.6(4) ?
+Ag1 Ag4 Ag1 . . 3_545 162.1(12) ?
+Ag1 Ag4 Ag2 . . 2_554 119.7(10) ?
+Ag1 Ag4 Ag4 . . 5_555 125(2) ?
+Ag1 Ag4 Ag5 . . 2_554 137.1(11) ?
+Ag1 Ag4 Ag5 . . 6_455 63.4(6) ?
+Ag1 Ag4 Ag2 3_545 . 2_554 77.2(6) ?
+Ag1 Ag4 Ag4 3_545 . 5_555 36.7(15) ?
+Ag1 Ag4 Ag5 3_545 . 2_554 58.7(5) ?
+Ag1 Ag4 Ag5 3_545 . 6_455 99.9(8) ?
+Ag2 Ag4 Ag4 2_554 . 5_555 112(2) ?
+Ag2 Ag4 Ag5 2_554 . 2_554 19.6(3) ?
+Ag2 Ag4 Ag5 2_554 . 6_455 176.7(9) ?
+Ag4 Ag4 Ag5 5_555 . 2_554 93(2) ?
+Ag4 Ag4 Ag5 5_555 . 6_455 65.3(18) ?
+Ag5 Ag4 Ag5 2_554 . 6_455 157.9(11) ?
+I1 Ag5 Ag1 . . 4_555 55.23(14) ?
+I1 Ag5 Ag2 . . . 98.1(8) ?
+I1 Ag5 Ag2 . . 5_655 130.2(4) ?
+I1 Ag5 Ag2 . . 7_555 59.1(3) ?
+I1 Ag5 Ag3 . . . 92.7(3) ?
+I1 Ag5 Ag4 . . 2_555 64.3(6) ?
+I1 Ag5 Ag4 . . 6_555 61.1(5) ?
+I1 Ag5 Ag5 . . 7_555 59.1(3) ?
+I1 Ag5 O1 . . . 127.5(4) ?
+I1 Ag5 O3 . . 2_654 147.3(4) ?
+I1 Ag5 O6 . . . 119.0(3) ?
+Ag1 Ag5 Ag2 4_555 . . 150.1(8) ?
+Ag1 Ag5 Ag2 4_555 . 5_655 167.5(3) ?
+Ag1 Ag5 Ag2 4_555 . 7_555 81.5(3) ?
+Ag1 Ag5 Ag3 4_555 . . 51.0(2) ?
+Ag1 Ag5 Ag4 4_555 . 2_555 65.4(6) ?
+Ag1 Ag5 Ag4 4_555 . 6_555 44.2(5) ?
+Ag1 Ag5 Ag5 4_555 . 7_555 65.9(2) ?
+Ag1 Ag5 O1 4_555 . . 111.8(3) ?
+Ag1 Ag5 O3 4_555 . 2_654 119.3(4) ?
+Ag1 Ag5 O6 4_555 . . 67.8(2) ?
+Ag2 Ag5 Ag2 . . 5_655 32.2(5) ?
+Ag2 Ag5 Ag2 . . 7_555 96.5(6) ?
+Ag2 Ag5 Ag3 . . . 155.3(7) ?
+Ag2 Ag5 Ag4 . . 2_555 92.2(9) ?
+Ag2 Ag5 Ag4 . . 6_555 114.2(9) ?
+Ag2 Ag5 Ag5 . . 7_555 114.8(7) ?
+Ag2 Ag5 O1 . . . 71.8(5) ?
+Ag2 Ag5 O3 . . 2_654 90.4(6) ?
+Ag2 Ag5 O6 . . . 127.2(6) ?
+Ag2 Ag5 Ag2 5_655 . 7_555 111.0(3) ?
+Ag2 Ag5 Ag3 5_655 . . 132.3(4) ?
+Ag2 Ag5 Ag4 5_655 . 2_555 105.6(6) ?
+Ag2 Ag5 Ag4 5_655 . 6_555 125.5(6) ?
+Ag2 Ag5 Ag5 5_655 . 7_555 126.4(3) ?
+Ag2 Ag5 O1 5_655 . . 55.7(2) ?
+Ag2 Ag5 O3 5_655 . 2_654 63.3(2) ?
+Ag2 Ag5 O6 5_655 . . 102.1(3) ?
+Ag2 Ag5 Ag3 7_555 . . 70.1(3) ?
+Ag2 Ag5 Ag4 7_555 . 2_555 123.4(6) ?
+Ag2 Ag5 Ag4 7_555 . 6_555 115.4(6) ?
+Ag2 Ag5 Ag5 7_555 . 7_555 18.3(3) ?
+Ag2 Ag5 O1 7_555 . . 166.6(4) ?
+Ag2 Ag5 O3 7_555 . 2_654 88.6(3) ?
+Ag2 Ag5 O6 7_555 . . 133.9(4) ?
+Ag3 Ag5 Ag4 . . 2_555 112.5(7) ?
+Ag3 Ag5 Ag4 . . 6_555 90.5(6) ?
+Ag3 Ag5 Ag5 . . 7_555 53.3(3) ?
+Ag3 Ag5 O1 . . . 118.2(5) ?
+Ag3 Ag5 O3 . . 2_654 69.2(4) ?
+Ag3 Ag5 O6 . . . 63.9(3) ?
+Ag4 Ag5 Ag4 2_555 . 6_555 22.1(8) ?
+Ag4 Ag5 Ag5 2_555 . 7_555 119.4(6) ?
+Ag4 Ag5 O1 2_555 . . 64.8(6) ?
+Ag4 Ag5 O3 2_555 . 2_654 147.3(7) ?
+Ag4 Ag5 O6 2_555 . . 74.2(7) ?
+Ag4 Ag5 Ag5 6_555 . 7_555 105.2(5) ?
+Ag4 Ag5 O1 6_555 . . 76.2(5) ?
+Ag4 Ag5 O3 6_555 . 2_654 141.8(7) ?
+Ag4 Ag5 O6 6_555 . . 63.6(6) ?
+Ag5 Ag5 O1 7_555 . . 171.1(6) ?
+Ag5 Ag5 O3 7_555 . 2_654 88.6(4) ?
+Ag5 Ag5 O6 7_555 . . 116.3(5) ?
+O1 Ag5 O3 . . 2_654 85.2(3) ?
+O1 Ag5 O6 . . . 56.1(2) ?
+O3 Ag5 O6 2_654 . . 78.3(4) ?
+O3 B1 O5 5_656 . . 121.7(6) ?
+O3 B1 O6 5_656 . 5_656 121.3(5) ?
+O5 B1 O6 . . 5_656 117.1(5) ?
+Ag5 B2 O1 . . . 56.2(3) ?
+Ag5 B2 O4 . . . 153.7(5) ?
+Ag5 B2 O5 . . 6_555 98.5(4) ?
+Ag5 B2 O6 . . . 64.4(3) ?
+O1 B2 O4 . . . 107.5(5) ?
+O1 B2 O5 . . 6_555 112.0(6) ?
+O1 B2 O6 . . . 108.3(5) ?
+O4 B2 O5 . . 6_555 107.3(5) ?
+O4 B2 O6 . . . 108.5(5) ?
+O5 B2 O6 6_555 . . 113.0(5) ?
+O1 B3 O1 . . 7_545 118.5(8) ?
+O1 B3 O2 . . . 120.7(4) ?
+O1 B3 O2 7_545 . . 120.7(4) ?
+O2 B4 O3 . . 4_445 111.1(5) ?
+O2 B4 O3 . . 6_455 111.1(5) ?
+O2 B4 O4 . . 4_445 109.3(7) ?
+O3 B4 O3 4_445 . 6_455 107.1(7) ?
+O3 B4 O4 4_445 . 4_445 109.1(5) ?
+O3 B4 O4 6_455 . 4_445 109.1(5) ?
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_site_symmetry_1
+_geom_bond_site_symmetry_2
+_geom_bond_distance
+_geom_bond_publ_flag
+I1 Ag1 . 4_555 2.582(3) ?
+I1 Ag2 . . 2.768(9) ?
+I1 Ag2 . 7_555 2.768(9) ?
+I1 Ag3 . . 3.251(8) ?
+I1 Ag3 . 4_455 3.336(8) ?
+I1 Ag4 . 2_555 2.88(3) ?
+I1 Ag4 . 4_555 2.96(3) ?
+I1 Ag4 . 6_555 2.96(3) ?
+I1 Ag4 . 8_555 2.88(3) ?
+I1 Ag5 . . 2.412(9) ?
+I1 Ag5 . 7_555 2.412(9) ?
+Ag1 Ag3 . 4_455 2.362(6) ?
+Ag1 Ag4 . . 2.37(3) ?
+Ag1 Ag4 . 3_555 3.23(3) ?
+Ag1 Ag4 . 5_555 3.23(3) ?
+Ag1 Ag4 . 7_555 2.37(3) ?
+Ag1 Ag5 . 4_455 3.032(7) ?
+Ag1 Ag5 . 6_455 3.032(7) ?
+Ag1 O2 . 2_554 2.456(7) ?
+Ag1 O5 . 2_554 2.437(5) ?
+Ag1 O5 . 8_554 2.437(5) ?
+Ag2 Ag2 . 5_655 2.286(13) ?
+Ag2 Ag2 . 7_555 3.364(6) ?
+Ag2 Ag3 . . 3.068(8) ?
+Ag2 Ag4 . 2_555 3.16(3) ?
+Ag2 Ag5 . . 1.061(12) ?
+Ag2 Ag5 . 5_655 3.113(11) ?
+Ag2 Ag5 . 7_555 3.074(9) ?
+Ag2 O1 . . 2.292(7) ?
+Ag2 O1 . 5_655 2.649(12) ?
+Ag2 O3 . 2_654 2.585(8) ?
+Ag3 Ag5 . . 2.072(12) ?
+Ag3 Ag5 . 7_555 2.072(12) ?
+Ag3 O3 . 2_654 2.521(6) ?
+Ag3 O3 . 8_654 2.521(6) ?
+Ag3 O6 . . 2.510(5) ?
+Ag3 O6 . 7_555 2.510(5) ?
+Ag4 Ag4 . 5_555 1.22(4) ?
+Ag4 Ag5 . 2_554 2.94(3) ?
+Ag4 Ag5 . 6_455 3.23(3) ?
+Ag5 Ag5 . 7_555 2.475(11) ?
+Ag5 O1 . . 2.391(9) ?
+Ag5 O3 . 2_654 2.350(10) ?
+Ag5 O6 . . 2.598(11) ?
+B1 O3 . 5_656 1.353(8) ?
+B1 O5 . . 1.374(8) ?
+B1 O6 . 5_656 1.361(9) ?
+B2 Ag5 . . 2.871(12) ?
+B2 O1 . . 1.458(9) ?
+B2 O4 . . 1.535(7) ?
+B2 O5 . 6_555 1.418(9) ?
+B2 O6 . . 1.444(8) ?
+B3 O1 . . 1.360(7) ?
+B3 O1 . 7_545 1.360(7) ?
+B3 O2 . . 1.355(13) ?
+B4 O2 . . 1.422(12) ?
+B4 O3 . 4_445 1.466(7) ?
+B4 O3 . 6_455 1.466(7) ?
+B4 O4 . 4_445 1.510(12) ?
+loop_
+_geom_hbond_atom_site_label_D
+_geom_hbond_atom_site_label_H
+_geom_hbond_atom_site_label_A
+_geom_hbond_site_symmetry_D
+_geom_hbond_site_symmetry_H
+_geom_hbond_site_symmetry_A
+_geom_hbond_distance_DH
+_geom_hbond_distance_HA
+_geom_hbond_distance_DA
+_geom_hbond_angle_DHA
+_geom_hbond_publ_flag
+? ? ? ? ? ? ? ? ? ? ?
+loop_
+_geom_torsion_atom_site_label_1
+_geom_torsion_atom_site_label_2
+_geom_torsion_atom_site_label_3
+_geom_torsion_atom_site_label_4
+_geom_torsion_site_symmetry_1
+_geom_torsion_site_symmetry_2
+_geom_torsion_site_symmetry_3
+_geom_torsion_site_symmetry_4
+_geom_torsion
+_geom_torsion_publ_flag
+? ? ? ? ? ? ? ? ? ?
+loop_
+_twin_individual_id
+_twin_individual_mass_fraction_refined
+_twin_individual_twin_matrix_11
+_twin_individual_twin_matrix_12
+_twin_individual_twin_matrix_13
+_twin_individual_twin_matrix_21
+_twin_individual_twin_matrix_22
+_twin_individual_twin_matrix_23
+_twin_individual_twin_matrix_31
+_twin_individual_twin_matrix_32
+_twin_individual_twin_matrix_33
+? ? ? ? ? ? ? ? ? ? ?
+loop_
+_twin_refln_datum_id
+_twin_refln_individual_id
+_twin_refln_index_h
+_twin_refln_index_k
+_twin_refln_index_l
+_twin_refln_F_squared_calc
+_twin_refln_F_squared_meas
+_twin_refln_F_squared_sigma
+_twin_refln_include_status
+? ? ? ? ? ? ? ? ?
+loop_
+_jana_atom_site_adp_c_label
+_jana_atom_site_adp_c_type_symbol
+_jana_atom_site_adp_c_111
+_jana_atom_site_adp_c_112
+_jana_atom_site_adp_c_113
+_jana_atom_site_adp_c_122
+_jana_atom_site_adp_c_123
+_jana_atom_site_adp_c_133
+_jana_atom_site_adp_c_222
+_jana_atom_site_adp_c_223
+_jana_atom_site_adp_c_233
+_jana_atom_site_adp_c_333
+I1 I 0.0043(3) 0 0 0.0038(4) 0 0.0068(4) 0 -0.0033(5) 0 -0.0087(10)
+Ag1 Ag 0 0 0.0031(3) -0.0087(6) 0 0.0073(6) 0 -0.0065(9) 0 0.0237(17)
+Ag2 Ag 0 0.0018(5) 0.0046(10) 0 0.0059(8) 0.002(3) -0.0033(12) 0 0 0.149(15)
+Ag3 Ag 0.029(3) 0 -0.0216(16) -0.0057(8) 0 -0.0116(14) 0 0 0 0.018(2)
+Ag4 Ag -0.018(9) -0.018(7) 0.008(7) -0.015(7) 0.020(7) -0.011(9) 0.000(8)
+0.041(11) -0.029(13) 0.04(2)
+loop_
+_jana_atom_site_adp_d_label
+_jana_atom_site_adp_d_type_symbol
+_jana_atom_site_adp_d_1111
+_jana_atom_site_adp_d_1112
+_jana_atom_site_adp_d_1113
+_jana_atom_site_adp_d_1122
+_jana_atom_site_adp_d_1123
+_jana_atom_site_adp_d_1133
+_jana_atom_site_adp_d_1222
+_jana_atom_site_adp_d_1223
+_jana_atom_site_adp_d_1233
+_jana_atom_site_adp_d_1333
+_jana_atom_site_adp_d_2222
+_jana_atom_site_adp_d_2223
+_jana_atom_site_adp_d_2233
+_jana_atom_site_adp_d_2333
+_jana_atom_site_adp_d_3333
+I1 I 0 0 0.00056(17) 0 0 0.0008(2) 0 0 0 0 0 0 0.0019(4) 0 0
+Ag1 Ag 0 0 0 0.0007(3) 0 0 0 0 0 0 0.015(3) 0 0 0 0
+Ag2 Ag 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.27(3)
+loop_
+_jana_atom_site_adp_e_label
+_jana_atom_site_adp_e_type_symbol
+_jana_atom_site_adp_e_11111
+_jana_atom_site_adp_e_11112
+_jana_atom_site_adp_e_11113
+_jana_atom_site_adp_e_11122
+_jana_atom_site_adp_e_11123
+_jana_atom_site_adp_e_11133
+_jana_atom_site_adp_e_11222
+_jana_atom_site_adp_e_11223
+_jana_atom_site_adp_e_11233
+_jana_atom_site_adp_e_11333
+_jana_atom_site_adp_e_12222
+_jana_atom_site_adp_e_12223
+_jana_atom_site_adp_e_12233
+_jana_atom_site_adp_e_12333
+_jana_atom_site_adp_e_13333
+_jana_atom_site_adp_e_22222
+_jana_atom_site_adp_e_22223
+_jana_atom_site_adp_e_22233
+_jana_atom_site_adp_e_22333
+_jana_atom_site_adp_e_23333
+_jana_atom_site_adp_e_33333
+? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?
+loop_
+_jana_atom_site_adp_f_label
+_jana_atom_site_adp_f_type_symbol
+_jana_atom_site_adp_f_111111
+_jana_atom_site_adp_f_111112
+_jana_atom_site_adp_f_111113
+_jana_atom_site_adp_f_111122
+_jana_atom_site_adp_f_111123
+_jana_atom_site_adp_f_111133
+_jana_atom_site_adp_f_111222
+_jana_atom_site_adp_f_111223
+_jana_atom_site_adp_f_111233
+_jana_atom_site_adp_f_111333
+_jana_atom_site_adp_f_112222
+_jana_atom_site_adp_f_112223
+_jana_atom_site_adp_f_112233
+_jana_atom_site_adp_f_112333
+_jana_atom_site_adp_f_113333
+_jana_atom_site_adp_f_122222
+_jana_atom_site_adp_f_122223
+_jana_atom_site_adp_f_122233
+_jana_atom_site_adp_f_122333
+_jana_atom_site_adp_f_123333
+_jana_atom_site_adp_f_133333
+_jana_atom_site_adp_f_222222
+_jana_atom_site_adp_f_222223
+_jana_atom_site_adp_f_222233
+_jana_atom_site_adp_f_222333
+_jana_atom_site_adp_f_223333
+_jana_atom_site_adp_f_233333
+_jana_atom_site_adp_f_333333
+? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ? ?

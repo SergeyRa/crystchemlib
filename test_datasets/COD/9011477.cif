@@ -1,0 +1,94 @@
+#------------------------------------------------------------------------------
+#$Date: 2024-05-09 11:47:05 +0300 (Thu, 09 May 2024) $
+#$Revision: 291792 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/9/01/14/9011477.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided the American Mineralogist Crystal Structure Database,
+# http://rruff.geo.arizona.edu/AMS/amcsd.php
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_9011477
+loop_
+_publ_author_name
+'Sugiyama, K.'
+'Takeuchi, Y.'
+_publ_section_title
+;Unusual thermal expansion of a B-O-bond in the structure of danburite
+ CaB2Si2O8 Locality: Toroku mine, Miyazaki Prefecture, Japan Note: AnisoB's
+ from ICSD Sample: T = 910 C
+;
+_journal_name_full               'Zeitschrift fur Kristallographie'
+_journal_page_first              293
+_journal_page_last               304
+_journal_volume                  173
+_journal_year                    1985
+_chemical_compound_source        'Toroku mine, Miyazaki Prefecture, Japan'
+_chemical_formula_sum            'B2 Ca O8 Si2'
+_chemical_name_mineral           Danburite
+_space_group_IT_number           62
+_symmetry_space_group_name_Hall  '-P 2c 2n'
+_symmetry_space_group_name_H-M   'P n a m'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_length_a                   8.101
+_cell_length_b                   8.801
+_cell_length_c                   7.786
+_cell_formula_units_Z            4
+_cell_volume                     555.118
+_database_code_amcsd             0010951
+_diffrn_ambient_temperature      1183.15
+_exptl_crystal_density_diffrn    2.942
+_cod_original_formula_sum        'Ca B2 Si2 O8'
+_cod_database_code               9011477
+loop_
+_space_group_symop_operation_xyz
+x,y,z
+x,y,1/2-z
+-x,-y,1/2+z
+1/2-x,1/2+y,1/2+z
+1/2+x,1/2-y,1/2-z
+1/2+x,1/2-y,z
+1/2-x,1/2+y,-z
+-x,-y,-z
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Ca 0.03291 0.02590 0.02979 -0.00108 0.00000 0.00000
+B 0.01862 0.01648 0.01873 -0.00108 -0.00032 -0.00104
+Si 0.01662 0.01264 0.01505 -0.00029 -0.00022 -0.00073
+O1 0.03158 0.01884 0.03808 0.00939 -0.00735 -0.00555
+O2 0.02892 0.01530 0.02856 -0.00542 -0.00991 0.00174
+O3 0.02228 0.02590 0.02027 0.00614 0.00607 0.00278
+O4 0.03724 0.03492 0.01536 0.00867 0.00000 0.00000
+O5 0.02261 0.04552 0.01566 0.00686 0.00000 0.00000
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+Ca 0.38920 0.07680 0.25000 0.02948
+B 0.26190 0.41860 0.41970 0.01788
+Si 0.05564 0.19260 -0.05649 0.01478
+O1 0.19440 0.06840 -0.00610 0.02943
+O2 0.12810 0.36410 -0.04040 0.02432
+O3 0.40320 0.31510 0.07660 0.02384
+O4 0.51020 0.66760 0.25000 0.02912
+O5 0.18820 0.42500 0.25000 0.02793
+loop_
+_cod_related_entry_id
+_cod_related_entry_database
+_cod_related_entry_code
+1 AMCSD 0010951

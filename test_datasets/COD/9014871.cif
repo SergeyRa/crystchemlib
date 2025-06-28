@@ -1,0 +1,87 @@
+#------------------------------------------------------------------------------
+#$Date: 2024-05-23 12:45:01 +0300 (Thu, 23 May 2024) $
+#$Revision: 292002 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/9/01/48/9014871.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided the American Mineralogist Crystal Structure Database,
+# http://rruff.geo.arizona.edu/AMS/amcsd.php
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_9014871
+loop_
+_publ_author_name
+'Ito, T.'
+'Morimoto, N.'
+'Sadanaga, R.'
+_publ_section_title
+;
+ The crystal structure of boracite
+;
+_journal_name_full               'Acta Crystallographica'
+_journal_page_first              310
+_journal_page_last               316
+_journal_paper_doi               10.1107/S0365110X51001033
+_journal_volume                  4
+_journal_year                    1951
+_chemical_compound_source        'Stassfurt, Germany'
+_chemical_formula_sum            'B7 Cl Mg3 O13'
+_chemical_name_mineral           Boracite
+_symmetry_space_group_name_H-M   'P c a 21'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_length_a                   8.54
+_cell_length_b                   8.54
+_cell_length_c                   12.07
+_cell_formula_units_Z            4
+_cell_volume                     880.284
+_database_code_amcsd             0019539
+_exptl_crystal_density_diffrn    2.958
+_cod_original_formula_sum        'Mg3 B7 O13 Cl'
+_cod_database_code               9014871
+loop_
+_space_group_symop_operation_xyz
+x,y,z
+1/2+x,1/2-y,z
+-x,y,1/2+z
+1/2-x,1/2-y,1/2+z
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+Mg1 0.50000 0.00000 0.98100
+Mg2 0.23100 -0.26900 0.25000
+Mg3 0.23100 0.26900 0.25000
+B11 0.25000 -0.25000 0.00000
+B12 0.00000 0.00000 0.25000
+B13 -0.25000 0.25000 0.00000
+B21 0.50000 0.33000 0.41500
+B22 0.50000 -0.33000 0.41500
+B23 0.17000 0.00000 0.08500
+B24 0.17000 0.00000 -0.41500
+O1 0.00000 0.00000 0.00000
+O21 0.08200 -0.27800 0.47900
+O22 0.15900 0.20100 0.40200
+O23 0.07700 -0.11900 0.32000
+O24 0.41800 0.22200 0.47900
+O25 0.34100 -0.29900 0.40200
+O26 0.42300 0.38100 0.32000
+O27 0.11900 0.07600 0.18000
+O28 0.20100 -0.15900 0.09800
+O29 0.22200 -0.41800 0.02100
+O210 0.38100 -0.42300 0.18000
+O211 0.29900 0.34100 0.09800
+O212 0.27800 0.08200 0.02100
+Cl 0.52400 0.00000 0.26200
+loop_
+_cod_related_entry_id
+_cod_related_entry_database
+_cod_related_entry_code
+1 AMCSD 0019539

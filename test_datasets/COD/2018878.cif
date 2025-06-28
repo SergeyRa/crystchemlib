@@ -1,0 +1,88 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-14 16:26:36 +0200 (Sun, 14 Feb 2016) $
+#$Revision: 176435 $
+#$URL: svn://www.crystallography.net/cod/cif/2/01/88/2018878.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided by IUCr Journals, http://journals.iucr.org/.
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_2018878
+loop_
+_publ_author_name
+'Schmid, H.'
+'Kubel, F.'
+'Mao, S.Y.'
+_publ_section_title
+;
+ Structure of the fully ferroelectric/fully ferroelastic orthorhombic
+ room-temperature phase of cobalt bromine boracite, Co3B7O13Br and nickel
+ chlorine boracite, Ni3B7O13Cl
+;
+_journal_name_full               'Acta Crystallographica C (39,1983-)'
+_journal_page_first              1167
+_journal_page_last               1170
+_journal_volume                  48
+_journal_year                    1992
+_chemical_formula_sum            'B7 Br Co3 O13'
+_chemical_name_systematic        'Co3 (B7 O13) Br'
+_space_group_IT_number           29
+_symmetry_space_group_name_Hall  'P 2c -2ac'
+_symmetry_space_group_name_H-M   'P c a 21'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_formula_units_Z            4
+_cell_length_a                   8.5614
+_cell_length_b                   8.5657
+_cell_length_c                   12.1196
+_cell_volume                     888.783
+_citation_journal_id_ASTM        ACSCEE
+_cod_data_source_file            boron4-x_305.cif
+_cod_data_source_block           B7Br1Co3O13
+_cod_original_cell_volume        888.7834
+_cod_original_formula_sum        'B7 Br1 Co3 O13'
+_cod_database_code               2018878
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+-x,-y,z+1/2
+-x+1/2,y,z+1/2
+x+1/2,-y,z
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+Co3 Co+2 -0.0107 0.0252 0.5027 1 0.0
+O13 O-2 0.5893 0.9415 0.6554 1 0.0
+Co2 Co+2 0.4882 0.5254 0.5012 1 0.0
+O3 O-2 0.3794 0.3292 0.4338 1 0.0
+O10 O-2 0.9512 0.5914 0.8455 1 0.0
+O6 O-2 0.1685 0.973 0.2308 1 0.0
+B7 B+3 0.7525 0.903 0.6723 1 0.0
+O7 O-2 0.1394 0.1724 0.4265 1 0.0
+B6 B+3 0.905 0.749 0.8233 1 0.0
+O5 O-2 0.3224 0.3625 0.0654 1 0.0
+Br1 Br-1 0.76434 0.2494 0.5087 1 0.0
+O1 O-2 0.2329 0.2501 0.2425 1 0.0
+O2 O-2 0.5415 0.3295 0.2749 1 0.0
+B2 B+3 0.2568 0.248 0.4975 1 0.0
+B1 B+3 0.4993 0.499 0.2502 1 0.0
+B4 B+3 0.4517 0.251 0.3499 1 0.0
+B3 B+3 -0.001 -0.003 0.251 1 0.0
+O8 O-2 0.334 0.5195 0.2296 1 0.0
+B5 B+3 0.2478 0.402 0.1717 1 0.0
+O9 O-2 0.1705 0.1271 0.065 1 0.0
+O11 O-2 0.5414 0.911 0.8528 1 0.0
+Co1 Co+2 0.7588 0.252 0.2289 1 0.0
+O12 O-2 0.9111 0.5421 0.6502 1 0.0
+O4 O-2 0.9682 0.164 0.2693 1 0.0

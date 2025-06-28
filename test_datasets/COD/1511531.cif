@@ -1,0 +1,81 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-14 16:26:36 +0200 (Sun, 14 Feb 2016) $
+#$Revision: 176435 $
+#$URL: svn://www.crystallography.net/cod/cif/1/51/15/1511531.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_1511531
+loop_
+_publ_author_name
+'Shiokawa, J.'
+'Moriwaki, Y.'
+'Adachi, G.Y.'
+'Machida, K.I.'
+_publ_section_title
+;
+ The crystal structure and luminescence properties of europium(II)
+ haloborates
+;
+_journal_name_full               'Bulletin of the Chemical Society of Japan'
+_journal_page_first              1048
+_journal_page_last               1051
+_journal_paper_doi               10.1246/bcsj.54.1048
+_journal_volume                  54
+_journal_year                    1981
+_chemical_formula_sum            'B5 Cl Eu2 O9'
+_chemical_name_systematic        'Eu2 (B5 O9) Cl'
+_space_group_IT_number           34
+_symmetry_space_group_name_Hall  'P 2 -2n'
+_symmetry_space_group_name_H-M   'P n n 2'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_formula_units_Z            4
+_cell_length_a                   11.364
+_cell_length_b                   11.301
+_cell_length_c                   6.504
+_cell_volume                     835.273
+_citation_journal_id_ASTM        BCSJA8
+_cod_data_source_file            boron4-x_167.cif
+_cod_data_source_block           B5Cl1Eu2O9
+_cod_original_cell_volume        835.2734
+_cod_original_formula_sum        'B5 Cl1 Eu2 O9'
+_cod_database_code               1511531
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+-x,-y,z
+-x+1/2,y+1/2,z+1/2
+x+1/2,-y+1/2,z+1/2
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+Cl2 Cl-1 0 0.5 0.613 1 0.0
+B4 B+3 0.457 0.231 0.712 1 0.0
+B3 B+3 0.292 0.217 0.479 1 0.0
+O2 O-2 0.211 0.427 0.191 1 0.0
+B2 B+3 0.187 0.299 0.162 1 0.0
+O5 O-2 0.286 0.451 0.853 1 0.0
+O8 O-2 0.421 0.207 0.51 1 0.0
+O9 O-2 0.232 0.114 0.576 1 0.0
+O1 O-2 0.244 0.318 0.594 1 0.0
+B1 B+3 0.274 0.325 0.809 1 0.0
+Eu1 Eu+2 0.2523 0.0475 0 1 0.0
+O3 O-2 0.279 0.225 0.255 1 0.0
+Eu2 Eu+2 0.0255 0.2403 0.6624 1 0.0
+O7 O-2 0.182 0.269 0.939 1 0.0
+Cl1 Cl-1 0 0 0.862 1 0.0
+O4 O-2 0.077 0.27 0.263 1 0.0
+O6 O-2 0.384 0.262 0.856 1 0.0
+B5 B+3 0.251 0.497 0.035 1 0.0

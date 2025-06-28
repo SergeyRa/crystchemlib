@@ -1,0 +1,286 @@
+#------------------------------------------------------------------------------
+#$Date: 2018-01-23 14:43:58 +0200 (Tue, 23 Jan 2018) $
+#$Revision: 205493 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/4/12/37/4123757.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_4123757
+loop_
+_publ_author_name
+'Chen, Hong'
+'Ju, Jing'
+'Meng, Qingpeng'
+'Su, Jie'
+'Lin, Cong'
+'Zhou, Zhengyang'
+'Li, Guobao'
+'Wang, Weilu'
+'Gao, Wenliang'
+'Zeng, Chunmei'
+'Tang, Chiu'
+'Lin, Jianhua'
+'Yang, Tao'
+'Sun, Junliang'
+_publ_section_title
+;
+ PKU-3: An HCl-Inclusive Aluminoborate for Strecker Reaction Solved by
+ Combining RED and PXRD.
+;
+_journal_issue                   22
+_journal_name_full               'Journal of the American Chemical Society'
+_journal_page_first              7047
+_journal_page_last               7050
+_journal_paper_doi               10.1021/jacs.5b03685
+_journal_volume                  137
+_journal_year                    2015
+_chemical_formula_moiety         Al9B18Cl2O65.24
+_chemical_formula_sum            'Al9 B18 Cl2 O65.24'
+_chemical_formula_weight         1552.20
+_space_group_crystal_system      trigonal
+_space_group_IT_number           165
+_symmetry_space_group_name_Hall  '-P 3 2"c'
+_symmetry_space_group_name_H-M   'P -3 c 1'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                120
+_cell_formula_units_Z            2
+_cell_length_a                   14.584380(14)
+_cell_length_b                   14.584380(14)
+_cell_length_c                   12.222620(17)
+_cell_measurement_temperature    150(3)
+_cell_volume                     2251.494(4)
+_diffrn_ambient_temperature      150(3)
+_diffrn_measured_fraction_theta_full 1.0
+_diffrn_measurement_device_type  'Beamline I11, Diamond'
+_diffrn_radiation_type           synchrotron
+_diffrn_radiation_wavelength     0.82613(1)
+_diffrn_reflns_theta_full        34
+_diffrn_reflns_theta_max         34
+_diffrn_reflns_theta_min         1.5
+_exptl_crystal_colour            colorless
+_exptl_crystal_colour_primary    colorless
+_exptl_crystal_description       needle
+_cod_data_source_file            ja5b03685_si_002.cif
+_cod_data_source_block           PKU-3_PXRD
+_cod_depositor_comments          'Adding full bibliography for 4123757.cif.'
+_cod_original_cell_volume        2251.4944(55)
+_cod_original_sg_symbol_H-M      P-3c1
+_cod_original_formula_sum        Al9B18Cl2O65.24
+_cod_database_code               4123757
+loop_
+_symmetry_equiv_pos_site_id
+_symmetry_equiv_pos_as_xyz
+1 x,y,z
+2 -y,x-y,z
+3 -x+y,-x,z
+4 y,x,1/2-z
+5 -x,-x+y,1/2-z
+6 x-y,-y,1/2-z
+7 -x,-y,-z
+8 y,-x+y,-z
+9 x-y,x,-z
+10 -y,-x,1/2+z
+11 x,x-y,1/2+z
+12 -x+y,y,1/2+z
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+CL1 0.0202(4) 0.0202(4) 0.0365(10) 0.0101(2) 0.00000 0.00000
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_symmetry_multiplicity
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_B_iso_or_equiv
+AL1 Al 6 0.5 0.5 0.5 1 1.061(13)
+AL2 Al 12 0.374217(62) 0.313995(59) 0.372658(62) 1 1.061(13)
+CL1 Cl 4 0.6666667 0.3333333 0.404809(87) 1 2.023(47)
+B1 B 12 0.60077(23) 0.46687(23) 0.68389(24) 1 2.276(43)
+B2 B 12 0.49562(23) 0.31637(24) 0.57413(23) 1 2.276(43)
+B3 B 12 0.38799(22) 0.13363(24) 0.47753(24) 1 2.276(43)
+O1 O 12 0.57250(12) 0.53529(12) 0.63330(13) 1 1.440(13)
+O2 O 12 0.66177(12) 0.50589(12) 0.77979(12) 1 1.440(13)
+O3 O 12 0.55461(12) 0.36083(12) 0.66572(12) 1 1.440(13)
+O4 O 12 0.47000(10) 0.36173(11) 0.49158(12) 1 1.440(13)
+O5 O 12 0.45058(12) 0.20493(13) 0.56955(12) 1 1.440(13)
+O6 O 12 0.34617(11) 0.17372(11) 0.39663(11) 1 1.440(13)
+O7 O 12 0.29908(13) 0.03349(11) 0.52931(11) 1 1.440(13)
+O8 O 12 0.45731(11) 0.09299(12) 0.42492(12) 1 1.440(13)
+O9 O 6 0.28778(16) 0.28778(16) 0.25 1 1.440(13)
+OW1 O 12 0.07156(35) 1.13375(21) -0.08862(23) 1 27.86(13)
+OW2 O 12 -0.74042(26) -0.78746(25) 0.70029(31) 1 27.86(13)
+OW3 O 12 1.06320(62) -0.08525(54) -0.7705(11) 0.3742(25) 27.86(13)
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+O1 Al1 O4 98.18(7) . .
+O1 Al1 O8 88.77(7) . 3_665
+O1 Al1 O1 180.00 . 7_666
+O1 Al1 O4 81.82(7) . 7_666
+O1 Al1 O8 91.23(7) . 9_556
+O4 Al1 O8 88.36(7) . 3_665
+O1 Al1 O4 81.82(7) 7_666 .
+O4 Al1 O4 180.00 . 7_666
+O4 Al1 O8 91.65(7) . 9_556
+O1 Al1 O8 91.23(7) 7_666 3_665
+O4 Al1 O8 91.65(7) 7_666 3_665
+O8 Al1 O8 180.00 3_665 9_556
+O1 Al1 O4 98.18(7) 7_666 7_666
+O1 Al1 O8 88.77(7) 7_666 9_556
+O4 Al1 O8 88.36(7) 7_666 9_556
+O4 Al2 O6 89.98(7) . .
+O4 Al2 O9 171.60(9) . .
+O1 Al2 O4 78.89(7) 7_666 .
+O4 Al2 O7 88.72(8) . 9_556
+O2 Al2 O4 87.17(8) 10_664 .
+O6 Al2 O9 98.24(8) . .
+O1 Al2 O6 168.40(9) 7_666 .
+O6 Al2 O7 93.49(8) . 9_556
+O2 Al2 O6 88.61(8) 10_664 .
+O1 Al2 O9 92.80(9) 7_666 .
+O7 Al2 O9 92.50(10) 9_556 .
+O2 Al2 O9 91.26(9) 10_664 .
+O1 Al2 O7 89.55(8) 7_666 9_556
+O1 Al2 O2 87.59(8) 7_666 10_664
+O2 Al2 O7 175.39(8) 10_664 9_556
+Al1 O1 B1 121.11(14) . .
+Al1 O1 Al2 97.51(8) . 7_666
+Al2 O1 B1 137.16(16) 7_666 .
+Al2 O2 B1 129.59(17) 10_665 .
+B1 O3 B2 120.7(2) . .
+Al1 O4 Al2 99.99(8) . .
+Al1 O4 B2 121.32(14) . .
+Al2 O4 B2 136.44(15) . .
+B2 O5 B3 126.84(18) . .
+Al2 O6 B3 129.88(14) . .
+Al2 O7 B3 126.84(17) 8_556 .
+Al1 O8 B3 124.10(13) 2_655 .
+Al2 O9 Al2 127.91(13) . 4_555
+O1 B1 O2 115.6(2) . .
+O1 B1 O3 125.7(2) . .
+O2 B1 O3 116.7(2) . .
+O3 B2 O4 129.9(2) . .
+O3 B2 O5 113.4(2) . .
+O4 B2 O5 116.6(2) . .
+O5 B3 O6 118.2(2) . .
+O5 B3 O7 106.57(17) . .
+O5 B3 O8 106.9(2) . .
+O6 B3 O7 110.3(2) . .
+O6 B3 O8 111.34(18) . .
+O7 B3 O8 102.25(18) . .
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_distance
+_geom_bond_site_symmetry_2
+Al1 O1 1.8690(17) .
+Al1 O4 1.8402(14) .
+Al1 O8 1.978(2) 3_665
+Al1 O1 1.8690(17) 7_666
+Al1 O4 1.8402(14) 7_666
+Al1 O8 1.978(2) 9_556
+Al2 O4 1.8911(17) .
+Al2 O6 1.8979(16) .
+Al2 O9 1.8711(17) .
+Al2 O1 1.9319(17) 7_666
+Al2 O7 1.910(2) 9_556
+Al2 O2 1.963(2) 10_664
+O1 B1 1.400(3) .
+O2 B1 1.408(3) .
+O3 B1 1.362(3) .
+O3 B2 1.363(3) .
+O4 B2 1.357(3) .
+O5 B2 1.418(3) .
+O5 B3 1.494(3) .
+O6 B3 1.431(3) .
+O7 B3 1.524(3) .
+O8 B3 1.544(4) .
+loop_
+_geom_torsion_atom_site_label_1
+_geom_torsion_atom_site_label_2
+_geom_torsion_atom_site_label_3
+_geom_torsion_atom_site_label_4
+_geom_torsion
+_geom_torsion_site_symmetry_1
+_geom_torsion_site_symmetry_3
+_geom_torsion_site_symmetry_4
+O4 Al1 O1 B1 9.3(2) . . .
+O4 Al1 O1 Al2 169.88(8) . . 7_666
+O8 Al1 O1 B1 -78.91(19) 3_665 . .
+O4 Al1 O1 B1 -170.8(2) 7_666 . .
+O8 Al1 O1 B1 101.09(19) 9_556 . .
+O1 Al1 O4 Al2 169.59(8) . . .
+O1 Al1 O4 B2 4.0(2) . . .
+O8 Al1 O4 Al2 -101.89(8) 3_665 . .
+O8 Al1 O4 B2 92.52(19) 3_665 . .
+O1 Al1 O4 Al2 -10.41(8) 7_666 . .
+O1 Al1 O4 B2 -176.0(2) 7_666 . .
+O8 Al1 O4 Al2 78.11(8) 9_556 . .
+O8 Al1 O4 B2 -87.49(19) 9_556 . .
+O4 Al1 O1 Al2 10.12(8) . 7_666 .
+O6 Al2 O4 Al1 -173.13(8) . . .
+O6 Al2 O4 B2 -11.1(2) . . .
+O1 Al2 O4 Al1 10.16(8) 7_666 . .
+O1 Al2 O4 B2 172.2(2) 7_666 . .
+O7 Al2 O4 Al1 -79.63(8) 9_556 . .
+O7 Al2 O4 B2 82.4(2) 9_556 . .
+O2 Al2 O4 Al1 98.26(8) 10_664 . .
+O2 Al2 O4 B2 -99.7(2) 10_664 . .
+O4 Al2 O6 B3 0.2(2) . . .
+O9 Al2 O6 B3 178.5(2) . . .
+O7 Al2 O6 B3 -88.5(2) 9_556 . .
+O2 Al2 O6 B3 87.4(2) 10_664 . .
+O6 Al2 O9 Al2 -142.95(15) . . 4_555
+O4 Al2 O1 Al1 -9.93(8) . 7_666 .
+O4 Al2 O1 B1 -165.3(2) . 7_666 7_666
+O9 Al2 O1 Al1 171.34(9) . 7_666 .
+O4 Al2 O7 B3 72.1(2) . 9_556 9_556
+O6 Al2 O7 B3 162.0(2) . 9_556 9_556
+O4 Al2 O2 B1 -125.60(19) . 10_664 10_664
+O6 Al2 O2 B1 144.36(19) . 10_664 10_664
+Al1 O1 B1 O2 175.57(16) . . .
+Al2 O1 B1 O2 24.5(4) 7_666 . .
+Al1 O1 B1 O3 -21.7(3) . . .
+Al2 O1 B1 O3 -172.74(18) 7_666 . .
+Al2 O2 B1 O1 15.9(3) 10_665 . .
+Al2 O2 B1 O3 -148.46(18) 10_665 . .
+B2 O3 B1 O1 18.5(4) . . .
+B2 O3 B1 O2 -178.9(2) . . .
+B1 O3 B2 O4 -1.9(4) . . .
+B1 O3 B2 O5 -178.1(2) . . .
+Al1 O4 B2 O3 -8.5(4) . . .
+Al2 O4 B2 O3 -167.7(2) . . .
+Al1 O4 B2 O5 167.66(16) . . .
+Al2 O4 B2 O5 8.5(4) . . .
+B3 O5 B2 O3 -175.7(2) . . .
+B3 O5 B2 O4 7.5(4) . . .
+B2 O5 B3 O6 -16.3(4) . . .
+B2 O5 B3 O7 -141.0(2) . . .
+B2 O5 B3 O8 110.2(3) . . .
+Al2 O6 B3 O5 10.8(3) . . .
+Al2 O6 B3 O7 133.62(16) . . .
+Al2 O6 B3 O8 -113.61(18) . . .
+Al2 O7 B3 O5 -59.1(3) 8_556 . .
+Al2 O7 B3 O6 171.45(13) 8_556 . .
+Al2 O7 B3 O8 53.0(2) 8_556 . .
+Al1 O8 B3 O5 65.6(2) 2_655 . .
+Al1 O8 B3 O6 -163.94(13) 2_655 . .
+Al1 O8 B3 O7 -46.2(2) 2_655 . .

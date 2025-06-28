@@ -1,0 +1,96 @@
+#------------------------------------------------------------------------------
+#$Date: 2024-05-29 17:00:33 +0300 (Wed, 29 May 2024) $
+#$Revision: 292100 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/9/01/61/9016136.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided the American Mineralogist Crystal Structure Database,
+# http://rruff.geo.arizona.edu/AMS/amcsd.php
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_9016136
+loop_
+_publ_author_name
+'Lipp, C.'
+'Burns, P. C.'
+_publ_section_title
+;
+ Th2[BO4][PO4]: a rare example of an actinide borate-phosphate
+;
+_journal_name_full               'The Canadian Mineralogist'
+_journal_page_first              1211
+_journal_page_last               1220
+_journal_paper_doi               10.3749/canmin.49.5.1211
+_journal_volume                  49
+_journal_year                    2011
+_chemical_compound_source        Synthetic
+_chemical_formula_sum            'B O8 P Th2'
+_space_group_IT_number           14
+_symmetry_space_group_name_Hall  '-P 2ybc'
+_symmetry_space_group_name_H-M   'P 1 21/c 1'
+_cell_angle_alpha                90
+_cell_angle_beta                 103.746
+_cell_angle_gamma                90
+_cell_length_a                   8.4665
+_cell_length_b                   7.9552
+_cell_length_c                   8.2297
+_cell_formula_units_Z            4
+_cell_volume                     538.417
+_database_code_amcsd             0018624
+_exptl_crystal_density_diffrn    7.820
+_cod_original_formula_sum        'Th2 B P O8'
+_cod_database_code               9016136
+_amcsd_formula_title             Th2[BO4][PO4]
+loop_
+_space_group_symop_operation_xyz
+x,y,z
+x,1/2-y,1/2+z
+-x,1/2+y,1/2-z
+-x,-y,-z
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Th1 0.00730 0.00520 0.00760 0.00030 0.00310 -0.00030
+Th2 0.00500 0.00540 0.00530 -0.00010 0.00090 -0.00030
+P 0.00390 0.00660 0.00730 -0.00020 0.00150 -0.00040
+O1 0.01370 0.00180 0.01100 -0.00090 0.00500 -0.00110
+O2 0.00900 0.00550 0.00190 -0.00450 -0.00150 0.00050
+O3 0.00980 0.00740 0.00540 -0.00220 0.00130 -0.00260
+O4 0.00400 0.00470 0.00920 0.00130 -0.00340 -0.00040
+O5 0.01120 0.01360 0.01200 -0.00340 0.00500 -0.00550
+O6 0.01560 0.00600 0.00920 0.00150 0.00590 0.00070
+O7 0.00660 0.01210 0.00670 0.00160 -0.00240 0.00000
+O8 0.00610 0.00930 0.00830 0.00110 -0.00160 0.00120
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+Th1 0.18301 0.69330 0.04140 ?
+Th2 0.24191 0.31714 0.42356 ?
+B 0.03260 0.05700 0.21880 0.00630
+P 0.54340 0.45380 0.21670 ?
+O1 0.05640 0.89330 0.15560 ?
+O2 0.08920 0.06730 0.40330 ?
+O3 0.10880 0.19910 0.14870 ?
+O4 0.14620 0.58740 0.32310 ?
+O5 0.63150 0.31140 0.15410 ?
+O6 0.42940 0.12630 0.35220 ?
+O7 0.39020 0.95110 0.09310 ?
+O8 0.35780 0.42290 0.17250 ?
+loop_
+_cod_related_entry_id
+_cod_related_entry_database
+_cod_related_entry_code
+1 AMCSD 0018624

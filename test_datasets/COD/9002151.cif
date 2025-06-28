@@ -1,0 +1,91 @@
+#------------------------------------------------------------------------------
+#$Date: 2024-04-18 18:56:43 +0300 (Thu, 18 Apr 2024) $
+#$Revision: 291269 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/9/00/21/9002151.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided the American Mineralogist Crystal Structure Database,
+# http://rruff.geo.arizona.edu/AMS/amcsd.php
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_9002151
+loop_
+_publ_author_name
+'Downs, R. T.'
+'Yang, H.'
+'Hazen, R. M.'
+'Finger, L. W.'
+'Prewitt, C. T.'
+_publ_section_title
+;
+ Compressibility mechanisms of alkali feldspars: New data from reedmergnerite
+ Sample from Joseph Smith #1 mine, Duchesne Co., Utah,  NMNH 140
+ P = 3.64 GPa
+;
+_journal_name_full               'American Mineralogist'
+_journal_page_first              333
+_journal_page_last               340
+_journal_volume                  84
+_journal_year                    1999
+_chemical_formula_sum            'B Na O8 Si3'
+_chemical_name_mineral           Reedmergnerite
+_space_group_IT_number           2
+_symmetry_space_group_name_Hall  '-P 1 (1/2*x+1/2*y,1/2*x-1/2*y,-z)'
+_symmetry_space_group_name_H-M   'C -1'
+_cell_angle_alpha                93.392
+_cell_angle_beta                 116.222
+_cell_angle_gamma                92.263
+_cell_length_a                   7.6194
+_cell_length_b                   12.2465
+_cell_length_c                   6.7389
+_cell_formula_units_Z            4
+_cell_volume                     561.599
+_database_code_amcsd             0002219
+_diffrn_ambient_pressure         3.64e+06
+_exptl_crystal_density_diffrn    2.910
+_cod_original_formula_sum        'Na B Si3 O8'
+_cod_database_code               9002151
+loop_
+_space_group_symop_operation_xyz
+x,y,z
+1/2+x,1/2+y,z
+-x,-y,-z
+1/2-x,1/2-y,-z
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Na 0.01587 0.02244 0.02932 0.00366 0.01069 -0.00495
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+Na 0.25413 0.00896 0.12996 ?
+B 0.01183 0.15812 0.22019 0.00709
+Si1m 0.00459 0.81009 0.20710 0.00773
+Si2o 0.69921 0.09857 0.32068 0.00773
+Si2m 0.67376 0.86175 0.35290 0.00773
+O(A1) 0.00533 0.13397 0.99985 0.01051
+O(A2) 0.57848 0.97881 0.27190 0.00899
+O(B)o 0.84859 0.08772 0.21711 0.01102
+O(B)m 0.81109 0.83342 0.23341 0.01165
+O(C)o -0.00747 0.27224 0.27229 0.00887
+O(C)m 0.02686 0.67878 0.19875 0.01229
+O(D)o 0.20023 0.12160 0.38361 0.01330
+O(D)m 0.19499 0.86901 0.41481 0.01381
+loop_
+_cod_related_entry_id
+_cod_related_entry_database
+_cod_related_entry_code
+1 AMCSD 0002219

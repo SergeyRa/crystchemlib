@@ -1,0 +1,277 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-18 17:37:37 +0200 (Thu, 18 Feb 2016) $
+#$Revision: 176729 $
+#$URL: svn://www.crystallography.net/cod/cif/1/50/16/1501633.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_1501633
+loop_
+_publ_author_name
+'Sparta, K'
+'Redhammer, G J'
+'Roussel, P'
+'Heger, G'
+'Roth, G'
+'Lemmens, P'
+'Ionescu, A'
+'Grove, M'
+'Guentherodt, G'
+'Huehning, F'
+'Lueken, H'
+'Kageyama, H.'
+'Onizuka, K'
+'Ueda, Y'
+_publ_section_title
+;
+ Structural phase transition in the 2D spin dimer compound SrCu2(BO3)2
+;
+_journal_name_full               'The European Physical Journal B'
+_journal_page_first              507-516
+_journal_volume                  19
+_journal_year                    2001
+_chemical_formula_moiety         '2(B Cu O3), Sr'
+_chemical_formula_sum            'B2 Cu2 O6 Sr'
+_chemical_formula_weight         332.32
+_chemical_name_common            'strontium copper borate'
+_chemical_name_systematic
+;
+ ?
+;
+_space_group_IT_number           140
+_symmetry_cell_setting           tetragonal
+_symmetry_space_group_name_Hall  '-I 4 2c'
+_symmetry_space_group_name_H-M   'I 4/m c m'
+_atom_sites_solution_hydrogens   none
+_atom_sites_solution_primary     direct
+_atom_sites_solution_secondary   difmap
+_audit_creation_method           SHELXL-97
+_cell_angle_alpha                90.00
+_cell_angle_beta                 90.00
+_cell_angle_gamma                90.00
+_cell_formula_units_Z            4
+_cell_length_a                   9.005(2)
+_cell_length_b                   9.005(2)
+_cell_length_c                   6.647(2)
+_cell_measurement_temperature    423(2)
+_cell_volume                     539.0(2)
+_computing_structure_refinement  'SHELXL-97 (Sheldrick, 1997)'
+_diffrn_ambient_temperature      423(2)
+_diffrn_measured_fraction_theta_full 0.993
+_diffrn_measured_fraction_theta_max 0.993
+_diffrn_measurement_device_type  'STOE IPDS 1'
+_diffrn_measurement_method       'rotation method'
+_diffrn_radiation_monochromator  graphite
+_diffrn_radiation_source         'fine-focus sealed tube'
+_diffrn_radiation_type           MoK\a
+_diffrn_radiation_wavelength     0.71069
+_diffrn_reflns_av_R_equivalents  0.0333
+_diffrn_reflns_av_sigmaI/netI    0.0119
+_diffrn_reflns_limit_h_max       9
+_diffrn_reflns_limit_h_min       -9
+_diffrn_reflns_limit_k_max       10
+_diffrn_reflns_limit_k_min       -10
+_diffrn_reflns_limit_l_max       7
+_diffrn_reflns_limit_l_min       -7
+_diffrn_reflns_number            1801
+_diffrn_reflns_theta_full        24.13
+_diffrn_reflns_theta_max         24.13
+_diffrn_reflns_theta_min         3.20
+_diffrn_standards_decay_%        0
+_diffrn_standards_interval_count 0
+_diffrn_standards_interval_time  0
+_diffrn_standards_number         0
+_exptl_absorpt_coefficient_mu    17.313
+_exptl_absorpt_correction_T_max  0.2619
+_exptl_absorpt_correction_T_min  0.0921
+_exptl_absorpt_correction_type   empirical
+_exptl_absorpt_process_details   'X-SHAPE v. 1.03 (Stoe)'
+_exptl_crystal_colour            blue
+_exptl_crystal_density_diffrn    4.095
+_exptl_crystal_density_method    'not measured'
+_exptl_crystal_F_000             616
+_refine_diff_density_max         0.407
+_refine_diff_density_min         -0.382
+_refine_diff_density_rms         0.106
+_refine_ls_extinction_coef       0.0092(8)
+_refine_ls_extinction_expression Fc^*^=kFc[1+0.001xFc^2^\l^3^/sin(2\q)]^-1/4^
+_refine_ls_extinction_method     SHELXL
+_refine_ls_goodness_of_fit_ref   1.984
+_refine_ls_hydrogen_treatment    none
+_refine_ls_matrix_type           full
+_refine_ls_number_parameters     20
+_refine_ls_number_reflns         135
+_refine_ls_number_restraints     0
+_refine_ls_restrained_S_all      1.984
+_refine_ls_R_factor_all          0.0155
+_refine_ls_R_factor_gt           0.0154
+_refine_ls_shift/su_max          0.000
+_refine_ls_shift/su_mean         0.000
+_refine_ls_structure_factor_coef Fsqd
+_refine_ls_weighting_details
+'calc w=1/[\s^2^(Fo^2^)+(0.0100P)^2^+0.9000P] where P=(Fo^2^+2Fc^2^)/3'
+_refine_ls_weighting_scheme      calc
+_refine_ls_wR_factor_gt          0.0399
+_refine_ls_wR_factor_ref         0.0399
+_reflns_number_gt                134
+_reflns_number_total             135
+_reflns_threshold_expression     >2sigma(I)
+_cod_data_source_file            sc423.cif
+_cod_data_source_block           sc423
+_cod_original_cell_volume        539.0(3)
+_cod_database_code               1501633
+_cod_database_fobs_code          1501633
+loop_
+_symmetry_equiv_pos_as_xyz
+'x, y, z'
+'-y, x, z'
+'-x, -y, z'
+'y, -x, z'
+'-x, y, z+1/2'
+'y, x, z+1/2'
+'x, -y, z+1/2'
+'-y, -x, z+1/2'
+'x+1/2, y+1/2, z+1/2'
+'-y+1/2, x+1/2, z+1/2'
+'-x+1/2, -y+1/2, z+1/2'
+'y+1/2, -x+1/2, z+1/2'
+'-x+1/2, y+1/2, z+1'
+'y+1/2, x+1/2, z+1'
+'x+1/2, -y+1/2, z+1'
+'-y+1/2, -x+1/2, z+1'
+'-x, -y, -z'
+'y, -x, -z'
+'x, y, -z'
+'-y, x, -z'
+'x, -y, -z-1/2'
+'-y, -x, -z-1/2'
+'-x, y, -z-1/2'
+'y, x, -z-1/2'
+'-x+1/2, -y+1/2, -z+1/2'
+'y+1/2, -x+1/2, -z+1/2'
+'x+1/2, y+1/2, -z+1/2'
+'-y+1/2, x+1/2, -z+1/2'
+'x+1/2, -y+1/2, -z'
+'-y+1/2, -x+1/2, -z'
+'-x+1/2, y+1/2, -z'
+'y+1/2, x+1/2, -z'
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_occupancy
+_atom_site_symmetry_multiplicity
+_atom_site_calc_flag
+_atom_site_refinement_flags
+Sr Sr 0.0000 0.0000 0.2500 0.0104(3) Uani 1 8 d S
+Cu Cu 0.38606(6) -0.11394(6) 0.0000 0.0184(4) Uani 1 4 d S
+B B 0.2951(6) 0.2049(6) 0.0000 0.0105(15) Uiso 1 4 d S
+O1 O 0.4017(4) 0.0983(4) 0.0000 0.0409(18) Uani 1 4 d S
+O2 O 0.1728(3) -0.1455(3) 0.0000 0.0133(7) Uani 1 2 d S
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_23
+_atom_site_aniso_U_13
+_atom_site_aniso_U_12
+Sr 0.0101(4) 0.0101(4) 0.0109(5) 0.000 0.000 0.000
+Cu 0.0053(4) 0.0053(4) 0.0446(6) 0.000 0.000 -0.0011(3)
+O1 0.0058(15) 0.0058(15) 0.111(6) 0.000 0.000 -0.0012(18)
+O2 0.0060(16) 0.0080(16) 0.0259(17) 0.000 0.000 -0.0021(12)
+loop_
+_atom_type_symbol
+_atom_type_description
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+Sr Sr -1.6570 3.2640 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+Cu Cu 0.2630 1.2660 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+B B 0.0000 0.0010 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+O O 0.0080 0.0060 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+O2 Sr O2 172.41(13) 21_556 18
+O2 Sr O2 79.01(9) 21_556 2
+O2 Sr O2 101.50(9) 18 2
+O2 Sr O2 66.40(5) 21_556 6
+O2 Sr O2 120.16(12) 18 6
+O2 Sr O2 107.35(12) 2 6
+O2 Sr O2 107.35(12) 21_556 .
+O2 Sr O2 66.40(5) 18 .
+O2 Sr O2 66.40(5) 2 .
+O2 Sr O2 172.41(13) 6 .
+O2 Sr O2 120.16(12) 21_556 17
+O2 Sr O2 66.40(5) 18 17
+O2 Sr O2 66.40(5) 2 17
+O2 Sr O2 79.01(9) 6 17
+O2 Sr O2 101.50(9) . 17
+O2 Sr O2 66.40(5) 21_556 22_556
+O2 Sr O2 107.35(12) 18 22_556
+O2 Sr O2 120.16(12) 2 22_556
+O2 Sr O2 101.50(9) 6 22_556
+O2 Sr O2 79.01(9) . 22_556
+O2 Sr O2 172.41(13) 17 22_556
+O2 Sr O2 101.50(9) 21_556 5
+O2 Sr O2 79.01(9) 18 5
+O2 Sr O2 172.41(13) 2 5
+O2 Sr O2 66.40(5) 6 5
+O2 Sr O2 120.16(12) . 5
+O2 Sr O2 107.35(12) 17 5
+O2 Sr O2 66.40(5) 22_556 5
+O1 Cu O1 81.6(2) 17_655 .
+O1 Cu O2 175.80(15) 17_655 .
+O1 Cu O2 102.63(14) . .
+O1 Cu O2 102.63(14) 17_655 14_544
+O1 Cu O2 175.80(15) . 14_544
+O2 Cu O2 73.17(19) . 14_544
+O1 B O2 122.9(3) . 13_554
+O1 B O2 122.9(3) . 2
+O2 B O2 114.3(6) 13_554 2
+B O1 Cu 130.78(11) . 17_655
+B O1 Cu 130.78(11) . .
+Cu O1 Cu 98.4(2) 17_655 .
+B O2 Cu 86.3(3) 18 .
+B O2 Sr 127.75(19) 18 17
+Cu O2 Sr 120.86(10) . 17
+B O2 Sr 127.75(19) 18 .
+Cu O2 Sr 120.86(10) . .
+Sr O2 Sr 78.50(9) 17 .
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_distance
+_geom_bond_site_symmetry_2
+Sr O2 2.626(3) 21_556
+Sr O2 2.626(3) 18
+Sr O2 2.626(3) 2
+Sr O2 2.626(3) 6
+Sr O2 2.626(3) .
+Sr O2 2.626(3) 17
+Sr O2 2.626(3) 22_556
+Sr O2 2.626(3) 5
+Cu O1 1.916(3) 17_655
+Cu O1 1.916(3) .
+Cu O2 1.942(3) .
+Cu O2 1.942(3) 14_544
+B O1 1.358(9) .
+B O2 1.378(5) 13_554
+B O2 1.378(5) 2
+O1 Cu 1.916(3) 17_655
+O2 B 1.378(5) 18
+O2 Sr 2.626(3) 17

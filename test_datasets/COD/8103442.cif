@@ -1,0 +1,82 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-18 14:25:00 +0200 (Thu, 18 Feb 2016) $
+#$Revision: 176728 $
+#$URL: svn://www.crystallography.net/cod/cif/8/10/34/8103442.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_8103442
+loop_
+_publ_author_name
+'Friedrich, T.'
+'Hauf, C.'
+'Kniep, R.'
+_publ_section_title
+;
+ Crystal structure of pentasodium catena-(diborato-triphosphate), Na5 (B2
+ P3 O13)
+;
+_journal_name_full
+'Zeitschrift fuer Kristallographie (149,1979-)'
+_journal_page_first              446
+_journal_page_last               446
+_journal_volume                  210
+_journal_year                    1995
+_chemical_formula_sum            'B2 Na5 O13 P3'
+_chemical_name_systematic        'Na5 (B2 P3 O13)'
+_space_group_IT_number           4
+_symmetry_space_group_name_Hall  'P 2yb'
+_symmetry_space_group_name_H-M   'P 1 21 1'
+_cell_angle_alpha                90
+_cell_angle_beta                 115.166
+_cell_angle_gamma                90
+_cell_formula_units_Z            2
+_cell_length_a                   6.711
+_cell_length_b                   11.618
+_cell_length_c                   7.686
+_cell_volume                     542.383
+_citation_journal_id_ASTM        ZEKRDZ
+_cod_data_source_file            boron_271.cif
+_cod_data_source_block           B2Na5O13P3
+_cod_original_cell_volume        542.3826
+_cod_database_code               8103442
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+-x,y+1/2,-z
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+O4 O-2 -0.09045 0.55053 0.16033 1 0.0
+Na3 Na+1 0.52687 0.33204 0.49535 1 0.0
+O11 O-2 0.16286 0.68858 0.40608 1 0.0
+O13 O-2 0.36959 0.30475 -0.2102 1 0.0
+O3 O-2 -0.19085 0.47136 -0.46598 1 0.0
+Na1 Na+1 -0.09562 0.73555 -0.03263 1 0.0
+P3 P+5 0.50119 0.34858 -0.00993 1 0.0
+Na2 Na+1 0.04504 0.33238 0.5097 1 0.0
+P1 P+5 0.15737 0.57587 0.30654 1 0.0
+O12 O-2 0.49075 0.27716 0.14442 1 0.0
+B1 B+3 -0.13169 0.46465 0.00372 1 0.0
+O9 O-2 -0.24873 0.67988 -0.40312 1 0.0
+B2 B+3 0.21118 0.5128 -0.0037 1 0.0
+Na5 Na+1 0.64965 0.60768 0.26521 1 0.0
+P2 P+5 -0.15636 0.56283 -0.32075 1 0.0
+O6 O-2 0.26867 0.59511 0.16234 1 0.0
+O8 O-2 0.42453 0.47686 0.00338 1 0.0
+O7 O-2 0.74844 0.36574 0.03016 1 0.0
+O10 O-2 -0.26091 0.52851 -0.17798 1 0.0
+O1 O-2 0.07126 0.42436 0.00654 1 0.0
+Na4 Na+1 0.38131 0.60212 -0.27718 1 0.0
+O5 O-2 0.09693 0.58196 -0.18186 1 0.0
+O2 O-2 0.25787 0.47849 0.4404 1 0.0

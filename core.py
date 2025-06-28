@@ -798,8 +798,9 @@ class Structure:
         result = [
             DataFrame(
                 struct.poly(
-                    i, list(range(N)), dmax/f, plain=plain, suffixes=True
-                ).listdist(skipesd=True))[['name', 'value']]
+                    i, list(range(N)), dmax/f, plain=plain,
+                    suffixes=True, distonly=True
+                ))
             for i in range(N)
         ]
 
@@ -820,7 +821,8 @@ class Structure:
             return freq
 
     def poly(self, centr, ligands, dmax, dmin=0.0,
-             nmax=None, suffixes=False, plain=False):
+             nmax=None, suffixes=False, plain=False,
+             distonly=False):
         """Returns Polyhedron
 
         Parameters
@@ -842,6 +844,9 @@ class Structure:
         plain : bool
             if True, Nc will be set to zero for plain nets
             analysis (default False)
+        distonly : bool
+            if True, returns only list of distances
+            in Polyhedron.listdist() format (default False)
 
         Returns
         -------
@@ -861,24 +866,36 @@ class Structure:
             for i in range(-Na, Na+1):
                 for j in range(-Nb, Nb+1):
                     for k in range(-Nc, Nc+1):
-                        if suffixes:
-                            suffix = f"_{i}{j}{k}"
-                        else:
-                            suffix = ""
-                        newsite = deepcopy(s)
-                        newsite.fract = [newsite.fract[0]+i,
-                                         newsite.fract[1]+j,
-                                         newsite.fract[2]+k,
-                                         1]
-                        newsite.label += suffix
                         dist = length(self.cell,
                                       centr_site.fract,
-                                      newsite.fract,
+                                      [s.fract[0]+i,
+                                       s.fract[1]+j,
+                                       s.fract[2]+k,
+                                       1],
                                       skipesd=True)
                         if dmin <= dist[0] <= dmax:
+                            if suffixes:
+                                suffix = f"_{i}{j}{k}"
+                            else:
+                                suffix = ""
+                            if distonly:
+                                newsite = None
+                            else:
+                                newsite = deepcopy(s)
+                                newsite.fract = [newsite.fract[0]+i,
+                                                 newsite.fract[1]+j,
+                                                 newsite.fract[2]+k,
+                                                 1]
+                                newsite.label += suffix
                             liglist.append(
                                 [newsite, dist,
-                                 f"{centr_site.label}-{newsite.label}"])
+                                 f"{centr_site.label}-{s.label+suffix}"])
+        if distonly:
+            out = {'name': [], 'value': []}
+            for i in liglist:
+                out['name'].append(i[2])
+                out['value'].append(i[1][0])
+            return out
         if liglist == []:
             return Polyhedron(centr_site, [], self.cell, self.cell_esd)
         liglist.sort(key=lambda x: x[1][0])

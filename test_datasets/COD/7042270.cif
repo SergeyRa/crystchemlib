@@ -1,0 +1,210 @@
+#------------------------------------------------------------------------------
+#$Date: 2017-04-05 12:48:13 +0300 (Wed, 05 Apr 2017) $
+#$Revision: 195087 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/7/04/22/7042270.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_7042270
+loop_
+_publ_author_name
+'Morozov, I. V.'
+'Deeva, E. B.'
+'Glazunova, T. Yu'
+'Troyanov, S. I.'
+'Guseinov, F. I.'
+'Kustov, L. M.'
+_publ_section_title
+;
+ Interaction of copper with dinitrogen tetroxide in
+ 1-butyl-3-methylimidazolium-based ionic liquids.
+;
+_journal_issue                   13
+_journal_name_full
+'Dalton transactions (Cambridge, England : 2003)'
+_journal_page_first              4430
+_journal_page_last               4434
+_journal_paper_doi               10.1039/c6dt04526j
+_journal_volume                  46
+_journal_year                    2017
+_chemical_formula_sum            'B F4 N O'
+_chemical_formula_weight         116.82
+_chemical_name_systematic
+; 
+ ? 
+;
+_space_group_IT_number           62
+_symmetry_cell_setting           orthorhombic
+_symmetry_space_group_name_Hall  '-P 2ac 2n'
+_symmetry_space_group_name_H-M   'P n m a'
+_atom_sites_solution_hydrogens   none
+_atom_sites_solution_primary     direct
+_atom_sites_solution_secondary   difmap
+_audit_creation_method           SHELXL-97
+_cell_angle_alpha                90.00
+_cell_angle_beta                 90.00
+_cell_angle_gamma                90.00
+_cell_formula_units_Z            4
+_cell_length_a                   8.856(2)
+_cell_length_b                   5.6314(14)
+_cell_length_c                   6.8410(16)
+_cell_measurement_reflns_used    2134
+_cell_measurement_temperature    150(2)
+_cell_measurement_theta_max      28
+_cell_measurement_theta_min      4
+_cell_volume                     341.17(14)
+_computing_structure_refinement  'SHELXL-97 (Sheldrick, 1997)'
+_computing_structure_solution    'SHELXS-97 (Sheldrick, 1990)'
+_diffrn_ambient_temperature      150(2)
+_diffrn_measured_fraction_theta_full 0.966
+_diffrn_measured_fraction_theta_max 0.966
+_diffrn_measurement_device_type  IPDS(Stoe)
+_diffrn_radiation_monochromator  graphite
+_diffrn_radiation_source         'fine-focus sealed tube'
+_diffrn_radiation_type           MoK\a
+_diffrn_radiation_wavelength     0.71073
+_diffrn_reflns_av_R_equivalents  0.0341
+_diffrn_reflns_av_sigmaI/netI    0.0147
+_diffrn_reflns_limit_h_max       11
+_diffrn_reflns_limit_h_min       -11
+_diffrn_reflns_limit_k_max       7
+_diffrn_reflns_limit_k_min       -7
+_diffrn_reflns_limit_l_max       9
+_diffrn_reflns_limit_l_min       -9
+_diffrn_reflns_number            3097
+_diffrn_reflns_theta_full        28.48
+_diffrn_reflns_theta_max         28.48
+_diffrn_reflns_theta_min         3.76
+_exptl_absorpt_coefficient_mu    0.310
+_exptl_absorpt_correction_type   none
+_exptl_crystal_colour            colorless
+_exptl_crystal_density_diffrn    2.274
+_exptl_crystal_density_method    'not measured'
+_exptl_crystal_description       plate
+_exptl_crystal_F_000             224
+_exptl_crystal_size_max          0.5
+_exptl_crystal_size_mid          0.5
+_exptl_crystal_size_min          0.2
+_refine_diff_density_max         0.204
+_refine_diff_density_min         -0.139
+_refine_diff_density_rms         0.038
+_refine_ls_extinction_method     none
+_refine_ls_goodness_of_fit_ref   0.939
+_refine_ls_matrix_type           full
+_refine_ls_number_parameters     37
+_refine_ls_number_reflns         458
+_refine_ls_number_restraints     0
+_refine_ls_restrained_S_all      0.939
+_refine_ls_R_factor_all          0.0240
+_refine_ls_R_factor_gt           0.0213
+_refine_ls_shift/su_max          0.002
+_refine_ls_shift/su_mean         0.000
+_refine_ls_structure_factor_coef Fsqd
+_refine_ls_weighting_details
+'calc w=1/[\s^2^(Fo^2^)+(0.0350P)^2^+0.0800P] where P=(Fo^2^+2Fc^2^)/3'
+_refine_ls_weighting_scheme      calc
+_refine_ls_wR_factor_gt          0.0529
+_refine_ls_wR_factor_ref         0.0543
+_reflns_number_gt                417
+_reflns_number_total             458
+_reflns_threshold_expression     >2sigma(I)
+_cod_data_source_file            c6dt04526j1.cif
+_cod_data_source_block           bf4no1
+_cod_depositor_comments
+;
+The following automatic conversions were performed:
+
+'_symmetry_cell_setting' value 'Orthorhombic' changed to
+'orthorhombic' according to
+/home/data/users/saulius/crontab/automatic-downloads/rss-feeds/RSC/lib/dictionaries/cif_core.dic
+dictionary named 'cif_core.dic' version 2.4.2 from 2011-04-26.
+
+Automatic conversion script
+Id: cif_fix_values 4973 2017-02-22 13:04:09Z antanas 
+
+ Adding full bibliography for 7042270--7042271.cif.
+;
+_cod_original_sg_symbol_H-M      Pnma
+_cod_database_code               7042270
+loop_
+_symmetry_equiv_pos_as_xyz
+'x, y, z'
+'-x+1/2, -y, z+1/2'
+'-x, y+1/2, -z'
+'x+1/2, -y+1/2, -z+1/2'
+'-x, -y, -z'
+'x-1/2, y, -z-1/2'
+'x, -y-1/2, z'
+'-x-1/2, y-1/2, z-1/2'
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_occupancy
+_atom_site_symmetry_multiplicity
+_atom_site_calc_flag
+_atom_site_refinement_flags
+F1 F 0.34776(8) 0.2500 0.52841(10) 0.0242(2) Uani 1 2 d S
+F2 F 0.59678(8) 0.2500 0.61698(11) 0.0254(2) Uani 1 2 d S
+F3 F 0.42407(5) 0.04752(9) 0.79874(7) 0.02187(17) Uani 1 1 d .
+N N 0.81400(7) 0.15974(13) 0.35214(9) 0.02264(17) Uani 0.50 1 d P
+O O 0.81400(7) 0.15974(13) 0.35214(9) 0.02264(17) Uani 0.50 1 d P
+B B 0.44877(13) 0.2500 0.68293(16) 0.0160(2) Uani 1 2 d S
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_23
+_atom_site_aniso_U_13
+_atom_site_aniso_U_12
+F1 0.0322(4) 0.0262(4) 0.0141(3) 0.000 -0.0070(3) 0.000
+F2 0.0221(4) 0.0274(4) 0.0268(4) 0.000 0.0101(3) 0.000
+F3 0.0233(3) 0.0236(3) 0.0187(3) 0.00690(18) 0.00052(17) -0.00140(19)
+N 0.0192(3) 0.0261(3) 0.0226(3) -0.0042(3) -0.0017(2) -0.0003(2)
+O 0.0192(3) 0.0261(3) 0.0226(3) -0.0042(3) -0.0017(2) -0.0003(2)
+B 0.0182(5) 0.0186(5) 0.0112(5) 0.000 0.0011(4) 0.000
+loop_
+_atom_type_symbol
+_atom_type_description
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+B B 0.0013 0.0007 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+N N 0.0061 0.0033 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+O O 0.0106 0.0060 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+F F 0.0171 0.0103 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+O N N 0.00(10) 7_565 7_565
+F1 B F2 111.24(9) . .
+F1 B F3 109.25(6) . 7_565
+F2 B F3 109.30(6) . 7_565
+F1 B F3 109.25(6) . .
+F2 B F3 109.30(6) . .
+F3 B F3 108.43(9) 7_565 .
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_distance
+_geom_bond_site_symmetry_2
+F1 B 1.3847(13) .
+F2 B 1.3863(14) .
+F3 B 1.4056(8) .
+N O 1.0165(14) 7_565
+N N 1.0165(14) 7_565
+B F3 1.4056(8) 7_565

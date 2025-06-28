@@ -1,0 +1,500 @@
+#------------------------------------------------------------------------------
+#$Date: 2023-03-26 11:09:57 +0300 (Sun, 26 Mar 2023) $
+#$Revision: 282068 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/2/20/45/2204579.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/. The original data for this entry
+# were provided by IUCr Journals, http://journals.iucr.org/.
+#
+# The file may be used within the scientific community so long as
+# proper attribution is given to the journal article from which the
+# data were obtained.
+#
+data_2204579
+loop_
+_publ_author_name
+'Yakubovich, Olga V.'
+'Mochenova, Natalya N.'
+'Dimitrova, Olga. V.'
+'Massa, Werner'
+_publ_section_title
+;
+Reinvestigation of the Pb~2~[B~5~O~9~]Br structure based on single-crystal data
+;
+_journal_issue                   11
+_journal_name_full               'Acta Crystallographica, Section E'
+_journal_page_first              i127
+_journal_page_last               i130
+_journal_paper_doi               10.1107/S1600536804023232
+_journal_volume                  60
+_journal_year                    2004
+_chemical_formula_iupac          '[Pb2 (B5 O9) Br]'
+_chemical_formula_moiety         'B5 Br O9 Pb2'
+_chemical_formula_structural     'Pb2 (B5 O9) Br'
+_chemical_formula_sum            'B5 Br O9 Pb2'
+_chemical_formula_weight         692.34
+_chemical_name_systematic
+;
+Dilead pentaborate bromide
+;
+_space_group_IT_number           34
+_space_group_name_Hall           'P 2 -2n'
+_space_group_name_H-M_alt        'P n n 2'
+_symmetry_cell_setting           orthorhombic
+_symmetry_space_group_name_Hall  'P 2 -2n'
+_symmetry_space_group_name_H-M   'P n n 2'
+_atom_sites_solution_primary     direct
+_atom_sites_solution_secondary   difmap
+_audit_creation_method           SHELXL-97
+_cell_angle_alpha                90.00
+_cell_angle_beta                 90.00
+_cell_angle_gamma                90.00
+_cell_formula_units_Z            4
+_cell_length_a                   11.4935(19)
+_cell_length_b                   11.4717(19)
+_cell_length_c                   6.5297(11)
+_cell_measurement_reflns_used    4734
+_cell_measurement_temperature    293(2)
+_cell_measurement_theta_max      36.0
+_cell_measurement_theta_min      3.5
+_cell_volume                     860.9(2)
+_computing_cell_refinement       X-AREA
+_computing_data_collection       'X-AREA (Stoe & Cie, 2002)'
+_computing_data_reduction        X-AREA
+_computing_molecular_graphics    'DIAMOND (Crystal Impact, 2000)'
+_computing_publication_material  SHELXL97
+_computing_structure_refinement  'SHELXL97 (Sheldrick, 1997)'
+_computing_structure_solution    'SHELXS97 (Sheldrick, 1997)'
+_database_code_amcsd             0010437
+_diffrn_ambient_temperature      293(2)
+_diffrn_detector_area_resol_mean 150
+_diffrn_measured_fraction_theta_full 0.998
+_diffrn_measured_fraction_theta_max 0.998
+_diffrn_measurement_device_type  'Stoe IPDS-II'
+_diffrn_measurement_method       \w
+_diffrn_radiation_monochromator  graphite
+_diffrn_radiation_source         'fine-focus sealed tube'
+_diffrn_radiation_type           MoK\a
+_diffrn_radiation_wavelength     0.71073
+_diffrn_reflns_av_R_equivalents  0.0678
+_diffrn_reflns_av_sigmaI/netI    0.0507
+_diffrn_reflns_limit_h_max       16
+_diffrn_reflns_limit_h_min       -12
+_diffrn_reflns_limit_k_max       16
+_diffrn_reflns_limit_k_min       -16
+_diffrn_reflns_limit_l_max       9
+_diffrn_reflns_limit_l_min       -8
+_diffrn_reflns_number            7497
+_diffrn_reflns_theta_full        31.00
+_diffrn_reflns_theta_max         31.00
+_diffrn_reflns_theta_min         3.55
+_diffrn_standards_number         0
+_exptl_absorpt_coefficient_mu    43.731
+_exptl_absorpt_correction_T_max  0.3868
+_exptl_absorpt_correction_T_min  0.0933
+_exptl_absorpt_correction_type   numerical
+_exptl_absorpt_process_details
+;
+(XPREP in SHELXTL; Sheldrick, 1996).
+;
+_exptl_crystal_colour            colourless
+_exptl_crystal_density_diffrn    5.341
+_exptl_crystal_density_method    'not measured'
+_exptl_crystal_description       column
+_exptl_crystal_F_000             1184
+_exptl_crystal_size_max          0.13
+_exptl_crystal_size_mid          0.025
+_exptl_crystal_size_min          0.022
+_refine_diff_density_max         1.955
+_refine_diff_density_min         -2.127
+_refine_ls_abs_structure_details 'Flack (1983), 1059 Friedel pairs'
+_refine_ls_abs_structure_Flack   -0.03(2)
+_refine_ls_extinction_coef       0.00036(10)
+_refine_ls_extinction_expression Fc^*^=kFc[1+0.001xFc^2^\l^3^/sin(2\q)]^-1/4^
+_refine_ls_extinction_method     SHELXL97
+_refine_ls_goodness_of_fit_ref   1.064
+_refine_ls_matrix_type           full
+_refine_ls_number_parameters     87
+_refine_ls_number_reflns         2544
+_refine_ls_number_restraints     1
+_refine_ls_restrained_S_all      1.064
+_refine_ls_R_factor_all          0.0383
+_refine_ls_R_factor_gt           0.0344
+_refine_ls_shift/su_max          0.000
+_refine_ls_shift/su_mean         0.000
+_refine_ls_structure_factor_coef Fsqd
+_refine_ls_weighting_details
+'w = 1/[\s^2^(Fo^2^)+(0.0337P)^2^+13.5461P] where P = (Fo^2^+2Fc^2^)/3'
+_refine_ls_weighting_scheme      calc
+_refine_ls_wR_factor_gt          0.0776
+_refine_ls_wR_factor_ref         0.0803
+_reflns_number_gt                2429
+_reflns_number_total             2544
+_reflns_threshold_expression     I>2\s(I)
+_cod_data_source_file            wm6030.cif
+_cod_database_code               2204579
+_amcsd_formula_title             Pb2[B5O9]Br
+loop_
+_space_group_symop_operation_xyz
+'x, y, z'
+'-x, -y, z'
+'-x+1/2, y+1/2, z+1/2'
+'x+1/2, -y+1/2, z+1/2'
+loop_
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_calc_flag
+_atom_site_refinement_flags
+_atom_site_occupancy
+_atom_site_type_symbol
+Pb1 0.25762(6) 0.04280(6) 0.00433(9) 0.01489(12) Uani d . 1 Pb
+Pb2 0.02631(6) 0.23505(5) -0.66205(14) 0.01614(13) Uani d . 1 Pb
+Br1 0.0000 0.0000 -0.9081(5) 0.0289(6) Uani d S 1 Br
+Br2 0.0000 0.5000 -0.6476(6) 0.0259(5) Uani d S 1 Br
+O1 0.2376(8) 0.3135(8) -0.5784(14) 0.0030(16) Uiso d . 1 O
+O2 0.2084(8) 0.4248(8) -0.173(2) 0.0108(16) Uiso d . 1 O
+O3 0.2717(8) 0.2256(9) -0.2448(16) 0.0079(19) Uiso d . 1 O
+O4 0.0686(11) 0.2753(11) -0.2398(19) 0.017(2) Uiso d . 1 O
+O5 0.2790(9) 0.4487(11) -0.835(2) 0.015(2) Uiso d . 1 O
+O6 0.3827(9) 0.2616(9) -0.8357(17) 0.0092(18) Uiso d . 1 O
+O7 0.1785(8) 0.2698(9) -0.9231(15) 0.0046(16) Uiso d . 1 O
+O8 0.4168(8) 0.2110(9) -0.4921(18) 0.0090(16) Uiso d . 1 O
+O9 0.2339(9) 0.1103(10) -0.5577(16) 0.0106(19) Uiso d . 1 O
+B1 0.2706(13) 0.3217(14) -0.795(2) 0.008(3) Uiso d . 1 B
+B2 0.1803(13) 0.3009(14) -0.146(3) 0.012(3) Uiso d . 1 B
+B3 0.2864(14) 0.2180(15) -0.460(2) 0.010(3) Uiso d . 1 B
+B4 0.4556(13) 0.2354(16) -0.683(3) 0.011(3) Uiso d . 1 B
+B5 0.2513(15) 0.4950(14) -0.019(3) 0.009(3) Uiso d . 1 B
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Pb1 0.0172(2) 0.0170(2) 0.0105(2) 0.0011(2) 0.0010(2) 0.0004(3)
+Pb2 0.0187(2) 0.0179(2) 0.0118(3) -0.0013(2) 0.0034(3) 0.0000(3)
+Br1 0.0202(12) 0.0154(10) 0.0511(19) -0.0011(10) 0.000 0.000
+Br2 0.0188(11) 0.0179(10) 0.0411(16) 0.0002(8) 0.000 0.000
+loop_
+_atom_type_symbol
+_atom_type_description
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+B B 0.0013 0.0007 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+O O 0.0106 0.0060 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+Pb Pb -3.3944 10.1111 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+Br Br -0.2901 2.4595 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+_geom_angle
+_geom_angle_publ_flag
+O5 Pb1 O2 3_545 3_545 122.1(4) ?
+O5 Pb1 O3 3_545 . 79.0(4) ?
+O2 Pb1 O3 3_545 . 157.0(3) ?
+O5 Pb1 O1 3_545 3_545 53.3(3) ?
+O2 Pb1 O1 3_545 3_545 68.9(3) ?
+O3 Pb1 O1 . 3_545 130.4(3) ?
+O5 Pb1 O7 3_545 1_556 119.8(3) ?
+O2 Pb1 O7 3_545 1_556 114.0(3) ?
+O3 Pb1 O7 . 1_556 52.4(3) ?
+O1 Pb1 O7 3_545 1_556 162.2(3) ?
+O5 Pb1 O9 3_545 1_556 161.5(3) ?
+O2 Pb1 O9 3_545 1_556 49.8(3) ?
+O3 Pb1 O9 . 1_556 112.8(3) ?
+O1 Pb1 O9 3_545 1_556 116.8(3) ?
+O7 Pb1 O9 1_556 1_556 64.2(3) ?
+O5 Pb1 Br2 3_545 3_545 78.0(3) ?
+O2 Pb1 Br2 3_545 3_545 92.5(2) ?
+O3 Pb1 Br2 . 3_545 82.6(2) ?
+O1 Pb1 Br2 3_545 3_545 75.76(19) ?
+O7 Pb1 Br2 1_556 3_545 120.7(2) ?
+O9 Pb1 Br2 1_556 3_545 116.5(2) ?
+O5 Pb1 Br1 3_545 1_556 86.2(3) ?
+O2 Pb1 Br1 3_545 1_556 84.7(2) ?
+O3 Pb1 Br1 . 1_556 107.5(2) ?
+O1 Pb1 Br1 3_545 1_556 84.26(19) ?
+O7 Pb1 Br1 1_556 1_556 78.6(2) ?
+O9 Pb1 Br1 1_556 1_556 76.9(2) ?
+Br2 Pb1 Br1 3_545 1_556 159.43(5) ?
+O5 Pb1 O6 3_545 1_556 137.1(3) ?
+O2 Pb1 O6 3_545 1_556 94.7(3) ?
+O3 Pb1 O6 . 1_556 62.3(3) ?
+O1 Pb1 O6 3_545 1_556 149.1(3) ?
+O7 Pb1 O6 1_556 1_556 48.3(3) ?
+O9 Pb1 O6 1_556 1_556 60.3(3) ?
+Br2 Pb1 O6 3_545 1_556 79.1(2) ?
+Br1 Pb1 O6 1_556 1_556 121.4(2) ?
+O5 Pb1 B5 3_545 3_545 142.3(4) ?
+O2 Pb1 B5 3_545 3_545 25.1(4) ?
+O3 Pb1 B5 . 3_545 137.8(4) ?
+O1 Pb1 B5 3_545 3_545 91.6(4) ?
+O7 Pb1 B5 1_556 3_545 89.1(4) ?
+O9 Pb1 B5 1_556 3_545 25.3(4) ?
+Br2 Pb1 B5 3_545 3_545 109.1(3) ?
+Br1 Pb1 B5 1_556 3_545 75.9(3) ?
+O6 Pb1 B5 1_556 3_545 79.8(4) ?
+O7 Pb2 O8 . 4_454 74.3(3) ?
+O7 Pb2 O1 . . 55.9(3) ?
+O8 Pb2 O1 4_454 . 122.7(3) ?
+O7 Pb2 O6 . 4_455 167.2(3) ?
+O8 Pb2 O6 4_454 4_455 111.1(3) ?
+O1 Pb2 O6 . 4_455 113.2(3) ?
+O7 Pb2 O4 . . 121.4(3) ?
+O8 Pb2 O4 4_454 . 149.2(3) ?
+O1 Pb2 O4 . . 65.6(3) ?
+O6 Pb2 O4 4_455 . 48.3(3) ?
+O7 Pb2 O9 . . 69.8(3) ?
+O8 Pb2 O9 4_454 . 136.7(3) ?
+O1 Pb2 O9 . . 49.9(3) ?
+O6 Pb2 O9 4_455 . 109.2(3) ?
+O4 Pb2 O9 . . 73.0(4) ?
+O7 Pb2 O3 . 4_454 122.7(3) ?
+O8 Pb2 O3 4_454 4_454 48.5(3) ?
+O1 Pb2 O3 . 4_454 151.4(3) ?
+O6 Pb2 O3 4_455 4_454 62.9(3) ?
+O4 Pb2 O3 . 4_454 108.5(3) ?
+O9 Pb2 O3 . 4_454 158.0(3) ?
+O7 Pb2 Br2 . . 86.1(2) ?
+O8 Pb2 Br2 4_454 . 74.8(2) ?
+O1 Pb2 Br2 . . 75.3(2) ?
+O6 Pb2 Br2 4_455 . 84.3(2) ?
+O4 Pb2 Br2 . . 79.9(3) ?
+O9 Pb2 Br2 . . 124.9(2) ?
+O3 Pb2 Br2 4_454 . 76.1(2) ?
+O7 Pb2 B1 . . 27.8(4) ?
+O8 Pb2 B1 4_454 . 97.5(4) ?
+O1 Pb2 B1 . . 28.2(4) ?
+O6 Pb2 B1 4_455 . 140.5(4) ?
+O4 Pb2 B1 . . 93.8(4) ?
+O9 Pb2 B1 . . 58.2(4) ?
+O3 Pb2 B1 4_454 . 141.4(4) ?
+Br2 Pb2 B1 . . 77.3(3) ?
+O7 Pb2 Br1 . . 81.6(2) ?
+O8 Pb2 Br1 4_454 . 74.4(2) ?
+O1 Pb2 Br1 . . 118.9(2) ?
+O6 Pb2 Br1 4_455 . 110.9(2) ?
+O4 Pb2 Br1 . . 130.6(3) ?
+O9 Pb2 Br1 . . 76.9(2) ?
+O3 Pb2 Br1 4_454 . 86.8(2) ?
+Br2 Pb2 Br1 . . 148.95(10) ?
+B1 Pb2 Br1 . . 102.6(3) ?
+Pb1 Br1 Pb1 2_554 1_554 158.42(14) ?
+Pb1 Br1 Pb2 2_554 . 109.01(4) ?
+Pb1 Br1 Pb2 1_554 . 82.24(3) ?
+Pb1 Br1 Pb2 2_554 2 82.24(3) ?
+Pb1 Br1 Pb2 1_554 2 109.01(4) ?
+Pb2 Br1 Pb2 . 2 118.74(11) ?
+Pb1 Br2 Pb1 3_554 4_454 141.35(15) ?
+Pb1 Br2 Pb2 3_554 . 94.66(3) ?
+Pb1 Br2 Pb2 4_454 . 86.52(3) ?
+Pb1 Br2 Pb2 3_554 2_565 86.52(3) ?
+Pb1 Br2 Pb2 4_454 2_565 94.66(3) ?
+Pb2 Br2 Pb2 . 2_565 176.46(16) ?
+B3 O1 B1 . . 117.5(11) ?
+B3 O1 Pb2 . . 102.0(8) ?
+B1 O1 Pb2 . . 93.4(7) ?
+B3 O1 Pb1 . 3_554 128.5(8) ?
+B1 O1 Pb1 . 3_554 97.2(8) ?
+Pb2 O1 Pb1 . 3_554 113.1(3) ?
+B5 O2 B2 . . 123.9(14) ?
+B5 O2 Pb1 . 3_554 103.8(9) ?
+B2 O2 Pb1 . 3_554 130.6(11) ?
+B3 O3 B2 . . 122.8(13) ?
+B3 O3 Pb1 . . 124.4(10) ?
+B2 O3 Pb1 . . 98.6(9) ?
+B3 O3 Pb2 . 4 94.1(8) ?
+B2 O3 Pb2 . 4 121.1(8) ?
+Pb1 O3 Pb2 . 4 93.9(3) ?
+B4 O4 B2 4_455 . 138.5(15) ?
+B4 O4 Pb2 4_455 . 95.0(11) ?
+B2 O4 Pb2 . . 126.4(10) ?
+B5 O5 B1 1_554 . 121.5(13) ?
+B5 O5 Pb1 1_554 3_554 125.4(10) ?
+B1 O5 Pb1 . 3_554 105.2(9) ?
+B4 O6 B1 . . 121.0(13) ?
+B4 O6 Pb2 . 4_554 102.2(9) ?
+B1 O6 Pb2 . 4_554 131.6(9) ?
+B4 O6 Pb1 . 1_554 111.3(10) ?
+B1 O6 Pb1 . 1_554 91.9(8) ?
+Pb2 O6 Pb1 4_554 1_554 91.7(3) ?
+B1 O7 B2 . 1_554 116.3(11) ?
+B1 O7 Pb2 . . 100.6(8) ?
+B2 O7 Pb2 1_554 . 135.8(8) ?
+Pb1 Br2 Pb2 3_554 . 94.66(3) ?
+Pb1 Br2 Pb2 4_454 . 86.52(3) ?
+Pb1 Br2 Pb2 3_554 2_565 86.52(3) ?
+Pb1 Br2 Pb2 4_454 2_565 94.66(3) ?
+Pb2 Br2 Pb2 . 2_565 176.46(16) ?
+B3 O1 B1 . . 117.5(11) ?
+B3 O1 Pb2 . . 102.0(8) ?
+B1 O1 Pb2 . . 93.4(7) ?
+B3 O1 Pb1 . 3_554 128.5(8) ?
+B1 O1 Pb1 . 3_554 97.2(8) ?
+Pb2 O1 Pb1 . 3_554 113.1(3) ?
+B5 O2 B2 . . 123.9(14) ?
+B5 O2 Pb1 . 3_554 103.8(9) ?
+B2 O2 Pb1 . 3_554 130.6(11) ?
+B3 O3 B2 . . 122.8(13) ?
+B3 O3 Pb1 . . 124.4(10) ?
+B2 O3 Pb1 . . 98.6(9) ?
+B3 O3 Pb2 . 4 94.1(8) ?
+B2 O3 Pb2 . 4 121.1(8) ?
+Pb1 O3 Pb2 . 4 93.9(3) ?
+B4 O4 B2 4_455 . 138.5(15) ?
+B4 O4 Pb2 4_455 . 95.0(11) ?
+B2 O4 Pb2 . . 126.4(10) ?
+B5 O5 B1 1_554 . 121.5(13) ?
+B5 O5 Pb1 1_554 3_554 125.4(10) ?
+B1 O5 Pb1 . 3_554 105.2(9) ?
+B4 O6 B1 . . 121.0(13) ?
+B4 O6 Pb2 . 4_554 102.2(9) ?
+B1 O6 Pb2 . 4_554 131.6(9) ?
+B4 O6 Pb1 . 1_554 111.3(10) ?
+B1 O6 Pb1 . 1_554 91.9(8) ?
+Pb2 O6 Pb1 4_554 1_554 91.7(3) ?
+B1 O7 B2 . 1_554 116.3(11) ?
+B1 O7 Pb2 . . 100.6(8) ?
+B2 O7 Pb2 1_554 . 135.8(8) ?
+B1 O7 Pb1 . 1_554 103.8(8) ?
+B2 O7 Pb1 1_554 1_554 93.0(7) ?
+Pb2 O7 Pb1 . 1_554 101.3(3) ?
+B4 O8 B3 . . 116.3(12) ?
+B4 O8 Pb2 . 4 124.1(9) ?
+B3 O8 Pb2 . 4 110.8(8) ?
+B5 O9 B3 3_544 . 131.8(13) ?
+B5 O9 Pb2 3_544 . 129.5(10) ?
+B3 O9 Pb2 . . 91.4(8) ?
+B5 O9 Pb1 3_544 1_554 85.0(9) ?
+B3 O9 Pb1 . 1_554 125.5(8) ?
+Pb2 O9 Pb1 . 1_554 88.7(3) ?
+O1 B1 O7 . . 109.5(11) y
+O1 B1 O5 . . 104.2(12) y
+O7 B1 O5 . . 110.3(12) y
+O1 B1 O6 . . 111.4(12) y
+O7 B1 O6 . . 109.6(12) y
+O5 B1 O6 . . 111.7(11) y
+O1 B1 Pb2 . . 58.3(6) ?
+O7 B1 Pb2 . . 51.6(6) ?
+O5 B1 Pb2 . . 115.0(9) ?
+O6 B1 Pb2 . . 133.3(9) ?
+O1 B1 Pb1 . 3_554 55.9(6) ?
+O7 B1 Pb1 . 3_554 126.2(9) ?
+O5 B1 Pb1 . 3_554 48.5(7) ?
+O6 B1 Pb1 . 3_554 124.1(9) ?
+Pb2 B1 Pb1 . 3_554 89.4(4) ?
+O4 B2 O2 . . 109.9(13) y
+O4 B2 O7 . 1_556 110.4(12) y
+O2 B2 O7 . 1_556 110.4(14) y
+O4 B2 O3 . . 108.8(13) y
+O2 B2 O3 . . 110.5(12) y
+O7 B2 O3 1_556 . 106.7(12) y
+O4 B2 Pb1 . . 100.7(9) ?
+O2 B2 Pb1 . . 149.2(10) ?
+O7 B2 Pb1 1_556 . 59.5(6) ?
+O3 B2 Pb1 . . 54.2(7) ?
+O3 B3 O1 . . 115.8(13) y
+O3 B3 O8 . . 105.0(12) y
+O1 B3 O8 . . 110.3(12) y
+O3 B3 O9 . . 114.8(13) y
+O1 B3 O9 . . 103.7(11) y
+O8 B3 O9 . . 107.0(11) y
+O3 B3 Pb2 . . 106.7(9) ?
+O1 B3 Pb2 . . 52.3(6) ?
+O8 B3 Pb2 . . 148.2(10) ?
+O9 B3 Pb2 . . 61.0(7) ?
+O6 B4 O8 . . 121.9(13) y
+O6 B4 O4 . 4_554 114.5(17) y
+O8 B4 O4 . 4_554 123.4(16) y
+O6 B4 Pb2 . 4_554 54.1(9) ?
+O8 B4 Pb2 . 4_554 172.2(11) ?
+O4 B4 Pb2 4_554 4_554 60.4(10) ?
+O5 B5 O9 1_556 3 121.1(15) y
+O5 B5 O2 1_556 . 120.3(14) y
+O9 B5 O2 3 . 118.7(15) y
+O5 B5 Pb1 1_556 3_554 162.0(11) ?
+O9 B5 Pb1 3 3_554 69.7(9) ?
+O2 B5 Pb1 . 3_554 51.1(8) ?
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_site_symmetry_2
+_geom_bond_distance
+_geom_bond_publ_flag
+Pb1 O5 3_545 2.497(13) y
+Pb1 O2 3_545 2.534(12) y
+Pb1 O3 . 2.659(11) y
+Pb1 O1 3_545 2.686(9) y
+Pb1 O7 1_556 2.798(10) y
+Pb1 O9 1_556 2.975(11) y
+Pb1 Br2 3_545 2.9977(16) y
+Pb1 Br1 1_556 3.0554(10) y
+Pb1 O6 1_556 3.076(11) y
+Pb1 B5 3_545 3.160(19) ?
+Pb2 O7 . 2.475(10) y
+Pb2 O8 4_454 2.571(11) y
+Pb2 O1 . 2.647(9) y
+Pb2 O6 4_455 2.695(11) y
+Pb2 O4 . 2.838(13) y
+Pb2 O9 . 2.864(11) y
+Pb2 O3 4_454 3.010(10) y
+Pb2 Br2 . 3.0559(8) y
+Pb2 B1 . 3.104(15) ?
+Pb2 Br1 . 3.153(2) y
+Br1 Pb1 2_554 3.0554(10) ?
+Br1 Pb1 1_554 3.0554(10) ?
+Br1 Pb2 2 3.1532(19) ?
+Br2 Pb1 3_554 2.9977(16) ?
+Br2 Pb1 4_454 2.9977(16) ?
+Br2 Pb2 2_565 3.0559(8) ?
+B1 O1 . 1.470(18) y
+B1 O5 . 1.48(2) y
+B1 O6 . 1.485(18) y
+B1 O7 . 1.473(18) y
+O1 Pb1 3_554 2.686(9) ?
+B2 O2 . 1.468(19) y
+B2 O3 . 1.504(19) y
+B2 O4 . 1.450(19) y
+B2 O7 1_556 1.50(2) y
+O2 Pb1 3_554 2.534(12) ?
+B3 O1 . 1.453(19) y
+B3 O3 . 1.417(19) y
+B3 O8 . 1.516(19) y
+B3 O9 . 1.52(2) y
+B4 O4 4_554 1.358(19) y
+B4 O6 . 1.34(2) y
+B4 O8 . 1.35(2) y
+B5 O2 . 1.38(2) y
+B5 O5 1_556 1.36(2) y
+B5 O9 3 1.358(19) y
+O3 Pb2 4 3.010(10) ?
+O4 B4 4_455 1.358(19) ?
+O5 B5 1_554 1.36(2) ?
+O5 Pb1 3_554 2.497(13) ?
+O6 Pb2 4_554 2.695(11) ?
+O6 Pb1 1_554 3.076(11) ?
+O7 B2 1_554 1.50(2) ?
+O7 Pb1 1_554 2.798(10) ?
+O8 Pb2 4 2.571(11) ?
+O9 B5 3_544 1.358(19) ?
+O9 Pb1 1_554 2.975(11) ?
+B1 Pb1 3_554 3.220(16) ?
+B4 Pb2 4_554 3.25(2) ?
+B5 Pb1 3_554 3.160(19) ?
+loop_
+_cod_related_entry_id
+_cod_related_entry_database
+_cod_related_entry_code
+1 AMCSD 0010437

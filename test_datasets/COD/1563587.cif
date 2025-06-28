@@ -1,0 +1,260 @@
+#------------------------------------------------------------------------------
+#$Date: 2021-06-18 12:37:29 +0300 (Fri, 18 Jun 2021) $
+#$Revision: 266565 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/1/56/35/1563587.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_1563587
+loop_
+_publ_author_name
+'Zhang, Wei-Long'
+'Lin, Chen-Sheng'
+'Geng, Lei'
+'Li, Ye-Yu'
+'Zhang, Hao'
+'He, Zhang-Zhen'
+'Cheng, Wen-Dan'
+_publ_section_title
+;
+ Synthesis and characterizations of two anhydrous metal borophosphates:
+ MIII2BP3O12 (M=Fe, In)
+;
+_journal_issue                   5
+_journal_name_full               'Journal of Solid State Chemistry'
+_journal_page_first              1108
+_journal_page_last               1113
+_journal_paper_doi               10.1016/j.jssc.2010.03.020
+_journal_volume                  183
+_journal_year                    2010
+_chemical_formula_moiety         'B1 In2 O12 P3'
+_chemical_formula_sum            'B In2 O12 P3'
+_chemical_formula_weight         525.36
+_space_group_IT_number           176
+_space_group_name_Hall           '-P 6c'
+_space_group_name_H-M_alt        'P 63/m'
+_symmetry_cell_setting           hexagonal
+_symmetry_space_group_name_H-M   'P 63/m'
+_atom_sites_solution_hydrogens   none
+_atom_sites_solution_primary     direct
+_atom_sites_solution_secondary   difmap
+_audit_creation_method           SHELXL-97
+_cell_angle_alpha                90.00
+_cell_angle_beta                 90.00
+_cell_angle_gamma                120.00
+_cell_formula_units_Z            2
+_cell_length_a                   8.1698(6)
+_cell_length_b                   8.1698(6)
+_cell_length_c                   7.7375(11)
+_cell_measurement_reflns_used    612
+_cell_measurement_temperature    293(2)
+_cell_measurement_theta_max      27.4680
+_cell_measurement_theta_min      3.9024
+_cell_volume                     447.25(8)
+_computing_structure_refinement  'SHELXL-97 (Sheldrick, 1997)'
+_computing_structure_solution    'SHELXS-97 (Sheldrick, 1990)'
+_diffrn_ambient_temperature      293(2)
+_diffrn_detector_area_resol_mean 14.6306
+_diffrn_measured_fraction_theta_full 0.992
+_diffrn_measured_fraction_theta_max 0.992
+_diffrn_measurement_device_type  Mercury2
+_diffrn_measurement_method       CCD_Profile_fitting
+_diffrn_radiation_monochromator  graphite
+_diffrn_radiation_source         'fine-focus sealed tube'
+_diffrn_radiation_type           MoK\a
+_diffrn_radiation_wavelength     0.71073
+_diffrn_reflns_av_R_equivalents  0.0182
+_diffrn_reflns_av_sigmaI/netI    0.0088
+_diffrn_reflns_limit_h_max       10
+_diffrn_reflns_limit_h_min       -10
+_diffrn_reflns_limit_k_max       10
+_diffrn_reflns_limit_k_min       -10
+_diffrn_reflns_limit_l_max       7
+_diffrn_reflns_limit_l_min       -10
+_diffrn_reflns_number            3431
+_diffrn_reflns_theta_full        27.52
+_diffrn_reflns_theta_max         27.52
+_diffrn_reflns_theta_min         2.88
+_diffrn_standards_decay_%        none
+_diffrn_standards_number         378
+_exptl_absorpt_coefficient_mu    5.763
+_exptl_absorpt_correction_T_max  0.891
+_exptl_absorpt_correction_T_min  0.871
+_exptl_absorpt_correction_type   multi-scan
+_exptl_crystal_colour            Colorless
+_exptl_crystal_density_diffrn    3.901
+_exptl_crystal_density_method    'not measured'
+_exptl_crystal_description       Prism
+_exptl_crystal_F_000             244
+_exptl_crystal_size_max          0.12
+_exptl_crystal_size_mid          0.04
+_exptl_crystal_size_min          0.04
+_refine_diff_density_max         0.530
+_refine_diff_density_min         -0.469
+_refine_diff_density_rms         0.092
+_refine_ls_extinction_coef       0.0078(10)
+_refine_ls_extinction_expression Fc^*^=kFc[1+0.001xFc^2^\l^3^/sin(2\q)]^-1/4^
+_refine_ls_extinction_method     SHELXL
+_refine_ls_goodness_of_fit_ref   1.035
+_refine_ls_hydrogen_treatment    none
+_refine_ls_matrix_type           full
+_refine_ls_number_parameters     34
+_refine_ls_number_reflns         373
+_refine_ls_number_restraints     0
+_refine_ls_restrained_S_all      1.035
+_refine_ls_R_factor_all          0.0135
+_refine_ls_R_factor_gt           0.0134
+_refine_ls_shift/su_max          0.001
+_refine_ls_shift/su_mean         0.000
+_refine_ls_structure_factor_coef Fsqd
+_refine_ls_weighting_details
+'calc w=1/[\s^2^(Fo^2^)+(0.0106P)^2^+1.8594P] where P=(Fo^2^+2Fc^2^)/3'
+_refine_ls_weighting_scheme      calc
+_refine_ls_wR_factor_gt          0.0329
+_refine_ls_wR_factor_ref         0.0330
+_reflns_number_gt                372
+_reflns_number_total             373
+_reflns_threshold_expression     >2sigma(I)
+_cod_data_source_file            JSSC-2010-183-1108.cif
+_cod_data_source_block           a2
+_cod_depositor_comments
+;
+The following automatic conversions were performed:
+
+data item '_exptl_absorpt_correction_type' value 'Multi-scan' was
+changed to 'multi-scan' in accordance with the built-in table derived
+from the CIF Core dictionary named 'cif_core.dic' version 2.4.5 last
+updated on 2014-11-21.
+
+Automatic conversion script
+Id: cif_fix_values 8369 2020-08-20 11:38:08Z andrius 
+;
+_cod_original_sg_symbol_H-M      P6(3)/m
+_cod_original_formula_sum        'B In2 O12 P3 '
+_cod_database_code               1563587
+loop_
+_symmetry_equiv_pos_as_xyz
+'x, y, z'
+'-y, x-y, z'
+'-x+y, -x, z'
+'-x, -y, z+1/2'
+'y, -x+y, z+1/2'
+'x-y, x, z+1/2'
+'-x, -y, -z'
+'y, -x+y, -z'
+'x-y, x, -z'
+'x, y, -z-1/2'
+'-y, x-y, -z-1/2'
+'-x+y, -x, -z-1/2'
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_occupancy
+_atom_site_symmetry_multiplicity
+_atom_site_calc_flag
+_atom_site_refinement_flags
+_atom_site_disorder_assembly
+_atom_site_disorder_group
+In1 In 0.3333 0.6667 -0.04417(4) 0.00740(13) Uani 1 3 d S . .
+P1 P 0.30894(12) 0.35063(11) 0.2500 0.00650(19) Uani 1 2 d S . .
+O1 O 0.1880(3) 0.1269(3) 0.2500 0.0103(5) Uani 1 2 d S . .
+O2 O 0.2662(3) 0.4201(2) 0.0866(2) 0.0141(4) Uani 1 1 d . . .
+O3 O 0.5137(3) 0.3886(3) 0.2500 0.0080(4) Uani 1 2 d S . .
+B1 B 0.0000 0.0000 0.2500 0.0096(12) Uani 1 6 d S . .
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_23
+_atom_site_aniso_U_13
+_atom_site_aniso_U_12
+In1 0.00752(14) 0.00752(14) 0.00715(18) 0.000 0.000 0.00376(7)
+P1 0.0052(4) 0.0051(4) 0.0094(4) 0.000 0.000 0.0027(3)
+O1 0.0065(11) 0.0069(11) 0.0175(12) 0.000 0.000 0.0032(9)
+O2 0.0135(8) 0.0122(8) 0.0160(9) 0.0041(7) -0.0032(7) 0.0060(7)
+O3 0.0061(10) 0.0097(11) 0.0086(11) 0.000 0.000 0.0044(9)
+B1 0.0058(16) 0.0058(16) 0.017(3) 0.000 0.000 0.0029(8)
+loop_
+_atom_type_symbol
+_atom_type_description
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+B B 0.0013 0.0007 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+O O 0.0106 0.0060 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+P P 0.1023 0.0942 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+In In -0.7276 1.3100 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+O2 In1 O2 98.11(7) 3_565 2_665
+O2 In1 O2 98.11(7) 3_565 .
+O2 In1 O2 98.11(7) 2_665 .
+O2 In1 O3 92.72(7) 3_565 8_565
+O2 In1 O3 93.18(8) 2_665 8_565
+O2 In1 O3 163.07(7) . 8_565
+O2 In1 O3 93.18(8) 3_565 9
+O2 In1 O3 163.07(7) 2_665 9
+O2 In1 O3 92.72(7) . 9
+O3 In1 O3 73.63(7) 8_565 9
+O2 In1 O3 163.07(7) 3_565 7_665
+O2 In1 O3 92.72(7) 2_665 7_665
+O2 In1 O3 93.18(7) . 7_665
+O3 In1 O3 73.63(7) 8_565 7_665
+O3 In1 O3 73.63(7) 9 7_665
+O2 In1 In1 119.29(5) 3_565 10
+O2 In1 In1 119.29(5) 2_665 10
+O2 In1 In1 119.29(5) . 10
+O3 In1 In1 43.78(5) 8_565 10
+O3 In1 In1 43.78(4) 9 10
+O3 In1 In1 43.78(5) 7_665 10
+O2 P1 O2 115.25(15) . 10_556
+O2 P1 O3 111.06(9) . .
+O2 P1 O3 111.06(9) 10_556 .
+O2 P1 O1 107.96(9) . .
+O2 P1 O1 107.96(9) 10_556 .
+O3 P1 O1 102.71(13) . .
+B1 O1 P1 134.09(18) . .
+P1 O2 In1 141.62(12) . .
+P1 O3 In1 128.89(7) . 7_665
+P1 O3 In1 128.89(7) . 4_665
+In1 O3 In1 92.43(9) 7_665 4_665
+O1 B1 O1 120.0 . 3
+O1 B1 O1 120.0 . 2
+O1 B1 O1 120.0 3 2
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_distance
+_geom_bond_site_symmetry_2
+In1 O2 2.0679(17) 3_565
+In1 O2 2.0679(17) 2_665
+In1 O2 2.0679(17) .
+In1 O3 2.2060(16) 8_565
+In1 O3 2.2060(17) 9
+In1 O3 2.2060(17) 7_665
+In1 In1 3.1853(7) 10
+P1 O2 1.4973(18) .
+P1 O2 1.4973(18) 10_556
+P1 O3 1.541(2) .
+P1 O1 1.585(2) .
+O1 B1 1.357(2) .
+O3 In1 2.2060(16) 7_665
+O3 In1 2.2060(16) 4_665
+B1 O1 1.357(2) 3
+B1 O1 1.357(2) 2

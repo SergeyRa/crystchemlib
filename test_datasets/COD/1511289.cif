@@ -1,0 +1,74 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-14 16:26:36 +0200 (Sun, 14 Feb 2016) $
+#$Revision: 176435 $
+#$URL: svn://www.crystallography.net/cod/cif/1/51/12/1511289.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_1511289
+loop_
+_publ_author_name
+'Taibi, M.'
+'Aschehoug, P.'
+'Ben Ali, A.'
+'Boukhari, A.'
+'Aride, J.'
+'Antic-Fidancev, E.'
+'Viana, B.'
+_publ_section_title
+;
+ Crystal structure of A B P O5 and optical study of Pr(3+) embedded in
+ these compounds
+;
+_journal_name_full               'Journal of Physics: Condensed Matter'
+_journal_page_first              9663
+_journal_page_last               9671
+_journal_paper_doi               10.1088/0953-8984/13/42/323
+_journal_volume                  13
+_journal_year                    2001
+_chemical_formula_sum            'B O5 P Pb'
+_chemical_name_systematic        'Pb (B P O5)'
+_space_group_IT_number           152
+_symmetry_space_group_name_Hall  'P 31 2"'
+_symmetry_space_group_name_H-M   'P 31 2 1'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                120
+_cell_formula_units_Z            3
+_cell_length_a                   6.851
+_cell_length_b                   6.851
+_cell_length_c                   6.821
+_cell_volume                     277.260
+_citation_journal_id_ASTM        JCOMEL
+_cod_data_source_file            boron0-1_418.cif
+_cod_data_source_block           B1O5P1Pb1
+_cod_original_cell_volume        277.2596
+_cod_original_formula_sum        'B1 O5 P1 Pb1'
+_cod_database_code               1511289
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+-y,x-y,z+1/3
+-x+y,-x,z+2/3
+y,x,-z
+-x,-x+y,-z+1/3
+x-y,-y,-z+2/3
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+O3 O-2 -0.0512 0 0.8333 1 0.0
+Pb1 Pb+2 0.3917 0 0.3333 1 0.0
+O2 O-2 0.4192 0.8594 -0.0291 1 0.0
+P1 P+5 0.3913 0 0.8333 1 0.0
+O1 O-2 0.3326 0.1415 -0.0327 1 0.0
+B1 B+3 -0.0921 0 0.3333 1 0.0

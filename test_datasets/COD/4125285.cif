@@ -1,0 +1,283 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-11-06 03:42:30 +0200 (Sun, 06 Nov 2016) $
+#$Revision: 187913 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/4/12/52/4125285.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_4125285
+loop_
+_publ_author_name
+'Xia, Mingjun'
+'Jiang, Xingxing'
+'Lin, Zheshuai'
+'Li, Rukang'
+_publ_section_title
+;
+ &quot;All-Three-in-One&quot;: A New Bismuth-Tellurium-Borate Bi3TeBO9
+ Exhibiting Strong Second Harmonic Generation Response.
+;
+_journal_issue                   43
+_journal_name_full               'Journal of the American Chemical Society'
+_journal_page_first              14190
+_journal_page_last               14193
+_journal_paper_doi               10.1021/jacs.6b08813
+_journal_volume                  138
+_journal_year                    2016
+_chemical_formula_sum            'B Bi3 O9 Te'
+_chemical_formula_weight         909.35
+_chemical_name_systematic
+; 
+ ? 
+;
+_space_group_IT_number           173
+_symmetry_cell_setting           hexagonal
+_symmetry_space_group_name_Hall  'P 6c'
+_symmetry_space_group_name_H-M   'P 63'
+_atom_sites_solution_hydrogens   none
+_atom_sites_solution_primary     direct
+_atom_sites_solution_secondary   difmap
+_audit_creation_method           SHELXL-97
+_cell_angle_alpha                90.00
+_cell_angle_beta                 90.00
+_cell_angle_gamma                120.00
+_cell_formula_units_Z            2
+_cell_length_a                   8.7510(12)
+_cell_length_b                   8.7510(12)
+_cell_length_c                   5.8981(12)
+_cell_measurement_reflns_used    1741
+_cell_measurement_temperature    293(2)
+_cell_measurement_theta_max      31.4764
+_cell_measurement_theta_min      2.6877
+_cell_volume                     391.16(11)
+_computing_structure_refinement  'SHELXL-97 (Sheldrick, 1997)'
+_computing_structure_solution    'SHELXS-97 (Sheldrick, 1990)'
+_diffrn_ambient_temperature      293(2)
+_diffrn_measured_fraction_theta_full 0.998
+_diffrn_measured_fraction_theta_max 0.998
+_diffrn_measurement_device_type  'Rigaku AFC'
+_diffrn_radiation_monochromator  graphite
+_diffrn_radiation_source         'fine-focus sealed tube'
+_diffrn_radiation_type           MoK\a
+_diffrn_radiation_wavelength     0.71073
+_diffrn_reflns_av_R_equivalents  0.0672
+_diffrn_reflns_av_sigmaI/netI    0.0532
+_diffrn_reflns_limit_h_max       12
+_diffrn_reflns_limit_h_min       -12
+_diffrn_reflns_limit_k_max       11
+_diffrn_reflns_limit_k_min       -12
+_diffrn_reflns_limit_l_max       8
+_diffrn_reflns_limit_l_min       -8
+_diffrn_reflns_number            5207
+_diffrn_reflns_theta_full        31.48
+_diffrn_reflns_theta_max         31.48
+_diffrn_reflns_theta_min         2.69
+_exptl_absorpt_coefficient_mu    70.998
+_exptl_crystal_colour            colorless
+_exptl_crystal_density_diffrn    7.721
+_exptl_crystal_density_method    'not measured'
+_exptl_crystal_description       chip
+_exptl_crystal_F_000             756
+_refine_diff_density_max         2.101
+_refine_diff_density_min         -2.696
+_refine_diff_density_rms         0.469
+_refine_ls_abs_structure_details 'Flack H D (1983), Acta Cryst. A39, 876-881'
+_refine_ls_abs_structure_Flack   0.021(15)
+_refine_ls_extinction_coef       0.0068(3)
+_refine_ls_extinction_expression Fc^*^=kFc[1+0.001xFc^2^\l^3^/sin(2\q)]^-1/4^
+_refine_ls_extinction_method     SHELXL
+_refine_ls_goodness_of_fit_ref   0.985
+_refine_ls_hydrogen_treatment    none
+_refine_ls_matrix_type           full
+_refine_ls_number_parameters     45
+_refine_ls_number_reflns         856
+_refine_ls_number_restraints     19
+_refine_ls_restrained_S_all      0.975
+_refine_ls_R_factor_all          0.0275
+_refine_ls_R_factor_gt           0.0250
+_refine_ls_shift/su_max          0.000
+_refine_ls_shift/su_mean         0.000
+_refine_ls_structure_factor_coef Fsqd
+_refine_ls_weighting_details
+'calc w=1/[\s^2^(Fo^2^)+(0.0123P)^2^+0.0000P] where P=(Fo^2^+2Fc^2^)/3'
+_refine_ls_weighting_scheme      calc
+_refine_ls_wR_factor_gt          0.0465
+_refine_ls_wR_factor_ref         0.0469
+_reflns_number_gt                786
+_reflns_number_total             856
+_reflns_threshold_expression     >2sigma(I)
+_cod_data_source_file            ja6b08813_si_002.cif
+_cod_data_source_block           shelxl
+_cod_depositor_comments
+;
+The following automatic conversions were performed:
+
+'_symmetry_cell_setting' value 'Hexagonal' changed to 'hexagonal'
+according to
+/usr/data/users/saulius/crontab/automatic-downloads/rss-feeds/ACS/lib/dictionaries/cif_core.dic
+dictionary named 'cif_core.dic' version 2.4.2 from 2011-04-26.
+
+Automatic conversion script
+Id: cif_fix_values 4268 2015-11-12 08:31:59Z antanas 
+
+ Adding full bibliography for 4125285.cif.
+;
+_cod_original_sg_symbol_H-M      P6(3)
+_cod_database_code               4125285
+loop_
+_symmetry_equiv_pos_as_xyz
+'x, y, z'
+'-y, x-y, z'
+'-x+y, -x, z'
+'-x, -y, z+1/2'
+'y, -x+y, z+1/2'
+'x-y, x, z+1/2'
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_occupancy
+_atom_site_symmetry_multiplicity
+_atom_site_calc_flag
+_atom_site_refinement_flags
+Bi1 Bi 0.29827(3) 0.34622(3) 0.10689(12) 0.00170(9) Uani 1 1 d .
+Te1 Te 0.6667 0.3333 0.0813(2) 0.0007(2) Uani 1 3 d SU
+O1 O 0.4599(9) 0.2464(9) 0.2679(12) 0.0035(13) Uani 1 1 d U
+O2 O 0.5407(8) 0.4147(8) -0.1042(13) 0.0034(14) Uani 1 1 d .
+O3 O 0.1009(9) 0.1813(8) 0.4333(13) 0.0032(12) Uani 1 1 d U
+B1 B 0.0000 0.0000 0.425(3) 0.005(4) Uani 1 3 d S
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_23
+_atom_site_aniso_U_13
+_atom_site_aniso_U_12
+Bi1 0.00197(13) 0.00214(13) 0.00124(17) 0.0000(2) -0.0002(2) 0.00121(10)
+Te1 0.0010(2) 0.0010(2) 0.0002(5) 0.000 0.000 0.00049(11)
+O1 0.0038(15) 0.0033(16) 0.0037(16) -0.0006(9) 0.0008(9) 0.0020(10)
+O2 0.002(3) 0.001(3) 0.006(4) -0.001(2) -0.002(2) 0.001(2)
+O3 0.0035(15) 0.0032(15) 0.0027(16) -0.0010(9) 0.0005(9) 0.0015(10)
+B1 0.005(5) 0.005(5) 0.005(10) 0.000 0.000 0.003(2)
+loop_
+_atom_type_symbol
+_atom_type_description
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+B B 0.0013 0.0007 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+O O 0.0106 0.0060 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+Te Te -0.5308 1.6751 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+Bi Bi -4.1077 10.2566 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+O1 Bi1 O3 80.7(2) . 5_554
+O1 Bi1 O2 69.0(2) . .
+O3 Bi1 O2 84.6(2) 5_554 .
+O1 Bi1 O1 150.9(3) . 6_554
+O3 Bi1 O1 88.6(2) 5_554 6_554
+O2 Bi1 O1 83.1(2) . 6_554
+O1 Bi1 O3 80.5(2) . .
+O3 Bi1 O3 85.9(2) 5_554 .
+O2 Bi1 O3 149.1(2) . .
+O1 Bi1 O3 125.9(2) 6_554 .
+O1 Bi1 O2 80.5(2) . 4_665
+O3 Bi1 O2 159.9(2) 5_554 4_665
+O2 Bi1 O2 95.24(11) . 4_665
+O1 Bi1 O2 111.4(2) 6_554 4_665
+O3 Bi1 O2 84.1(2) . 4_665
+O1 Bi1 Te1 34.38(17) . .
+O3 Bi1 Te1 83.76(16) 5_554 .
+O2 Bi1 Te1 34.81(17) . .
+O1 Bi1 Te1 117.87(16) 6_554 .
+O3 Bi1 Te1 114.90(16) . .
+O2 Bi1 Te1 84.75(14) 4_665 .
+O1 Te1 O1 90.4(3) 2_655 3_665
+O1 Te1 O1 90.4(3) 2_655 .
+O1 Te1 O1 90.4(3) 3_665 .
+O1 Te1 O2 82.6(3) 2_655 2_655
+O1 Te1 O2 169.9(3) 3_665 2_655
+O1 Te1 O2 97.0(3) . 2_655
+O1 Te1 O2 97.0(3) 2_655 3_665
+O1 Te1 O2 82.6(3) 3_665 3_665
+O1 Te1 O2 169.9(3) . 3_665
+O2 Te1 O2 90.9(3) 2_655 3_665
+O1 Te1 O2 169.9(3) 2_655 .
+O1 Te1 O2 97.0(3) 3_665 .
+O1 Te1 O2 82.6(3) . .
+O2 Te1 O2 90.9(3) 2_655 .
+O2 Te1 O2 90.9(3) 3_665 .
+O1 Te1 Bi1 40.6(2) 2_655 2_655
+O1 Te1 Bi1 131.0(2) 3_665 2_655
+O1 Te1 Bi1 91.4(2) . 2_655
+O2 Te1 Bi1 42.3(2) 2_655 2_655
+O2 Te1 Bi1 98.73(19) 3_665 2_655
+O2 Te1 Bi1 131.8(2) . 2_655
+O1 Te1 Bi1 91.4(2) 2_655 3_665
+O1 Te1 Bi1 40.6(2) 3_665 3_665
+O1 Te1 Bi1 131.0(2) . 3_665
+O2 Te1 Bi1 131.8(2) 2_655 3_665
+O2 Te1 Bi1 42.3(2) 3_665 3_665
+O2 Te1 Bi1 98.73(19) . 3_665
+Bi1 Te1 Bi1 119.790(4) 2_655 3_665
+O1 Te1 Bi1 131.0(2) 2_655 .
+O1 Te1 Bi1 91.4(2) 3_665 .
+O1 Te1 Bi1 40.6(2) . .
+O2 Te1 Bi1 98.73(19) 2_655 .
+O2 Te1 Bi1 131.8(2) 3_665 .
+O2 Te1 Bi1 42.3(2) . .
+Bi1 Te1 Bi1 119.790(4) 2_655 .
+Bi1 Te1 Bi1 119.790(4) 3_665 .
+Te1 O1 Bi1 105.0(3) . .
+Te1 O1 Bi1 134.5(3) . 5
+Bi1 O1 Bi1 120.4(3) . 5
+Te1 O2 Bi1 102.9(3) . .
+Te1 O2 Bi1 120.5(3) . 4_664
+Bi1 O2 Bi1 130.8(3) . 4_664
+B1 O3 Bi1 110.7(5) . 6
+B1 O3 Bi1 119.8(8) . .
+Bi1 O3 Bi1 118.3(3) 6 .
+O3 B1 O3 119.88(10) 2 .
+O3 B1 O3 119.88(10) 2 3
+O3 B1 O3 119.88(10) . 3
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_distance
+_geom_bond_site_symmetry_2
+Bi1 O1 2.214(7) .
+Bi1 O3 2.264(7) 5_554
+Bi1 O2 2.267(7) .
+Bi1 O1 2.505(7) 6_554
+Bi1 O3 2.506(7) .
+Bi1 O2 2.514(7) 4_665
+Bi1 Te1 3.2852(5) .
+Te1 O1 1.921(7) 2_655
+Te1 O1 1.921(7) 3_665
+Te1 O1 1.921(7) .
+Te1 O2 1.924(7) 2_655
+Te1 O2 1.924(7) 3_665
+Te1 O2 1.924(7) .
+Te1 Bi1 3.2852(5) 2_655
+Te1 Bi1 3.2852(5) 3_665
+O1 Bi1 2.505(7) 5
+O2 Bi1 2.514(7) 4_664
+O3 B1 1.378(6) .
+O3 Bi1 2.264(7) 6
+B1 O3 1.378(6) 2
+B1 O3 1.378(6) 3

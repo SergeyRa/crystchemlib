@@ -1,0 +1,240 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-20 22:30:07 +0200 (Sat, 20 Feb 2016) $
+#$Revision: 176789 $
+#$URL: svn://www.crystallography.net/cod/cif/2/22/80/2228054.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_2228054
+loop_
+_publ_author_name
+'Li, Fei Fei'
+'Zhang, Hui Ju'
+'Zhang, Li Na'
+_publ_section_title
+;
+ Redetermination of Fe~2~[BP~3~O~12~]
+;
+_journal_coeditor_code           WM2377
+_journal_issue                   9
+_journal_name_full               'Acta Crystallographica Section E'
+_journal_page_first              i63
+_journal_paper_doi               10.1107/S1600536810029818
+_journal_volume                  66
+_journal_year                    2010
+_chemical_formula_iupac          'Fe2 [B P3 O12]'
+_chemical_formula_structural     'Fe2 [B P3 O12]'
+_chemical_formula_sum            'B Fe2 O12 P3'
+_chemical_formula_weight         407.42
+_chemical_name_systematic
+;
+diiron(III) borotriphosphate
+;
+_space_group_IT_number           176
+_symmetry_cell_setting           hexagonal
+_symmetry_space_group_name_Hall  '-P 6c'
+_symmetry_space_group_name_H-M   'P 63/m'
+_atom_sites_solution_primary     direct
+_atom_sites_solution_secondary   difmap
+_audit_creation_method           SHELXL-97
+_cell_angle_alpha                90.00
+_cell_angle_beta                 90.00
+_cell_angle_gamma                120.00
+_cell_formula_units_Z            2
+_cell_length_a                   8.0347(8)
+_cell_length_b                   8.0347(8)
+_cell_length_c                   7.4163(13)
+_cell_measurement_reflns_used    1049
+_cell_measurement_temperature    293(2)
+_cell_measurement_theta_max      27.3794
+_cell_measurement_theta_min      4.0156
+_cell_volume                     414.63(9)
+_computing_cell_refinement       '<i>CrystalClear</i> (Rigaku, 2004)'
+_computing_data_collection       '<i>CrystalClear</i> (Rigaku, 2004)'
+_computing_data_reduction        '<i>CrystalClear</i> (Rigaku, 2004)'
+_computing_molecular_graphics    '<i>DIAMOND</i> (Brandenburg, 2004)'
+_computing_publication_material
+'<i>SHELXTL</i> (Sheldrick, 2008) and <i>PLATON</i> (Spek, 2009)'
+_computing_structure_refinement  '<i>SHELXL97</i> (Sheldrick, 2008)'
+_computing_structure_solution    'SHELXS97 (Sheldrick, 2008)'
+_diffrn_ambient_temperature      293(2)
+_diffrn_detector_area_resol_mean 14.6306
+_diffrn_measured_fraction_theta_full 0.997
+_diffrn_measured_fraction_theta_max 0.997
+_diffrn_measurement_device_type  'Rigaku Mercury70 CCD diffractometer'
+_diffrn_measurement_method       '\w scans'
+_diffrn_radiation_monochromator  'Graphite Monochromator'
+_diffrn_radiation_source         'fine-focus sealed tube'
+_diffrn_radiation_type           MoK\a
+_diffrn_radiation_wavelength     0.71073
+_diffrn_reflns_av_R_equivalents  0.0423
+_diffrn_reflns_av_sigmaI/netI    0.0262
+_diffrn_reflns_limit_h_max       10
+_diffrn_reflns_limit_h_min       -10
+_diffrn_reflns_limit_k_max       10
+_diffrn_reflns_limit_k_min       -10
+_diffrn_reflns_limit_l_max       6
+_diffrn_reflns_limit_l_min       -9
+_diffrn_reflns_number            3247
+_diffrn_reflns_theta_full        27.43
+_diffrn_reflns_theta_max         27.43
+_diffrn_reflns_theta_min         2.93
+_exptl_absorpt_coefficient_mu    4.152
+_exptl_absorpt_correction_T_max  0.8193
+_exptl_absorpt_correction_T_min  0.5748
+_exptl_absorpt_correction_type   multi-scan
+_exptl_absorpt_process_details   '(<i>ABSCOR</i>; Higashi, 1995)'
+_exptl_crystal_colour            light-red
+_exptl_crystal_density_diffrn    3.263
+_exptl_crystal_density_method    'not measured'
+_exptl_crystal_description       prism
+_exptl_crystal_F_000             396
+_exptl_crystal_size_max          0.15
+_exptl_crystal_size_mid          0.05
+_exptl_crystal_size_min          0.05
+_refine_diff_density_max         0.579
+_refine_diff_density_min         -0.782
+_refine_ls_extinction_method     none
+_refine_ls_goodness_of_fit_ref   1.073
+_refine_ls_matrix_type           full
+_refine_ls_number_parameters     33
+_refine_ls_number_reflns         345
+_refine_ls_number_restraints     0
+_refine_ls_restrained_S_all      1.073
+_refine_ls_R_factor_all          0.0363
+_refine_ls_R_factor_gt           0.0348
+_refine_ls_shift/su_max          0.000
+_refine_ls_shift/su_mean         0.000
+_refine_ls_structure_factor_coef Fsqd
+_refine_ls_weighting_details
+'calc w=1/[\s^2^(Fo^2^)+(0.0168P)^2^+3.0000P] where P=(Fo^2^+2Fc^2^)/3'
+_refine_ls_weighting_scheme      calc
+_refine_ls_wR_factor_gt          0.0707
+_refine_ls_wR_factor_ref         0.0718
+_reflns_number_gt                338
+_reflns_number_total             345
+_reflns_threshold_expression     I>2\s(I)
+_cod_data_source_file            wm2377.cif
+_cod_data_source_block           I
+_cod_database_code               2228054
+_cod_database_fobs_code          2228054
+loop_
+_symmetry_equiv_pos_as_xyz
+'x, y, z'
+'x-y, x, z+1/2'
+'-y, x-y, z'
+'-x, -y, z+1/2'
+'-x+y, -x, z'
+'y, -x+y, z+1/2'
+'-x, -y, -z'
+'-x+y, -x, -z-1/2'
+'y, -x+y, -z'
+'x, y, -z-1/2'
+'x-y, x, -z'
+'-y, x-y, -z-1/2'
+loop_
+_atom_site_type_symbol
+_atom_site_label
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_calc_flag
+_atom_site_refinement_flags
+_atom_site_occupancy
+_atom_site_disorder_assembly
+_atom_site_disorder_group
+Fe Fe1 0.6667 0.3333 0.45190(12) 0.0072(3) Uani d S 1 . .
+P P1 1.04513(17) 0.68473(17) 0.2500 0.0064(3) Uani d S 1 . .
+O O2 0.8735(5) 0.4782(5) 0.2500 0.0080(7) Uani d S 1 . .
+O O1 0.9428(5) 0.8099(5) 0.2500 0.0097(8) Uani d S 1 . .
+B B1 1.0000 1.0000 0.2500 0.0101(19) Uani d S 1 . .
+O O3 1.1626(3) 0.7289(3) 0.4200(4) 0.0115(6) Uani d . 1 . .
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Fe1 0.0076(3) 0.0076(3) 0.0063(5) 0.00381(15) 0.000 0.000
+P1 0.0055(6) 0.0057(6) 0.0077(7) 0.0025(5) 0.000 0.000
+O2 0.0067(15) 0.0059(16) 0.0099(19) 0.0021(13) 0.000 0.000
+O1 0.0060(16) 0.0056(16) 0.017(2) 0.0022(13) 0.000 0.000
+B1 0.008(2) 0.008(2) 0.014(5) 0.0040(12) 0.000 0.000
+O3 0.0116(12) 0.0115(12) 0.0127(15) 0.0066(10) -0.0045(11) -0.0019(10)
+loop_
+_atom_type_symbol
+_atom_type_description
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+B B 0.0013 0.0007 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+O O 0.0106 0.0060 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+P P 0.1023 0.0942 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+Fe Fe 0.3463 0.8444 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+_geom_angle
+_geom_angle_publ_flag
+O3 Fe1 O3 7_766 11_546 97.83(11) ?
+O3 Fe1 O3 7_766 9_566 97.83(11) ?
+O3 Fe1 O3 11_546 9_566 97.83(11) ?
+O3 Fe1 O2 7_766 8_666 93.65(11) ?
+O3 Fe1 O2 11_546 8_666 91.53(11) ?
+O3 Fe1 O2 9_566 8_666 164.04(11) ?
+O3 Fe1 O2 7_766 . 91.53(11) ?
+O3 Fe1 O2 11_546 . 164.04(11) ?
+O3 Fe1 O2 9_566 . 93.65(11) ?
+O2 Fe1 O2 8_666 . 74.92(10) ?
+O3 Fe1 O2 7_766 3_655 164.04(11) ?
+O3 Fe1 O2 11_546 3_655 93.65(11) ?
+O3 Fe1 O2 9_566 3_655 91.53(11) ?
+O2 Fe1 O2 8_666 3_655 74.92(10) ?
+O2 Fe1 O2 . 3_655 74.92(10) ?
+O3 P1 O3 . 10_556 113.6(2) ?
+O3 P1 O2 . . 111.85(12) ?
+O3 P1 O2 10_556 . 111.85(12) ?
+O3 P1 O1 . . 108.24(12) ?
+O3 P1 O1 10_556 . 108.24(12) ?
+O2 P1 O1 . . 102.37(18) ?
+P1 O2 Fe1 . . 129.13(10) ?
+P1 O2 Fe1 . 8_666 129.14(10) ?
+Fe1 O2 Fe1 . 8_666 90.78(13) ?
+B1 O1 P1 . . 136.3(3) ?
+O1 B1 O1 3_765 8_676 120.0000(10) ?
+O1 B1 O1 3_765 . 120.0000(10) ?
+O1 B1 O1 8_676 . 120.0000(10) ?
+P1 O3 Fe1 . 7_766 142.54(17) ?
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_site_symmetry_2
+_geom_bond_distance
+_geom_bond_publ_flag
+Fe1 O3 7_766 1.929(2) y
+Fe1 O3 11_546 1.929(2) ?
+Fe1 O3 9_566 1.929(2) ?
+Fe1 O2 8_666 2.103(2) ?
+Fe1 O2 . 2.103(2) y
+Fe1 O2 3_655 2.103(2) ?
+P1 O3 . 1.507(3) y
+P1 O3 10_556 1.507(3) ?
+P1 O2 . 1.538(3) y
+P1 O1 . 1.586(3) y
+O2 Fe1 8_666 2.103(2) ?
+O1 B1 . 1.357(3) y
+B1 O1 3_765 1.357(3) ?
+B1 O1 8_676 1.357(3) ?
+O3 Fe1 7_766 1.929(2) ?

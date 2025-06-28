@@ -1,0 +1,499 @@
+#------------------------------------------------------------------------------
+#$Date: 2023-06-05 07:21:26 +0300 (Mon, 05 Jun 2023) $
+#$Revision: 284254 $
+#$URL: file:///home/coder/svn-repositories/cod/cif/7/24/67/7246705.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_7246705
+loop_
+_publ_author_name
+'Kuznetsov, Artem B.'
+'Jamous, Ammar Y.'
+'Svetlichnyi, Valery A.'
+'Volkov, Sergey N.'
+'Korolkov, Ilya V.'
+'Kokh, Konstantin A.'
+'Gorelova, Liudmila A.'
+'Krzhizhanovskaya, Maria G.'
+'Aksenov, Sergey M.'
+'Kokh, Alexander E.'
+_publ_section_title
+;
+ Growth and characterization of Na3R(BO3)2 (R = La--Gd) borates: crystal
+ structure, high-temperature behavior, and optical properties
+;
+_journal_issue                   19
+_journal_name_full               CrystEngComm
+_journal_page_first              2914
+_journal_page_last               2924
+_journal_paper_doi               10.1039/D3CE00248A
+_journal_volume                  25
+_journal_year                    2023
+_chemical_formula_sum            'B2 Na3 O6 Pr'
+_chemical_formula_weight         327.5
+_space_group_IT_number           14
+_space_group_name_Hall           '-P 2yn'
+_space_group_name_H-M_alt        'P 1 21/n 1'
+_symmetry_cell_setting           monoclinic
+_symmetry_Int_Tables_number      14
+_symmetry_space_group_name_Hall  '-P 2yn'
+_symmetry_space_group_name_H-M   'P 1 21/n 1'
+_audit_update_record
+;
+2022-10-31 deposited with the CCDC.	2023-05-02 downloaded from the CCDC.
+;
+_cell_angle_alpha                90
+_cell_angle_beta                 90.9385(12)
+_cell_angle_gamma                90
+_cell_formula_units_Z            4
+_cell_length_a                   6.63360(10)
+_cell_length_b                   8.82790(10)
+_cell_length_c                   10.2569(2)
+_cell_measurement_reflns_used    8619
+_cell_measurement_temperature    293
+_cell_measurement_theta_max      33.67
+_cell_measurement_theta_min      3.67
+_cell_volume                     600.571(16)
+_diffrn_ambient_temperature      296.68
+_diffrn_detector                 'Hybrid Pixel Array Detector'
+_diffrn_detector_area_resol_mean 10.0000
+_diffrn_measured_fraction_theta_full 0.98
+_diffrn_measured_fraction_theta_max 0.88
+_diffrn_measurement_device       'four-circle diffractometer'
+_diffrn_measurement_device_type
+'XtaLAB Synergy, Single source at home/near, HyPix'
+_diffrn_measurement_method       '\w scans'
+_diffrn_radiation_monochromator  mirror
+_diffrn_radiation_probe          x-ray
+_diffrn_radiation_source         'X-ray tube'
+_diffrn_radiation_type           'Mo K\a'
+_diffrn_radiation_wavelength     0.71073
+_diffrn_reflns_av_R_equivalents  0.0227
+_diffrn_reflns_av_unetI/netI     0.0153
+_diffrn_reflns_limit_h_max       9
+_diffrn_reflns_limit_h_min       -9
+_diffrn_reflns_limit_k_max       13
+_diffrn_reflns_limit_k_min       -13
+_diffrn_reflns_limit_l_max       11
+_diffrn_reflns_limit_l_min       -15
+_diffrn_reflns_number            10588
+_diffrn_reflns_theta_full        31.86
+_diffrn_reflns_theta_max         33.63
+_diffrn_reflns_theta_min         3.63
+_diffrn_source                   'micro-focus sealed X-ray tube'
+_exptl_absorpt_coefficient_mu    8.296
+_exptl_absorpt_correction_T_max  1
+_exptl_absorpt_correction_T_min  0.7
+_exptl_absorpt_correction_type   multi-scan
+_exptl_absorpt_process_details
+;
+CrysAlisPro 1.171.41.123a (Rigaku Oxford Diffraction, 2022)
+Empirical absorption correction using spherical harmonics,
+implemented in SCALE3 ABSPACK scaling algorithm.
+;
+_exptl_crystal_density_diffrn    3.622
+_exptl_crystal_description       'anhedral grain'
+_exptl_crystal_F_000             600
+_refine_diff_density_max         1.86
+_refine_diff_density_min         -1.90
+_refine_ls_extinction_coef       2250(70)
+_refine_ls_extinction_method
+'B-C type 1 Gaussian isotropic (Becker & Coppens, 1974)'
+_refine_ls_goodness_of_fit_gt    1.70
+_refine_ls_goodness_of_fit_ref   1.68
+_refine_ls_number_constraints    0
+_refine_ls_number_parameters     110
+_refine_ls_number_reflns         2098
+_refine_ls_number_restraints     0
+_refine_ls_R_factor_all          0.0196
+_refine_ls_R_factor_gt           0.0182
+_refine_ls_shift/su_max          0.0469
+_refine_ls_shift/su_mean         0.0023
+_refine_ls_structure_factor_coef F
+_refine_ls_weighting_details     w=1/(\s^2^(F)+0.0001F^2^)
+_refine_ls_weighting_scheme      sigma
+_refine_ls_wR_factor_gt          0.0257
+_refine_ls_wR_factor_ref         0.0261
+_reflns_number_gt                1979
+_reflns_number_total             2098
+_reflns_threshold_expression     I>3\s(I)
+_cod_data_source_file            d3ce00248a2.cif
+_cod_data_source_block           Na3Pr(BO3)2
+_cod_depositor_comments
+;
+The following automatic conversions were performed:
+
+data item '_diffrn_radiation_probe' value 'X-ray' was changed to
+'x-ray' in accordance with the
+/home/data/users/saulius/crontab/automatic-downloads/rss-feeds/RSC/lib/dictionaries/cif_core.dic
+dictionary named 'cif_core.dic' version 2.4.2 last updated on
+2011-04-26.
+
+Automatic conversion script
+Id: cif_fix_values 8170 2020-07-09 18:12:32Z antanas 
+
+ Adding full bibliography for 7246705--7246706.cif.
+;
+_cod_original_sg_symbol_Hall     '-P 2yabc'
+_cod_original_formula_sum        'B2 Na3 O6 Pr1'
+_cod_database_code               7246705
+loop_
+_space_group_symop_id
+_space_group_symop_operation_xyz
+1 x,y,z
+2 -x+1/2,y+1/2,-z+1/2
+3 -x,-y,-z
+4 x+1/2,-y+1/2,z+1/2
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_adp_type
+_atom_site_U_iso_or_equiv
+_atom_site_site_symmetry_multiplicity
+_atom_site_occupancy
+_atom_site_calc_flag
+_atom_site_refinement_flags
+_atom_site_disorder_assembly
+_atom_site_disorder_group
+Pr1 Pr 0.838887(17) 0.386632(13) 0.354362(10) Uani 0.00657(5) 4 1 d . . .
+Na1 Na 0.02142(16) 0.19000(12) 0.10342(9) Uani 0.0154(3) 4 1 d . . .
+Na2 Na 0.02514(16) 0.76302(12) 0.34215(9) Uani 0.0156(3) 4 1 d . . .
+Na3 Na 0.2230(3) 0.56403(18) 0.10690(14) Uani 0.0552(6) 4 1 d . . .
+O1 O -0.2398(3) 0.63607(18) 0.24663(16) Uani 0.0113(5) 4 1 d . . .
+O2 O 0.1944(3) 0.8480(2) 0.51846(17) Uani 0.0203(6) 4 1 d . . .
+O3 O 0.1872(3) 0.5811(2) -0.11576(17) Uani 0.0204(6) 4 1 d . . .
+O4 O 0.1728(3) 0.2902(2) 0.29524(17) Uani 0.0143(5) 4 1 d . . .
+O5 O 0.4830(3) 0.3992(2) 0.3684(2) Uani 0.0195(6) 4 1 d . . .
+O6 O 0.1667(3) 0.5191(2) 0.41552(16) Uani 0.0118(5) 4 1 d . . .
+B1 B 0.2790(5) 0.4021(3) 0.3611(3) Uani 0.0090(7) 4 1 d . . .
+B2 B 0.2553(4) 0.9332(3) 0.6245(2) Uani 0.0105(7) 4 1 d . . .
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_type_symbol
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_12
+_atom_site_aniso_U_13
+_atom_site_aniso_U_23
+Pr1 Pr 0.00572(9) 0.00666(8) 0.00733(8) -0.00003(4) -0.00030(5) -0.00051(3)
+Na1 Na 0.0152(5) 0.0163(5) 0.0147(5) 0.0017(4) 0.0007(3) -0.0034(4)
+Na2 Na 0.0160(5) 0.0166(5) 0.0141(4) -0.0036(4) -0.0056(3) 0.0020(4)
+Na3 Na 0.1239(17) 0.0212(7) 0.0200(6) 0.0163(9) -0.0147(8) -0.0048(6)
+O1 O 0.0146(10) 0.0085(8) 0.0108(8) 0.0007(7) -0.0035(7) -0.0006(6)
+O2 O 0.0397(13) 0.0104(8) 0.0105(8) -0.0079(8) -0.0062(7) 0.0006(7)
+O3 O 0.0384(13) 0.0118(8) 0.0108(8) 0.0100(9) -0.0019(7) 0.0005(7)
+O4 O 0.0085(8) 0.0160(9) 0.0184(8) -0.0006(7) -0.0006(6) -0.0086(7)
+O5 O 0.0086(9) 0.0232(11) 0.0267(11) 0.0004(7) -0.0011(8) -0.0096(7)
+O6 O 0.0089(8) 0.0120(8) 0.0144(8) 0.0001(6) 0.0014(6) -0.0046(6)
+B1 B 0.0086(12) 0.0103(12) 0.0080(11) -0.0010(9) 0.0010(8) 0.0011(8)
+B2 B 0.0102(12) 0.0097(11) 0.0115(11) -0.0006(9) -0.0015(8) -0.0011(9)
+loop_
+_atom_type_symbol
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+B 0.0013 0.0007 'International Tables Vol C tables 4.2.6.8 and 6.1.1.1'
+Na 0.0362 0.0249 'International Tables Vol C tables 4.2.6.8 and 6.1.1.1'
+O 0.0106 0.0060 'International Tables Vol C tables 4.2.6.8 and 6.1.1.1'
+Pr -0.2180 2.8214 'International Tables Vol C tables 4.2.6.8 and 6.1.1.1'
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_2
+_geom_angle_site_symmetry_3
+_geom_angle
+_geom_angle_publ_flag
+Na1 Pr1 Na1 1_655 . 2_555 136.33(2) ?
+Na1 Pr1 Na1 1_655 . 4_555 135.21(3) ?
+Na1 Pr1 Na2 1_655 . 1_655 109.14(2) ?
+Na1 Pr1 Na2 1_655 . 2_545 68.27(3) ?
+Na1 Pr1 Na2 1_655 . 3_666 113.48(2) ?
+Na1 Pr1 O2 1_655 . 3_666 90.45(5) ?
+Na1 Pr1 O3 1_655 . 3_665 46.97(5) ?
+Na1 Pr1 O4 1_655 . 1_655 44.93(4) ?
+Na1 Pr1 O5 1_655 . . 116.36(6) ?
+Na1 Pr1 O6 1_655 . 3_666 155.28(4) ?
+Na1 Pr1 Na1 2_555 . 4_555 68.87(2) ?
+Na1 Pr1 Na2 2_555 . 1_655 62.77(2) ?
+Na1 Pr1 Na2 2_555 . 2_545 80.79(2) ?
+Na1 Pr1 Na2 2_555 . 3_666 109.58(2) ?
+Na1 Pr1 O2 2_555 . 3_666 119.62(5) ?
+Na1 Pr1 O3 2_555 . 3_665 89.85(5) ?
+Na1 Pr1 O4 2_555 . 1_655 152.25(5) ?
+Na1 Pr1 O5 2_555 . . 45.40(5) ?
+Na1 Pr1 O6 2_555 . 3_666 67.75(4) ?
+Na1 Pr1 Na2 4_555 . 1_655 115.63(2) ?
+Na1 Pr1 Na2 4_555 . 2_545 86.40(2) ?
+Na1 Pr1 Na2 4_555 . 3_666 53.78(2) ?
+Na1 Pr1 O2 4_555 . 3_666 51.16(5) ?
+Na1 Pr1 O3 4_555 . 3_665 137.14(6) ?
+Na1 Pr1 O4 4_555 . 1_655 133.41(5) ?
+Na1 Pr1 O5 4_555 . . 48.32(6) ?
+Na1 Pr1 O6 4_555 . 3_666 48.68(4) ?
+Na2 Pr1 Na2 1_655 . 2_545 122.62(2) ?
+Na2 Pr1 Na2 1_655 . 3_666 107.53(2) ?
+Na2 Pr1 O2 1_655 . 3_666 147.33(5) ?
+Na2 Pr1 O3 1_655 . 3_665 82.85(5) ?
+Na2 Pr1 O4 1_655 . 1_655 89.99(5) ?
+Na2 Pr1 O5 1_655 . . 107.82(5) ?
+Na2 Pr1 O6 1_655 . 3_666 74.49(4) ?
+Na2 Pr1 Na2 2_545 . 3_666 126.52(3) ?
+Na2 Pr1 O2 2_545 . 3_666 88.52(5) ?
+Na2 Pr1 O3 2_545 . 3_665 52.74(5) ?
+Na2 Pr1 O4 2_545 . 1_655 112.81(5) ?
+Na2 Pr1 O5 2_545 . . 48.23(6) ?
+Na2 Pr1 O6 2_545 . 3_666 131.50(4) ?
+Na2 Pr1 O2 3_666 . 3_666 39.80(5) ?
+Na2 Pr1 O3 3_666 . 3_665 160.45(5) ?
+Na2 Pr1 O4 3_666 . 1_655 82.42(4) ?
+Na2 Pr1 O5 3_666 . . 101.95(6) ?
+Na2 Pr1 O6 3_666 . 3_666 44.91(4) ?
+O2 Pr1 O3 3_666 . 3_665 128.16(6) ?
+O2 Pr1 O4 3_666 . 1_655 85.90(7) ?
+O2 Pr1 O5 3_666 . . 84.79(7) ?
+O2 Pr1 O6 3_666 . 3_666 77.12(6) ?
+O3 Pr1 O4 3_665 . 1_655 81.03(7) ?
+O3 Pr1 O5 3_665 . . 90.05(8) ?
+O3 Pr1 O6 3_665 . 3_666 153.50(6) ?
+O4 Pr1 O5 1_655 . . 159.02(7) ?
+O4 Pr1 O6 1_655 . 3_666 112.03(6) ?
+O5 Pr1 O6 . . 3_666 84.09(7) ?
+Pr1 Na1 Pr1 1_455 . 2_545 92.51(2) ?
+Pr1 Na1 Pr1 1_455 . 4_454 156.32(4) ?
+Pr1 Na1 Na1 1_455 . 3_555 145.49(4) ?
+Pr1 Na1 Na2 1_455 . 2_445 55.33(2) ?
+Pr1 Na1 Na2 1_455 . 2_545 96.61(3) ?
+Pr1 Na1 Na3 1_455 . . 69.64(3) ?
+Pr1 Na1 Na3 1_455 . 2_545 72.23(3) ?
+Pr1 Na1 Na3 1_455 . 3_565 88.98(4) ?
+Pr1 Na1 O4 1_455 . . 47.21(5) ?
+Pr1 Na1 Pr1 2_545 . 4_454 111.13(3) ?
+Pr1 Na1 Na1 2_545 . 3_555 53.01(2) ?
+Pr1 Na1 Na2 2_545 . 2_445 57.67(2) ?
+Pr1 Na1 Na2 2_545 . 2_545 140.22(4) ?
+Pr1 Na1 Na3 2_545 . . 158.89(5) ?
+Pr1 Na1 Na3 2_545 . 2_545 88.60(4) ?
+Pr1 Na1 Na3 2_545 . 3_565 103.66(4) ?
+Pr1 Na1 O4 2_545 . . 116.70(6) ?
+Pr1 Na1 Na1 4_454 . 3_555 58.12(2) ?
+Pr1 Na1 Na2 4_454 . 2_445 139.51(3) ?
+Pr1 Na1 Na2 4_454 . 2_545 64.45(3) ?
+Pr1 Na1 Na3 4_454 . . 87.42(4) ?
+Pr1 Na1 Na3 4_454 . 2_545 105.73(4) ?
+Pr1 Na1 Na3 4_454 . 3_565 86.90(4) ?
+Pr1 Na1 O4 4_454 . . 116.03(6) ?
+Na1 Na1 Na2 3_555 . 2_445 99.46(3) ?
+Na1 Na1 Na2 3_555 . 2_545 109.28(4) ?
+Na1 Na1 Na3 3_555 . . 144.17(4) ?
+Na1 Na1 Na3 3_555 . 2_545 102.11(4) ?
+Na1 Na1 Na3 3_555 . 3_565 99.71(4) ?
+Na1 Na1 O4 3_555 . . 141.70(6) ?
+Na2 Na1 Na2 2_445 . 2_545 150.92(4) ?
+Na2 Na1 Na3 2_445 . . 101.76(5) ?
+Na2 Na1 Na3 2_445 . 2_545 112.21(4) ?
+Na2 Na1 Na3 2_445 . 3_565 62.41(4) ?
+Na2 Na1 O4 2_445 . . 102.19(5) ?
+Na2 Na1 Na3 2_545 . . 56.33(4) ?
+Na2 Na1 Na3 2_545 . 2_545 58.15(4) ?
+Na2 Na1 Na3 2_545 . 3_565 115.11(5) ?
+Na2 Na1 O4 2_545 . . 51.58(5) ?
+Na3 Na1 Na3 . . 2_545 96.15(5) ?
+Na3 Na1 Na3 . . 3_565 66.11(5) ?
+Na3 Na1 O4 . . . 59.39(6) ?
+Na3 Na1 Na3 2_545 . 3_565 158.14(5) ?
+Na3 Na1 O4 2_545 . . 40.18(5) ?
+Na3 Na1 O4 3_565 . . 118.28(6) ?
+Pr1 Na2 Pr1 1_455 . 2_555 94.55(3) ?
+Pr1 Na2 Pr1 1_455 . 3_666 72.47(2) ?
+Pr1 Na2 Na1 1_455 . 2_455 59.56(2) ?
+Pr1 Na2 Na1 1_455 . 2_555 97.79(3) ?
+Pr1 Na2 Na3 1_455 . . 70.60(4) ?
+Pr1 Na2 Na3 1_455 . 2_555 163.71(5) ?
+Pr1 Na2 Na3 1_455 . 4_465 99.56(4) ?
+Pr1 Na2 O1 1_455 . . 44.91(4) ?
+Pr1 Na2 O2 1_455 . . 117.07(6) ?
+Pr1 Na2 B1 1_455 . 2_555 127.69(6) ?
+Pr1 Na2 Pr1 2_555 . 3_666 147.70(3) ?
+Pr1 Na2 Na1 2_555 . 2_455 56.40(2) ?
+Pr1 Na2 Na1 2_555 . 2_555 150.52(4) ?
+Pr1 Na2 Na3 2_555 . . 91.46(4) ?
+Pr1 Na2 Na3 2_555 . 2_555 101.60(4) ?
+Pr1 Na2 Na3 2_555 . 4_465 85.00(4) ?
+Pr1 Na2 O1 2_555 . . 49.69(4) ?
+Pr1 Na2 O2 2_555 . . 137.10(7) ?
+Pr1 Na2 B1 2_555 . 2_555 74.99(7) ?
+Pr1 Na2 Na1 3_666 . 2_455 92.22(3) ?
+Pr1 Na2 Na1 3_666 . 2_555 61.77(3) ?
+Pr1 Na2 Na3 3_666 . . 110.70(4) ?
+Pr1 Na2 Na3 3_666 . 2_555 92.43(4) ?
+Pr1 Na2 Na3 3_666 . 4_465 68.85(3) ?
+Pr1 Na2 O1 3_666 . . 112.45(5) ?
+Pr1 Na2 O2 3_666 . . 44.60(5) ?
+Pr1 Na2 B1 3_666 . 2_555 136.40(7) ?
+Na1 Na2 Na1 2_455 . 2_555 150.92(4) ?
+Na1 Na2 Na3 2_455 . . 114.79(5) ?
+Na1 Na2 Na3 2_455 . 2_555 128.98(5) ?
+Na1 Na2 Na3 2_455 . 4_465 55.03(4) ?
+Na1 Na2 O1 2_455 . . 40.48(5) ?
+Na1 Na2 O2 2_455 . . 114.33(7) ?
+Na1 Na2 B1 2_455 . 2_555 131.27(7) ?
+Na1 Na2 Na3 2_555 . . 67.92(5) ?
+Na1 Na2 Na3 2_555 . 2_555 68.92(5) ?
+Na1 Na2 Na3 2_555 . 4_465 118.87(4) ?
+Na1 Na2 O1 2_555 . . 134.96(6) ?
+Na1 Na2 O2 2_555 . . 57.03(6) ?
+Na1 Na2 B1 2_555 . 2_555 76.27(7) ?
+Na3 Na2 Na3 . . 2_555 110.71(6) ?
+Na3 Na2 Na3 . . 4_465 169.29(6) ?
+Na3 Na2 O1 . . . 74.72(6) ?
+Na3 Na2 O2 . . . 124.89(8) ?
+Na3 Na2 B1 . . 2_555 58.90(6) ?
+Na3 Na2 Na3 2_555 . 4_465 79.94(5) ?
+Na3 Na2 O1 2_555 . . 151.29(7) ?
+Na3 Na2 O2 2_555 . . 48.12(6) ?
+Na3 Na2 B1 2_555 . 2_555 59.99(6) ?
+Na3 Na2 O1 4_465 . . 95.39(6) ?
+Na3 Na2 O2 4_465 . . 62.85(7) ?
+Na3 Na2 B1 4_465 . 2_555 129.25(7) ?
+O1 Na2 O2 . . . 151.54(8) ?
+O1 Na2 B1 . . 2_555 105.18(8) ?
+O2 Na2 B1 . . 2_555 102.96(9) ?
+Na1 Na3 Na1 . . 2_555 118.01(5) ?
+Na1 Na3 Na1 . . 3_565 113.89(6) ?
+Na1 Na3 Na2 . . . 110.46(6) ?
+Na1 Na3 Na2 . . 2_545 54.75(4) ?
+Na1 Na3 Na2 . . 4_564 125.34(5) ?
+Na1 Na3 Na3 . . 3_565 55.50(4) ?
+Na1 Na3 O2 . . 2_545 48.59(6) ?
+Na1 Na3 O3 . . . 91.03(7) ?
+Na1 Na3 O4 . . 2_555 154.90(7) ?
+Na1 Na3 B2 . . 2_545 67.19(7) ?
+Na1 Na3 Na1 2_555 . 3_565 122.42(5) ?
+Na1 Na3 Na2 2_555 . . 53.93(3) ?
+Na1 Na3 Na2 2_555 . 2_545 83.25(5) ?
+Na1 Na3 Na2 2_555 . 4_564 102.99(6) ?
+Na1 Na3 Na3 2_555 . 3_565 157.02(7) ?
+Na1 Na3 O2 2_555 . 2_545 126.22(9) ?
+Na1 Na3 O3 2_555 . . 147.78(9) ?
+Na1 Na3 O4 2_555 . 2_555 40.83(5) ?
+Na1 Na3 B2 2_555 . 2_545 148.16(10) ?
+Na1 Na3 Na2 3_565 . . 86.17(5) ?
+Na1 Na3 Na2 3_565 . 2_545 150.50(5) ?
+Na1 Na3 Na2 3_565 . 4_564 62.56(3) ?
+Na1 Na3 Na3 3_565 . 3_565 58.39(4) ?
+Na1 Na3 O2 3_565 . 2_545 106.13(7) ?
+Na1 Na3 O3 3_565 . . 45.31(6) ?
+Na1 Na3 O4 3_565 . 2_555 82.13(7) ?
+Na1 Na3 B2 3_565 . 2_545 75.26(7) ?
+Na2 Na3 Na2 . . 2_545 122.90(5) ?
+Na2 Na3 Na2 . . 4_564 122.92(5) ?
+Na2 Na3 Na3 . . 3_565 105.39(7) ?
+Na2 Na3 O2 . . 2_545 158.48(9) ?
+Na2 Na3 O3 . . . 131.37(9) ?
+Na2 Na3 O4 . . 2_555 49.01(6) ?
+Na2 Na3 B2 . . 2_545 157.39(10) ?
+Na2 Na3 Na2 2_545 . 4_564 100.06(6) ?
+Na2 Na3 Na3 2_545 . 3_565 104.29(5) ?
+Na2 Na3 O2 2_545 . 2_545 44.81(6) ?
+Na2 Na3 O3 2_545 . . 105.29(8) ?
+Na2 Na3 O4 2_545 . 2_555 119.57(9) ?
+Na2 Na3 B2 2_545 . 2_545 75.30(7) ?
+Na2 Na3 Na3 4_564 . 3_565 97.09(4) ?
+Na2 Na3 O2 4_564 . 2_545 78.60(7) ?
+Na2 Na3 O3 4_564 . . 45.34(7) ?
+Na2 Na3 O4 4_564 . 2_555 78.70(7) ?
+Na2 Na3 B2 4_564 . 2_545 59.17(7) ?
+Na3 Na3 O2 3_565 . 2_545 68.56(7) ?
+Na3 Na3 O3 3_565 . . 51.89(7) ?
+Na3 Na3 O4 3_565 . 2_555 136.06(9) ?
+Na3 Na3 B2 3_565 . 2_545 53.81(7) ?
+O2 Na3 O3 2_545 . . 62.23(8) ?
+O2 Na3 O4 2_545 . 2_555 148.47(12) ?
+O2 Na3 B2 2_545 . 2_545 31.26(8) ?
+O3 Na3 O4 . . 2_555 113.36(9) ?
+O3 Na3 B2 . . 2_545 31.02(8) ?
+O4 Na3 B2 2_555 . 2_545 137.65(10) ?
+Na2 O1 B2 . . 4_464 127.26(16) ?
+Pr1 O2 Na2 3_666 . . 95.60(8) ?
+Pr1 O2 Na3 3_666 . 2_555 171.58(12) ?
+Pr1 O2 B2 3_666 . . 93.93(14) ?
+Na2 O2 Na3 . . 2_555 87.07(8) ?
+Na2 O2 B2 . . . 162.95(18) ?
+Na3 O2 B2 2_555 . . 85.53(15) ?
+Pr1 O3 Na3 3_665 . . 176.55(11) ?
+Pr1 O3 B2 3_665 . 2_545 93.48(14) ?
+Na3 O3 B2 . . 2_545 88.75(14) ?
+Pr1 O4 Na1 1_455 . . 87.86(6) ?
+Pr1 O4 Na3 1_455 . 2_545 116.85(9) ?
+Pr1 O4 B1 1_455 . . 94.93(15) ?
+Na1 O4 Na3 . . 2_545 98.99(8) ?
+Na1 O4 B1 . . . 151.54(16) ?
+Na3 O4 B1 2_545 . . 104.84(15) ?
+Pr1 O5 B1 . . . 173.18(19) ?
+Pr1 O6 B1 3_666 . . 129.76(15) ?
+Na2 B1 O4 2_545 . . 63.64(13) ?
+Na2 B1 O5 2_545 . . 63.33(14) ?
+Na2 B1 O6 2_545 . . 153.10(17) ?
+O4 B1 O5 . . . 120.9(2) ?
+O4 B1 O6 . . . 117.0(2) ?
+O5 B1 O6 . . . 122.1(2) ?
+Na3 B2 O1 2_555 . 4_565 175.53(19) ?
+Na3 B2 O2 2_555 . . 63.21(13) ?
+Na3 B2 O3 2_555 . 2_555 60.24(12) ?
+O1 B2 O2 4_565 . . 118.2(2) ?
+O1 B2 O3 4_565 . 2_555 118.5(2) ?
+O2 B2 O3 . . 2_555 123.3(2) ?
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_site_symmetry_1
+_geom_bond_site_symmetry_2
+_geom_bond_distance
+_geom_bond_publ_flag
+Pr1 Na1 . 1_655 3.3476(10) ?
+Pr1 Na1 . 2_555 3.6203(11) ?
+Pr1 Na1 . 4_555 3.4051(10) ?
+Pr1 Na2 . 1_655 3.5480(11) ?
+Pr1 Na2 . 2_545 3.3053(10) ?
+Pr1 Na2 . 3_666 3.4867(10) ?
+Pr1 O2 . 3_666 2.4601(19) ?
+Pr1 O3 . 3_665 2.4671(18) ?
+Pr1 O4 . 1_655 2.4583(17) ?
+Pr1 O5 . . 2.370(2) ?
+Pr1 O6 . 3_666 2.5035(16) ?
+Na1 Na1 . 3_555 3.9768(15) ?
+Na1 Na2 . 2_445 3.7335(15) ?
+Na1 Na2 . 2_545 3.1177(15) ?
+Na1 Na3 . . 3.562(2) ?
+Na1 Na3 . 2_545 3.5741(19) ?
+Na1 Na3 . 3_565 3.447(2) ?
+Na1 O4 . . 2.366(2) ?
+Na2 Na3 . . 3.2763(19) ?
+Na2 Na3 . 2_555 3.178(2) ?
+Na2 Na3 . 4_465 3.728(2) ?
+Na2 O1 . . 2.291(2) ?
+Na2 O2 . . 2.242(2) ?
+Na2 B1 . 2_555 2.762(3) ?
+Na3 Na3 . 3_565 3.825(3) ?
+Na3 O2 . 2_545 2.369(3) ?
+Na3 O3 . . 2.297(2) ?
+Na3 O4 . 2_555 2.335(2) ?
+Na3 B2 . 2_545 2.646(3) ?
+O1 B2 . 4_464 1.394(3) ?
+O2 B2 . . 1.377(3) ?
+O3 B2 . 2_545 1.364(3) ?
+O4 B1 . . 1.383(3) ?
+O5 B1 . . 1.355(4) ?
+O6 B1 . . 1.395(3) ?

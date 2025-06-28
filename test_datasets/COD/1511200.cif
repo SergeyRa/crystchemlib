@@ -1,0 +1,80 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-13 21:28:24 +0200 (Sat, 13 Feb 2016) $
+#$Revision: 176429 $
+#$URL: svn://www.crystallography.net/cod/cif/1/51/12/1511200.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_1511200
+loop_
+_publ_author_name
+'Ftini, M. M.'
+'Haddad, A.'
+'Jouini, T.'
+_publ_section_title
+;
+ Synthesis and crystal structure of K~3~Sb~4~BO~13~
+;
+_journal_issue                   1
+_journal_name_full               'Journal of Chemical Crystallography'
+_journal_page_first              49
+_journal_page_last               53
+_journal_paper_doi               10.1023/A:1009598116581
+_journal_volume                  30
+_journal_year                    2000
+_chemical_formula_sum            'B K3 O13 Sb4'
+_chemical_name_systematic        'K3 (B Sb4 O13)'
+_space_group_IT_number           2
+_symmetry_space_group_name_Hall  '-P 1'
+_symmetry_space_group_name_H-M   'P -1'
+_cell_angle_alpha                82.00(1)
+_cell_angle_beta                 99.77(1)
+_cell_angle_gamma                117.08(1)
+_cell_formula_units_Z            2
+_cell_length_a                   7.133(1)
+_cell_length_b                   7.232(1)
+_cell_length_c                   13.259(2)
+_cell_volume                     598.665
+_citation_journal_id_ASTM        JCCYEV
+_cod_data_source_file            boron0-1_307.cif
+_cod_data_source_block           B1K3O13Sb4
+_cod_original_formula_sum        'B1 K3 O13 Sb4'
+_cod_database_code               1511200
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+-x,-y,-z
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+O12 O-2 -0.0521 -0.3506 -0.0645 1 0.0
+K2 K+1 0.0993 -0.6047 0.44523 1 0.0
+O2 O-2 0.2267 -0.1808 0.0693 1 0.0
+Sb2 Sb+5 0.16796 -0.70613 0.20676 1 0.0
+O9 O-2 -0.5367 -0.9863 0.2509 1 0.0
+K3 K+1 0.3095 -0.7802 -0.03259 1 0.0
+O7 O-2 0.448 -0.6164 0.16 1 0.0
+B1 B+3 -0.1591 -0.7303 0.0228 1 0.0
+Sb3 Sb+5 0.16304 -0.20975 0.20951 1 0.0
+O13 O-2 0.1613 -0.1949 0.3609 1 0.0
+K1 K+1 0.2939 -0.7821 -0.30652 1 0.0
+O3 O-2 0.0649 -0.9931 0.1694 1 0.0
+O4 O-2 0.3257 -0.327 0.6375 1 0.0
+O11 O-2 -0.3233 -0.7511 0.0727 1 0.0
+O5 O-2 0.2694 -0.4181 0.2463 1 0.0
+O1 O-2 -0.5924 0.0846 0.5391 1 0.0
+Sb4 Sb+5 -0.31802 -0.69116 0.21278 1 0.0
+O6 O-2 0.2583 -0.7753 0.35 1 0.0
+O10 O-2 -0.136 -0.3984 0.1925 1 0.0
+O8 O-2 -0.103 -0.7893 0.2589 1 0.0
+Sb1 Sb+5 0.5804 -0.06652 0.60509 1 0.0

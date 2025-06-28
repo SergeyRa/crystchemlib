@@ -1,0 +1,84 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-16 18:55:33 +0200 (Tue, 16 Feb 2016) $
+#$Revision: 176466 $
+#$URL: svn://www.crystallography.net/cod/cif/8/10/34/8103491.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_8103491
+loop_
+_publ_author_name
+'Kubel, F.'
+'Crottaz, O.'
+_publ_section_title
+;
+ Crystal structure of manganese bromine boracite, Mn3 B7 O13 Br
+;
+_journal_name_full
+'Zeitschrift fuer Kristallographie (149,1979-)'
+_journal_page_first              924
+_journal_page_last               924
+_journal_volume                  211
+_journal_year                    1996
+_chemical_formula_sum            'B7 Br Mn3 O13'
+_chemical_name_systematic        'Mn3 (B7 O13 Br)'
+_space_group_IT_number           29
+_symmetry_space_group_name_Hall  'P 2c -2ac'
+_symmetry_space_group_name_H-M   'P c a 21'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                90
+_cell_formula_units_Z            4
+_cell_length_a                   8.7099
+_cell_length_b                   8.6861
+_cell_length_c                   12.314
+_cell_volume                     931.616
+_citation_journal_id_ASTM        ZEKRDZ
+_cod_data_source_file            boron4-x_309.cif
+_cod_data_source_block           B7Br1Mn3O13
+_cod_original_cell_volume        931.6165
+_cod_original_formula_sum        'B7 Br1 Mn3 O13'
+_cod_database_code               8103491
+loop_
+_symmetry_equiv_pos_as_xyz
+x,y,z
+-x,-y,z+1/2
+-x+1/2,y,z+1/2
+x+1/2,-y,z
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_occupancy
+_atom_site_U_iso_or_equiv
+O8 O-2 0.3374 0.5149 0.2336 1 0.0
+O7 O-2 0.1421 0.1805 0.4291 1 0.0
+O6 O-2 0.1627 0.9747 0.2311 1 0.0
+O3 O-2 0.3804 0.3246 0.4397 1 0.0
+B7 B+3 0.7551 0.902 0.6768 1 0.0
+B3 B+3 -0.0012 -0.002 0.255 1 0.0
+O13 O-2 0.5932 0.9434 0.6646 1 0.0
+B2 B+3 0.2556 0.2467 0.501 1 0.0
+O5 O-2 0.316 0.3626 0.0724 1 0.0
+Mn2 Mn+2 0.4906 0.5256 0.50547 1 0.0
+Br1 Br-1 0.75673 0.25061 0.5087 1 0.0
+O12 O-2 0.9096 0.5384 0.6585 1 0.0
+B1 B+3 0.4994 0.496 0.2537 1 0.0
+B5 B+3 0.2452 0.4012 0.1759 1 0.0
+O9 O-2 0.1764 0.1258 0.0698 1 0.0
+O1 O-2 0.2293 0.2497 0.2428 1 0.0
+B4 B+3 0.4523 0.2494 0.3544 1 0.0
+B6 B+3 0.905 0.7502 0.8265 1 0.0
+O2 O-2 0.5372 0.3327 0.2808 1 0.0
+O4 O-2 0.9707 0.1595 0.2794 1 0.0
+O10 O-2 0.9526 0.593 0.8459 1 0.0
+Mn3 Mn+2 -0.00842 0.0259 0.50889 1 0.0
+O11 O-2 0.5377 0.9081 0.8564 1 0.0
+Mn1 Mn+2 0.75972 0.2521 0.23392 1 0.0

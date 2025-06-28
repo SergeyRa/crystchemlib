@@ -1,0 +1,255 @@
+#------------------------------------------------------------------------------
+#$Date: 2016-02-13 14:50:18 +0200 (Sat, 13 Feb 2016) $
+#$Revision: 176428 $
+#$URL: svn://www.crystallography.net/cod/cif/1/52/03/1520321.cif $
+#------------------------------------------------------------------------------
+#
+# This file is available in the Crystallography Open Database (COD),
+# http://www.crystallography.net/
+#
+# All data on this site have been placed in the public domain by the
+# contributors.
+#
+data_1520321
+loop_
+_publ_author_name
+'Wang, Shichao'
+'Ye, Ning'
+'Poeppelmeier, Kenneth'
+_publ_section_title
+;
+ Flux Growth and Crystal Structure Refinement of Calcite Type Borate GaBO3
+;
+_journal_issue                   2
+_journal_name_full               Crystals
+_journal_page_first              252
+_journal_paper_doi               10.3390/cryst5020252
+_journal_volume                  5
+_journal_year                    2015
+_chemical_formula_moiety         'B1  O3  Ga1'
+_chemical_formula_sum            'B Ga O3'
+_chemical_formula_weight         128.53
+_chemical_name_systematic
+;
+ ?
+;
+_space_group_IT_number           167
+_symmetry_cell_setting           trigonal
+_symmetry_Int_Tables_number      167
+_symmetry_space_group_name_Hall  '-R 3 2"c'
+_symmetry_space_group_name_H-M   'R -3 c :H'
+_atom_sites_solution_primary     direct
+_atom_sites_solution_secondary   difmap
+_audit_conform_dict_location     ftp://ftp.iucr.org/pub/cif_core.dic
+_audit_conform_dict_name         cif_core.dic
+_audit_conform_dict_version      2.4.3
+_audit_creation_date             2014-12-10T11:38:31-00:00
+_audit_creation_method           'WinGX routine CIF_UPDATE'
+_cell_angle_alpha                90
+_cell_angle_beta                 90
+_cell_angle_gamma                120
+_cell_formula_units_Z            6
+_cell_length_a                   4.56590(10)
+_cell_length_b                   4.56590(10)
+_cell_length_c                   14.1764(4)
+_cell_measurement_reflns_used    4393
+_cell_measurement_temperature    100(2)
+_cell_measurement_theta_max      45.1564
+_cell_measurement_theta_min      5.9067
+_cell_measurement_wavelength     0.71073
+_cell_volume                     255.947(11)
+_computing_molecular_graphics    'Ortep for Windows (Farrugia, 2012)'
+_computing_publication_material  'WinGX publication routines (Farrugia, 2012)'
+_computing_structure_refinement  'SHELXL-97 (Sheldrick, 2008)'
+_computing_structure_solution    'SHELXS-97 (Sheldrick, 2008)'
+_diffrn_ambient_temperature      100(2)
+_diffrn_measured_fraction_theta_full 1
+_diffrn_measured_fraction_theta_max 1
+_diffrn_radiation_monochromator  graphite
+_diffrn_radiation_probe          x-ray
+_diffrn_radiation_type           MoK\a
+_diffrn_radiation_wavelength     0.71073
+_diffrn_reflns_av_R_equivalents  0.0353
+_diffrn_reflns_av_unetI/netI     0.0114
+_diffrn_reflns_limit_h_max       9
+_diffrn_reflns_limit_h_min       -8
+_diffrn_reflns_limit_k_max       9
+_diffrn_reflns_limit_k_min       -8
+_diffrn_reflns_limit_l_max       28
+_diffrn_reflns_limit_l_min       -26
+_diffrn_reflns_number            6025
+_diffrn_reflns_theta_full        45.16
+_diffrn_reflns_theta_max         45.16
+_diffrn_reflns_theta_min         5.91
+_exptl_absorpt_coefficient_mu    15.716
+_exptl_absorpt_correction_T_max  0.419
+_exptl_absorpt_correction_T_min  0.2059
+_exptl_absorpt_correction_type   multi-scan
+_exptl_crystal_colour            'light yellow'
+_exptl_crystal_density_diffrn    5.003
+_exptl_crystal_density_method    'not measured'
+_exptl_crystal_description       pyramid
+_exptl_crystal_F_000             360
+_exptl_crystal_size_max          0.15
+_exptl_crystal_size_mid          0.11
+_exptl_crystal_size_min          0.07
+_refine_diff_density_max         1.504
+_refine_diff_density_min         -1.156
+_refine_diff_density_rms         0.186
+_refine_ls_extinction_coef       0.0017(14)
+_refine_ls_extinction_expression Fc^*^=kFc[1+0.001xFc^2^\l^3^/sin(2\q)]^-1/4^
+_refine_ls_extinction_method     SHELXL
+_refine_ls_goodness_of_fit_ref   1.172
+_refine_ls_matrix_type           full
+_refine_ls_number_constraints    0
+_refine_ls_number_parameters     11
+_refine_ls_number_reflns         242
+_refine_ls_number_restraints     0
+_refine_ls_restrained_S_all      1.172
+_refine_ls_R_factor_all          0.0155
+_refine_ls_R_factor_gt           0.0153
+_refine_ls_shift/su_max          0
+_refine_ls_shift/su_mean         0
+_refine_ls_structure_factor_coef Fsqd
+_refine_ls_weighting_details
+'calc w=1/[\s^2^(Fo^2^)+(0.0295P)^2^+0.1029P] where P=(Fo^2^+2Fc^2^)/3'
+_refine_ls_weighting_scheme      calc
+_refine_ls_wR_factor_gt          0.0432
+_refine_ls_wR_factor_ref         0.0433
+_reflns_number_gt                237
+_reflns_number_total             242
+_reflns_threshold_expression     >2sigma(I)
+_cod_data_source_file            s1.cif
+_cod_data_source_block           shelx
+_cod_depositor_comments
+;
+The following automatic conversions were performed:
+
+'_exptl_absorpt_correction_type' value 'Multi-Scan' changed to
+'multi-scan' according to
+/usr/data/users/saulius/crontab/automatic-downloads/current/MDPI/lib/dictionaries/cif_core.dic
+dictionary named 'cif_core.dic' version 2.4.2 from 2011-04-26.
+
+Automatic conversion script
+Id: cif_fix_values 3271 2015-04-21 07:52:19Z andrius 
+;
+_cod_original_cell_volume        255.946(11)
+_cod_original_sg_symbol_H-M      R-3c
+_cod_database_code               1520321
+loop_
+_symmetry_equiv_pos_as_xyz
+'x, y, z'
+'-y, x-y, z'
+'-x+y, -x, z'
+'y, x, -z+1/2'
+'x-y, -y, -z+1/2'
+'-x, -x+y, -z+1/2'
+'x+2/3, y+1/3, z+1/3'
+'-y+2/3, x-y+1/3, z+1/3'
+'-x+y+2/3, -x+1/3, z+1/3'
+'y+2/3, x+1/3, -z+5/6'
+'x-y+2/3, -y+1/3, -z+5/6'
+'-x+2/3, -x+y+1/3, -z+5/6'
+'x+1/3, y+2/3, z+2/3'
+'-y+1/3, x-y+2/3, z+2/3'
+'-x+y+1/3, -x+2/3, z+2/3'
+'y+1/3, x+2/3, -z+7/6'
+'x-y+1/3, -y+2/3, -z+7/6'
+'-x+1/3, -x+y+2/3, -z+7/6'
+'-x, -y, -z'
+'y, -x+y, -z'
+'x-y, x, -z'
+'-y, -x, z-1/2'
+'-x+y, y, z-1/2'
+'x, x-y, z-1/2'
+'-x+2/3, -y+1/3, -z+1/3'
+'y+2/3, -x+y+1/3, -z+1/3'
+'x-y+2/3, x+1/3, -z+1/3'
+'-y+2/3, -x+1/3, z-1/6'
+'-x+y+2/3, y+1/3, z-1/6'
+'x+2/3, x-y+1/3, z-1/6'
+'-x+1/3, -y+2/3, -z+2/3'
+'y+1/3, -x+y+2/3, -z+2/3'
+'x-y+1/3, x+2/3, -z+2/3'
+'-y+1/3, -x+2/3, z+1/6'
+'-x+y+1/3, y+2/3, z+1/6'
+'x+1/3, x-y+2/3, z+1/6'
+loop_
+_atom_site_label
+_atom_site_type_symbol
+_atom_site_fract_x
+_atom_site_fract_y
+_atom_site_fract_z
+_atom_site_U_iso_or_equiv
+_atom_site_adp_type
+_atom_site_occupancy
+_atom_site_symmetry_multiplicity
+_atom_site_calc_flag
+_atom_site_refinement_flags
+Ga1 Ga 0 0 0 0.00262(8) Uani 1 6 d S
+B1 B 0 0 0.25 0.0043(3) Uani 1 6 d S
+O1 O 0.30201(12) 0.30201(12) 0.25 0.00391(11) Uani 1 2 d S
+loop_
+_atom_site_aniso_label
+_atom_site_aniso_U_11
+_atom_site_aniso_U_22
+_atom_site_aniso_U_33
+_atom_site_aniso_U_23
+_atom_site_aniso_U_13
+_atom_site_aniso_U_12
+Ga1 0.00232(9) 0.00232(9) 0.00321(11) 0 0 0.00116(5)
+B1 0.0037(5) 0.0037(5) 0.0055(8) 0 0 0.0019(2)
+O1 0.00291(15) 0.00291(15) 0.00534(18) 0.00024(6) -0.00024(6) 0.00104(15)
+loop_
+_atom_type_symbol
+_atom_type_description
+_atom_type_scat_dispersion_real
+_atom_type_scat_dispersion_imag
+_atom_type_scat_source
+B B 0.0013 0.0007 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+O O 0.0106 0.006 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+Ga Ga 0.2307 1.6083 'International Tables Vol C Tables 4.2.6.8 and 6.1.1.4'
+loop_
+_geom_angle_atom_site_label_1
+_geom_angle_atom_site_label_2
+_geom_angle_atom_site_label_3
+_geom_angle
+_geom_angle_site_symmetry_1
+_geom_angle_site_symmetry_3
+O1 Ga1 O1 180.00(3) 25 13_444
+O1 Ga1 O1 88.282(7) 25 27_445
+O1 Ga1 O1 91.718(7) 13_444 27_445
+O1 Ga1 O1 91.718(7) 25 15_554
+O1 Ga1 O1 88.282(7) 13_444 15_554
+O1 Ga1 O1 180 27_445 15_554
+O1 Ga1 O1 91.718(7) 25 14_544
+O1 Ga1 O1 88.282(7) 13_444 14_544
+O1 Ga1 O1 91.719(8) 27_445 14_544
+O1 Ga1 O1 88.281(8) 15_554 14_544
+O1 Ga1 O1 88.282(7) 25 26_455
+O1 Ga1 O1 91.718(7) 13_444 26_455
+O1 Ga1 O1 88.281(8) 27_445 26_455
+O1 Ga1 O1 91.719(8) 15_554 26_455
+O1 Ga1 O1 180.00(3) 14_544 26_455
+O1 B1 O1 120 . 3
+O1 B1 O1 120 . 2
+O1 B1 O1 120 3 2
+B1 O1 Ga1 117.055(14) . 7
+B1 O1 Ga1 117.055(14) . 16_554
+Ga1 O1 Ga1 125.89(3) 7 16_554
+loop_
+_geom_bond_atom_site_label_1
+_geom_bond_atom_site_label_2
+_geom_bond_distance
+_geom_bond_site_symmetry_2
+Ga1 O1 1.9875(2) 25
+Ga1 O1 1.9875(2) 13_444
+Ga1 O1 1.9875(2) 27_445
+Ga1 O1 1.9875(2) 15_554
+Ga1 O1 1.9875(2) 14_544
+Ga1 O1 1.9875(2) 26_455
+B1 O1 1.3789(5) .
+B1 O1 1.3789(5) 3
+B1 O1 1.3789(5) 2
+O1 Ga1 1.9875(2) 7
+O1 Ga1 1.9875(2) 16_554
