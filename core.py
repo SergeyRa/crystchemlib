@@ -35,6 +35,8 @@ parsecif
     Returns CIF content
 qimport
     Quick wrapper for parsecif
+r3diff
+    Difference between cumulative curve and 4/3 * pi * R**3
 readesd
     Returns value and its esd from string with parentheses
 readformula
@@ -474,7 +476,7 @@ class Structure:
     cif : str
         Outputs content of Structure instance in CIF format
     filter : list
-        Returns numbers of sites satisfying given condition
+        Returns numbers of self.sites present in values list
     formula : dict
         Returns formula unit
     p1 : Structure
@@ -581,15 +583,17 @@ class Structure:
         )
         return result
 
-    def filter(self, key, values):
-        """Returns selection of self.sites numbers
+    def filter(self, key, values, inverse=False):
+        """Returns numbers of self.sites present in values list
 
         Parameters
         ----------
         key : str
             'label', 'symbol' or 'number'
         values : list
-            list of required self.sites by key
+            list of key values
+        inverse : bool
+            inverse selection
 
         Returns
         -------
@@ -601,12 +605,20 @@ class Structure:
             values = [i.lower() for i in values]
         result = []
         for i in enumerate(self.sites):
-            if (key == 'label') and (i[1].label.lower() in values):
-                result.append(i[0])
-            elif (key == 'symbol') and (i[1].symbol.lower() in values):
-                result.append(i[0])
-            elif (key == 'number') and (i[0] in values):
-                result.append(i[0])
+            if not inverse:
+                if (key == 'label') and (i[1].label.lower() in values):
+                    result.append(i[0])
+                elif (key == 'symbol') and (i[1].symbol.lower() in values):
+                    result.append(i[0])
+                elif (key == 'number') and (i[0] in values):
+                    result.append(i[0])
+            else:
+                if (key == 'label') and not (i[1].label.lower() in values):
+                    result.append(i[0])
+                elif (key == 'symbol') and not (i[1].symbol.lower() in values):
+                    result.append(i[0])
+                elif (key == 'number') and not (i[0] in values):
+                    result.append(i[0])
         return result
 
     def formula(self, z=1):
@@ -775,6 +787,9 @@ class Structure:
         list
             sorted list of distances
         """
+
+        if len(self.sites) == 0:
+            return None
 
         from pandas import concat, DataFrame
 
@@ -1088,18 +1103,24 @@ def cumdiff(S1, S2):
         difference between cumulative curves
     """
 
+    if (S1 is None) or (S2 is None):
+        return None
+
     from pandas import DataFrame
 
-    A = S1.copy()
-    B = S2.copy()
-    A.name = 'A'
-    B.name = 'B'
-    df = DataFrame([A, B]).transpose().sort_index()
+    X = S1.copy()
+    Y = S2.copy()
+    X.name = 'X'
+    Y.name = 'Y'
+    df = DataFrame([X, Y]).transpose().sort_index()
     df['d'] = df.index
-    df['d_next'] = df['d'].shift(-1)
+    if len(df.index) > 1:
+        df['d_next'] = df['d'].shift(-1)
+    else:
+        df['d_next'] = df['d']
     df.ffill(inplace=True)
     df.fillna(0, inplace=True)
-    df['diff'] = (df['d_next'] - df['d']) * (df['A'] - df['B']).abs()
+    df['diff'] = (df['d_next'] - df['d']) * (df['X'] - df['Y']).abs()
 
     return df['diff'].sum()
 
@@ -1487,6 +1508,33 @@ def qimport(path):
     return structures[structures != array(None)]
 
 
+def r3diff(S):
+    """Difference between cumulative curve and 4/3 * pi * R**3
+
+    Parameters
+    ----------
+    S : pandas.Series
+        cumulative output from Structure.pairs()
+
+    Returns
+    -------
+    float
+        difference between cumulative curve and 4/3 * pi * R**3
+    """
+
+    if S is None:
+        return None
+
+    from numpy import abs, array, linspace, pi, searchsorted
+
+    N = 1000  # integration steps from dmin to dmax
+    X = linspace(S.index.min(), S.index.max(), N, endpoint=False)
+    delta = (S.index.max() - S.index.min()) / N
+    Y = array([S.iloc[searchsorted(S.index, x, side='right')-1] for x in X])
+
+    return (abs(Y - 4/3 * pi * (X+delta/2)**3).sum() * delta)
+
+
 def readesd(s):
     # returns floats (val, esd) from string "val(esd)"
     val = s.split("(")[0]
@@ -1563,6 +1611,7 @@ def readstruct(data):
     keys = ["_cell_length_a", "_cell_length_b", "_cell_length_c",
             "_cell_angle_alpha", "_cell_angle_beta", "_cell_angle_gamma",
             "_atom_site_fract_x", "_atom_site_fract_y", "_atom_site_fract_z"]
+    data = clearkeys(data)[0]
     if not (set(keys[:6]) <= set(data.keys())):
         return None
     struct = Structure([readesd(data[j])[0] for j in keys[:6]],
