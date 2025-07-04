@@ -16,7 +16,7 @@ angle
 clearkeys
     Removes empty keys from CIF-based dict
 cumdiff
-    Calculates difference between cumulative curves
+    Calculates difference between distance distributions
 dhkl
     Returns interplanar distance
 equivhkl
@@ -35,8 +35,6 @@ parsecif
     Returns CIF content
 qimport
     Quick wrapper for parsecif
-r3diff
-    Difference between cumulative curve and 4/3 * pi * R**3
 readesd
     Returns value and its esd from string with parentheses
 readformula
@@ -487,6 +485,10 @@ class Structure:
         Returns distances in structure
     poly : Polyhedron
         Returns Polyhedron instance with given central site and ligands
+    resymbol : None
+        Standartise chemical element symbols
+    skipdupl : Structure
+        Removes duplicate sites (e.g. disordered ones)
     sublatt : Structure
         Returns sublattice of structure
     transform : Structure
@@ -723,23 +725,15 @@ class Structure:
             with list for each of self.sites
         """
 
-        from copy import deepcopy
-        from numpy import array, diag, matmul
-
         result = []
         for i in self.sites:
             equiv = []
             for j in range(len(self.symops)):
-                newsite = deepcopy(i)
-                newsite.fract = [sum([row[k]*newsite.fract[k]
-                                      for k in range(4)]) % 1
-                                 # reducing to single cell
-                                 for row in self.symops[j]]
-                newsite.fract_esd = [(row**2).sum()**0.5
-                                     for row in
-                                     matmul(array(self.symops[j]),
-                                            diag(newsite.fract_esd))]
-                equiv.append(newsite)
+                fract = [sum([row[k]*i.fract[k]
+                              for k in range(4)]) % 1
+                         # reducing to single cell
+                         for row in self.symops[j]]
+                equiv.append(fract)
             counter = len(equiv)
             for j in range(len(equiv) - 1, 0, -1):
                 kill = False
@@ -747,9 +741,10 @@ class Structure:
                     for dx in [-1, 0, 1]:
                         for dy in [-1, 0, 1]:
                             for dz in [-1, 0, 1]:
-                                x, y, z = equiv[k].fract[:3]
-                                if length(self.cell, equiv[j].fract,
-                                          [x+dx, y+dy, z+dz, 1])[0] < delta:
+                                x, y, z = equiv[k][:3]
+                                if length(self.cell, equiv[j],
+                                          [x+dx, y+dy, z+dz, 1],
+                                          skipesd=True)[0] < delta:
                                     kill = True
                                     break
                             if kill:
@@ -766,7 +761,7 @@ class Structure:
                                          result[-1][-1]+1 + counter)))
         return result
 
-    def pairs(self, dmax, plain=False, norm=False, cumulative=False):
+    def pairs(self, dmax, plain=False, norm=False, sublatt=None):
         """Returns distances in structure
 
         Parameters
@@ -781,11 +776,15 @@ class Structure:
         cumulative : bool
             if True, returns cumulative distribution
             instead of frequencies (default False)
+        sublatt : list
+            list of first (A) sublattice site numbers
 
         Returns
         -------
-        list
-            sorted list of distances
+        pd.Series
+            index: sorted distances,
+            value: number of distances
+            (cumulative if corresponding flag activated)
         """
 
         if len(self.sites) == 0:
@@ -799,6 +798,20 @@ class Structure:
             struct.sites[i].label = str(i)  # unique labels
             if plain:
                 struct.sites[i].fract[2] = 0  # projecting on (001)
+        if sublatt is not None:
+            sublattA = []
+            for i, j in enumerate(self.p1_list()):
+                if i in sublatt:
+                    sublattA += j
+            sublattB = list(set(range(N)).difference(set(sublattA)))
+            AA = []  # names of A-A bonds
+            for i in sublattA:
+                for j in sublattA:
+                    AA.append(f'{i}-{j}')
+            BB = []  # names of B-B bonds
+            for i in sublattB:
+                for j in sublattB:
+                    BB.append(f'{i}-{j}')
 
         if norm:
             if plain:
@@ -822,18 +835,29 @@ class Structure:
         result = concat(result, ignore_index=True)
         result.value = (result.value * f).round(3)  # precision
 
+        bond = []
+        if sublatt is not None:
+            for i in result['name']:
+                x = i.split(sep='_')[0]
+                if x in AA:
+                    bond.append('AA')
+                elif x in BB:
+                    bond.append('BB')
+                else:
+                    bond.append('AB')
+        else:
+            bond = ['AA']*len(result.index)
+        result['bond'] = bond
+
         blacklist = []
         for i in range(N):
             blacklist.append(f'{i}-{i}_1_000')
 
         freq = result[
-            ~result.name.isin(blacklist)
-        ]['value'].value_counts().sort_index() / (N if norm else 1)
+            ~result['name'].isin(blacklist)
+        ].value_counts(['value', 'bond']) / (N if norm else 1)
 
-        if cumulative:
-            return freq.cumsum()
-        else:
-            return freq
+        return freq.sort_index()
 
     def poly(self, centr, ligands, dmax, dmin=0.0,
              nmax=None, suffixes=False, plain=False,
@@ -918,6 +942,64 @@ class Structure:
             nmax = len(liglist)
         return Polyhedron(centr_site, [i[0] for i in liglist[:nmax]],
                           self.cell, self.cell_esd)
+
+    def resymbol(self):
+        """Standartise chemical element symbols"""
+
+        elements = [
+            'Ac', 'Ag', 'Al', 'Am', 'Ar', 'As', 'At', 'Au', 'Ba', 'Be', 'Bh',
+            'Bi', 'Bk', 'Br', 'Ca', 'Cd', 'Ce', 'Cf', 'Cl', 'Cm', 'Cn', 'Co',
+            'Cr', 'Cs', 'Cu', 'Db', 'Ds', 'Dy', 'Er', 'Es', 'Eu', 'Fe', 'Fl',
+            'Fm', 'Fr', 'Ga', 'Gd', 'Ge', 'He', 'Hf', 'Hg', 'Ho', 'Hs', 'In',
+            'Ir', 'Kr', 'La', 'Li', 'Lr', 'Lu', 'Lv', 'Mc', 'Md', 'Mg', 'Mn',
+            'Mo', 'Mt', 'Na', 'Nb', 'Nd', 'Ne', 'Nh', 'Ni', 'No', 'Np', 'Og',
+            'Os', 'Pa', 'Pb', 'Pd', 'Pm', 'Po', 'Pr', 'Pt', 'Pu', 'Ra', 'Rb',
+            'Re', 'Rf', 'Rg', 'Rh', 'Rn', 'Ru', 'Sb', 'Sc', 'Se', 'Sg', 'Si',
+            'Sm', 'Sn', 'Sr', 'Ta', 'Tb', 'Tc', 'Te', 'Th', 'Ti', 'Tl', 'Tm',
+            'Ts', 'Xe', 'Yb', 'Zn', 'Zr',
+            'B', 'C', 'F', 'H', 'I', 'K', 'N',
+            'O', 'P', 'S', 'U', 'V', 'W', 'Y'
+        ]
+        for s in self.sites:
+            for e in elements:
+                if s.symbol.lower().startswith(e.lower()):
+                    s.symbol = e
+                    break
+
+    def skipdupl(self, dmin=0.1):
+        """Removes duplicate sites (e.g. disordered ones)
+
+        Returns
+        -------
+        Structure
+            Structure.p1() instance with removed duplicates
+        """
+
+        from numpy import array
+
+        if self.symops == [[[1, 0, 0, 0],
+                            [0, 1, 0, 0],
+                            [0, 0, 1, 0],
+                            [0, 0, 0, 1]]]:
+            struct = self
+        else:
+            struct = self.p1()
+        N = len(struct.sites)
+        blacklist = []
+        for i in range(N-1):
+            for j in range(i+1, N):
+                # check at cell boundaries:
+                for a in [-1, 0, 1]:
+                    for b in [-1, 0, 1]:
+                        for c in [-1, 0, 1]:
+                            if length(struct.cell, struct.sites[i].fract,
+                                      (array(struct.sites[j].fract)
+                                       + array([a, b, c, 0])),
+                                      skipesd=True)[0] < dmin:
+                                blacklist.append(j)
+        return struct.sublatt(
+            set(range(N)).difference(set(blacklist))
+        )
 
     def sublatt(self, filter):
         """Returns sublattice of structure
@@ -1088,41 +1170,60 @@ def clearkeys(data, loops=None):
 
 
 def cumdiff(S1, S2):
-    """Calculates difference between cumulative curves
+    """Calculates difference between distance distributions
 
     Parameters
     ----------
     S1 : pandas.Series
-        cumulative output from Structure.pairs()
+        sorted distance statistics
+        (Structure.pairs() output)
     S2 : pandas.Series
-        cumulative output from Structure.pairs()
+        sorted distance statistics
+        (Structure.pairs() output)
 
     Returns
     -------
-    float
-        difference between cumulative curves
+    dict
+        {'AA': diff1, 'AB': diff2, ...}
+        difference between cumulative distance
+        distributions for all pair types
     """
 
     if (S1 is None) or (S2 is None):
         return None
 
-    from pandas import DataFrame
+    from pandas import DataFrame, Series
 
-    X = S1.copy()
-    Y = S2.copy()
-    X.name = 'X'
-    Y.name = 'Y'
-    df = DataFrame([X, Y]).transpose().sort_index()
-    df['d'] = df.index
-    if len(df.index) > 1:
-        df['d_next'] = df['d'].shift(-1)
+    if (len(S1.index.names) == 2):
+        result = {}
+        for i in sorted(set(S1.unstack().columns)
+                        | set(S2.unstack().columns)):
+            if i not in S1.unstack():
+                S1a = Series()
+            else:
+                S1a = S1.unstack()[i]
+            if i not in S2.unstack():
+                S2a = Series()
+            else:
+                S2a = S2.unstack()[i]
+            result[i] = cumdiff(S1a, S2a)['area'].sum()
+        return result
     else:
-        df['d_next'] = df['d']
-    df.ffill(inplace=True)
-    df.fillna(0, inplace=True)
-    df['diff'] = (df['d_next'] - df['d']) * (df['X'] - df['Y']).abs()
-
-    return df['diff'].sum()
+        X = S1.cumsum()
+        Y = S2.cumsum()
+        X.name = 'X'
+        Y.name = 'Y'
+        df = DataFrame([X, Y]).transpose().sort_index()
+        df['d'] = df.index
+        if len(df.index) > 1:
+            df['d_next'] = df['d'].shift(-1)
+        else:
+            df['d_next'] = df['d']
+        df.ffill(inplace=True)
+        df.fillna(0, inplace=True)
+        df['area'] = ((df['d_next'] - df['d'])
+                      * (df['X'] - df['Y']).abs())
+        return df
 
 
 def dhkl(cell, indices):
@@ -1508,33 +1609,6 @@ def qimport(path):
     return structures[structures != array(None)]
 
 
-def r3diff(S):
-    """Difference between cumulative curve and 4/3 * pi * R**3
-
-    Parameters
-    ----------
-    S : pandas.Series
-        cumulative output from Structure.pairs()
-
-    Returns
-    -------
-    float
-        difference between cumulative curve and 4/3 * pi * R**3
-    """
-
-    if S is None:
-        return None
-
-    from numpy import abs, array, linspace, pi, searchsorted
-
-    N = 1000  # integration steps from dmin to dmax
-    X = linspace(S.index.min(), S.index.max(), N, endpoint=False)
-    delta = (S.index.max() - S.index.min()) / N
-    Y = array([S.iloc[searchsorted(S.index, x, side='right')-1] for x in X])
-
-    return (abs(Y - 4/3 * pi * (X+delta/2)**3).sum() * delta)
-
-
 def readesd(s):
     # returns floats (val, esd) from string "val(esd)"
     val = s.split("(")[0]
@@ -1631,6 +1705,11 @@ def readstruct(data):
         for i in range(len(struct.sites)):
             struct.sites[i].symbol = \
                 data["_atom_site_type_symbol"][i]
+    else:
+        for i in range(len(struct.sites)):
+            struct.sites[i].symbol = \
+                ''.join([char for char in struct.sites[i].label
+                         if char.isalpha()])
     if "_atom_site_occupancy" in data:
         for i in range(len(struct.sites)):
             struct.sites[i].occ, struct.sites[i].occ_esd = \
