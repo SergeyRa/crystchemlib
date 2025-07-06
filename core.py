@@ -778,6 +778,8 @@ class Structure:
             instead of frequencies (default False)
         sublatt : list
             list of first (A) sublattice site numbers
+            if None or [], all sites are recognized
+            as A sublattice
 
         Returns
         -------
@@ -789,11 +791,17 @@ class Structure:
 
         if len(self.sites) == 0:
             return None
+        if sublatt == []:
+            sublatt = None
 
+        from numpy import array, pi
         from pandas import concat, DataFrame
 
         struct = self.p1()
         N = len(struct.sites)
+        NA = N
+        sublattA = list(range(N))
+        sublattB = []
         for i in range(N):
             struct.sites[i].label = str(i)  # unique labels
             if plain:
@@ -803,6 +811,7 @@ class Structure:
             for i, j in enumerate(self.p1_list()):
                 if i in sublatt:
                     sublattA += j
+            NA = len(sublattA)
             sublattB = list(set(range(N)).difference(set(sublattA)))
             AA = []  # names of A-A bonds
             for i in sublattA:
@@ -818,22 +827,58 @@ class Structure:
                 f = (
                     N / vol(self.cell)[0] * dhkl(self.cell, [0, 0, 1])
                 ) ** 0.5
+                fA = (
+                    NA / vol(self.cell)[0] * dhkl(self.cell, [0, 0, 1])
+                ) ** 0.5
+                fB = (
+                    (N - NA) / vol(self.cell)[0] * dhkl(self.cell, [0, 0, 1])
+                ) ** 0.5
             else:
                 f = (N / vol(self.cell)[0]) ** (1/3)
+                fA = (NA / vol(self.cell)[0]) ** (1/3)
+                fB = ((N - NA) / vol(self.cell)[0]) ** (1/3)
         else:
             f = 1
+            fA = 1
+            fB = 1
 
-        result = [
+        resultA = [
             DataFrame(
                 struct.poly(
-                    i, list(range(N)), dmax/f, plain=plain,
+                    i, sublattA, dmax/fA, plain=plain,
                     suffixes=True, distonly=True
                 ))
-            for i in range(N)
+            for i in sublattA
         ]
+        resultA = concat(resultA, ignore_index=True)
+        resultA['value'] = (resultA['value'] * fA).round(3)
 
-        result = concat(result, ignore_index=True)
-        result.value = (result.value * f).round(3)  # precision
+        resultB = [
+            DataFrame(
+                struct.poly(
+                    i, sublattB, dmax/fB, plain=plain,
+                    suffixes=True, distonly=True
+                ))
+            for i in sublattB
+        ]
+        if resultB != []:
+            resultB = concat(resultB, ignore_index=True)
+            resultB['value'] = (resultB['value'] * fB).round(3)
+        else:
+            resultB = None
+
+        resultAB = [
+            DataFrame(
+                struct.poly(
+                    i, sublattB, dmax/f, plain=plain,
+                    suffixes=True, distonly=True
+                ))
+            for i in sublattA
+        ]
+        resultAB = concat(resultAB + resultAB, ignore_index=True)
+        resultAB['value'] = (resultAB['value'] * f).round(3)
+
+        result = concat([resultA, resultB, resultAB], ignore_index=True)
 
         bond = []
         if sublatt is not None:
@@ -855,8 +900,20 @@ class Structure:
 
         freq = result[
             ~result['name'].isin(blacklist)
-        ].value_counts(['value', 'bond']) / (N if norm else 1)
+        ].value_counts(['value', 'bond'])
 
+        if norm:
+            normalizer = [
+                NA if i[1] == 'AA'
+                else (
+                        (N - NA) if i[1] == 'BB' else N
+                )
+                for i in freq.index]
+            freq = (freq
+                    / (4*pi * array([i[0] for i in freq.index])**2)
+                    / normalizer)
+
+        freq.name = round(NA / N, 3)
         return freq.sort_index()
 
     def poly(self, centr, ligands, dmax, dmin=0.0,
@@ -1184,9 +1241,11 @@ def cumdiff(S1, S2):
     Returns
     -------
     dict
-        {'AA': diff1, 'AB': diff2, ...}
+        {'AA': diff1, 'AB': diff2, 'BB': diff3,
+        'wS': weighted_sum}
         difference between cumulative distance
         distributions for all pair types
+        and weighted sum
     """
 
     if (S1 is None) or (S2 is None):
@@ -1207,10 +1266,17 @@ def cumdiff(S1, S2):
             else:
                 S2a = S2.unstack()[i]
             result[i] = cumdiff(S1a, S2a)['area'].sum()
+        weights = {
+            'AA': float(S1.name[1]) * float(S2.name[1]),
+            'BB': (1 - float(S1.name[1])) * (1 - float(S2.name[1])),
+            'AB': (float(S1.name[1]) * (1 - float(S2.name[1]))
+                   + (1 - float(S1.name[1])) * float(S2.name[1]))
+        }
+        result['wS'] = sum([result[i]*weights[i] for i in result])
         return result
     else:
-        X = S1.cumsum()
-        Y = S2.cumsum()
+        X = S1.dropna().cumsum()
+        Y = S2.dropna().cumsum()
         X.name = 'X'
         Y.name = 'Y'
         df = DataFrame([X, Y]).transpose().sort_index()
