@@ -761,7 +761,8 @@ class Structure:
                                          result[-1][-1]+1 + counter)))
         return result
 
-    def pairs(self, dmax, plain=False, norm=False, sublatt=None):
+    def pairs(self, dmax, plain=False, norm=False,
+              sublatt=None, id=None, prec=3):
         """Returns distances in structure
 
         Parameters
@@ -780,13 +781,17 @@ class Structure:
             list of first (A) sublattice site numbers
             if None or [], all sites are recognized
             as A sublattice
+        id : str
+            id to include in output Series name
+        prec : int
+            decimals in distance output
 
         Returns
         -------
         pd.Series
             index: sorted distances,
             value: number of distances
-            (cumulative if corresponding flag activated)
+            name: (id, weight of A substructure)
         """
 
         if len(self.sites) == 0:
@@ -851,7 +856,7 @@ class Structure:
             for i in sublattA
         ]
         resultA = concat(resultA, ignore_index=True)
-        resultA['value'] = (resultA['value'] * fA).round(3)
+        resultA['value'] = (resultA['value'] * fA).round(prec)
 
         resultB = [
             DataFrame(
@@ -863,7 +868,7 @@ class Structure:
         ]
         if resultB != []:
             resultB = concat(resultB, ignore_index=True)
-            resultB['value'] = (resultB['value'] * fB).round(3)
+            resultB['value'] = (resultB['value'] * fB).round(prec)
         else:
             resultB = None
 
@@ -876,7 +881,7 @@ class Structure:
             for i in sublattA
         ]
         resultAB = concat(resultAB + resultAB, ignore_index=True)
-        resultAB['value'] = (resultAB['value'] * f).round(3)
+        resultAB['value'] = (resultAB['value'] * f).round(prec)
 
         result = concat([resultA, resultB, resultAB], ignore_index=True)
 
@@ -913,7 +918,7 @@ class Structure:
                     / (4*pi * array([i[0] for i in freq.index])**2)
                     / normalizer)
 
-        freq.name = round(NA / N, 3)
+        freq.name = (id, round(NA / N, 3))
         return freq.sort_index()
 
     def poly(self, centr, ligands, dmax, dmin=0.0,
@@ -1265,7 +1270,11 @@ def cumdiff(S1, S2):
                 S2a = Series()
             else:
                 S2a = S2.unstack()[i]
-            result[i] = cumdiff(S1a, S2a)['area'].sum()
+            cd = cumdiff(S1a, S2a)
+            result[i] = (abs((cd['dvert'] * cd['dhor']).sum())
+                         / cd.index.max()
+                         * ((cd['dvert']**2 * cd['dhor']).sum()
+                            / cd.index.max())**0.5)
         weights = {
             'AA': float(S1.name[1]) * float(S2.name[1]),
             'BB': (1 - float(S1.name[1])) * (1 - float(S2.name[1])),
@@ -1279,7 +1288,9 @@ def cumdiff(S1, S2):
         Y = S2.dropna().cumsum()
         X.name = 'X'
         Y.name = 'Y'
-        df = DataFrame([X, Y]).transpose().sort_index()
+        dlim = min(X.index.max(), Y.index.max())
+        df = DataFrame([X[X.index <= dlim],
+                        Y[Y.index <= dlim]]).transpose().sort_index()
         df['d'] = df.index
         if len(df.index) > 1:
             df['d_next'] = df['d'].shift(-1)
@@ -1287,8 +1298,8 @@ def cumdiff(S1, S2):
             df['d_next'] = df['d']
         df.ffill(inplace=True)
         df.fillna(0, inplace=True)
-        df['area'] = ((df['d_next'] - df['d'])
-                      * (df['X'] - df['Y']).abs())
+        df['dhor'] = df['d_next'] - df['d']
+        df['dvert'] = df['X'] - df['Y']
         return df
 
 
