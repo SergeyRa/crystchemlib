@@ -1270,11 +1270,15 @@ def cumdiff(S1, S2):
                 S2a = Series()
             else:
                 S2a = S2.unstack()[i]
-            cd = cumdiff(S1a, S2a)
-            result[i] = (abs((cd['dvert'] * cd['dhor']).sum())
-                         / cd.index.max()
-                         * ((cd['dvert']**2 * cd['dhor']).sum()
-                            / cd.index.max())**0.5)
+            if (len(S1a) == 0) and (len(S1a) == 0):
+                result[i] = 0
+            else:
+                cd = cumdiff(S1a, S2a)
+                if len(cd.index) == 0:
+                    result[i] = 0
+                else:
+                    result[i] = ((cd['dvert']**2 * cd['dhor']).sum()
+                                 / cd.index.max())**0.5
         weights = {
             'AA': float(S1.name[1]) * float(S2.name[1]),
             'BB': (1 - float(S1.name[1])) * (1 - float(S2.name[1])),
@@ -1288,7 +1292,12 @@ def cumdiff(S1, S2):
         Y = S2.dropna().cumsum()
         X.name = 'X'
         Y.name = 'Y'
-        dlim = min(X.index.max(), Y.index.max())
+        if len(X) == 0:
+            dlim = Y.index.max()
+        elif len(Y) == 0:
+            dlim = X.index.max()
+        else:
+            dlim = min(X.index.max(), Y.index.max())
         df = DataFrame([X[X.index <= dlim],
                         Y[Y.index <= dlim]]).transpose().sort_index()
         df['d'] = df.index
@@ -1300,6 +1309,7 @@ def cumdiff(S1, S2):
         df.fillna(0, inplace=True)
         df['dhor'] = df['d_next'] - df['d']
         df['dvert'] = df['X'] - df['Y']
+
         return df
 
 
