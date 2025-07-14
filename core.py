@@ -761,165 +761,92 @@ class Structure:
                                          result[-1][-1]+1 + counter)))
         return result
 
-    def pairs(self, dmax, plain=False, norm=False,
-              sublatt=None, id=None, prec=3):
+    def pairs2(self, dmax, A, B):
         """Returns distances in structure
 
         Parameters
         ----------
         dmax : float
             max distance
-        plain : bool
-            if True, only distances in (001) plane
-            will be calculated (default False)
-        norm : bool
-            either to normalize per 1 atom (default False)
-        cumulative : bool
-            if True, returns cumulative distribution
-            instead of frequencies (default False)
-        sublatt : list
-            list of first (A) sublattice site numbers
-            if None or [], all sites are recognized
-            as A sublattice
-        id : str
-            id to include in output Series name
-        prec : int
-            decimals in distance output
+        A : list
+            sublattice of central atoms
+        B : list
+            sublattice of ligands
 
         Returns
         -------
         pd.Series
-            index: sorted distances,
-            value: number of distances
-            name: (id, weight of A substructure)
+            sorted list of distances
         """
 
-        if len(self.sites) == 0:
-            return None
-        if sublatt == []:
-            sublatt = None
+        from pandas import Series
 
-        from numpy import array, pi
-        from pandas import concat, DataFrame
+        # multiplicities of sites:
+        mult = [len(i) for i in self.p1_list()]
+        distances = []
+        for i in A:
+            distances += self.poly(
+                i, B, dmax, dmin=0.01, distonly=True
+            )['value']*mult[i]
 
-        struct = self.p1()
-        N = len(struct.sites)
-        NA = N
-        sublattA = list(range(N))
-        sublattB = []
-        for i in range(N):
-            struct.sites[i].label = str(i)  # unique labels
-            if plain:
-                struct.sites[i].fract[2] = 0  # projecting on (001)
-        if sublatt is not None:
-            sublattA = []
-            for i, j in enumerate(self.p1_list()):
-                if i in sublatt:
-                    sublattA += j
-            NA = len(sublattA)
-            sublattB = list(set(range(N)).difference(set(sublattA)))
-            AA = []  # names of A-A bonds
-            for i in sublattA:
-                for j in sublattA:
-                    AA.append(f'{i}-{j}')
-            BB = []  # names of B-B bonds
-            for i in sublattB:
-                for j in sublattB:
-                    BB.append(f'{i}-{j}')
+        return Series(distances).sort_values()
 
-        if norm:
-            if plain:
-                f = (
-                    N / vol(self.cell)[0] * dhkl(self.cell, [0, 0, 1])
-                ) ** 0.5
-                fA = (
-                    NA / vol(self.cell)[0] * dhkl(self.cell, [0, 0, 1])
-                ) ** 0.5
-                fB = (
-                    (N - NA) / vol(self.cell)[0] * dhkl(self.cell, [0, 0, 1])
-                ) ** 0.5
-            else:
-                f = (N / vol(self.cell)[0]) ** (1/3)
-                fA = (NA / vol(self.cell)[0]) ** (1/3)
-                fB = ((N - NA) / vol(self.cell)[0]) ** (1/3)
-        else:
-            f = 1
-            fA = 1
-            fB = 1
+    def pairs_full(self, dmax, SL, prec=3):
+        """Returns distances in structure
 
-        resultA = [
-            DataFrame(
-                struct.poly(
-                    i, sublattA, dmax/fA, plain=plain,
-                    suffixes=True, distonly=True
-                ))
-            for i in sublattA
-        ]
-        resultA = concat(resultA, ignore_index=True)
-        resultA['value'] = (resultA['value'] * fA).round(prec)
+        Parameters
+        ----------
+        dmax : float
+            max distance
+        SL : list
+            list of sublattices
+        prec : int
+            decimals in normalized distances
 
-        resultB = [
-            DataFrame(
-                struct.poly(
-                    i, sublattB, dmax/fB, plain=plain,
-                    suffixes=True, distonly=True
-                ))
-            for i in sublattB
-        ]
-        if resultB != []:
-            resultB = concat(resultB, ignore_index=True)
-            resultB['value'] = (resultB['value'] * fB).round(prec)
-        else:
-            resultB = None
+        Returns
+        -------
+        pd.Series
+            index: sorted (distances, types)
+            value: normalized number of distances
+            (keys of distance types correspond to
+            sequence of cells in triangular matrix
+            of sublattice pairs)
+        """
 
-        resultAB = [
-            DataFrame(
-                struct.poly(
-                    i, sublattB, dmax/f, plain=plain,
-                    suffixes=True, distonly=True
-                ))
-            for i in sublattA
-        ]
-        resultAB = concat(resultAB + resultAB, ignore_index=True)
-        resultAB['value'] = (resultAB['value'] * f).round(prec)
+        from numpy import pi
+        from pandas import DataFrame
 
-        result = concat([resultA, resultB, resultAB], ignore_index=True)
-
-        bond = []
-        if sublatt is not None:
-            for i in result['name']:
-                x = i.split(sep='_')[0]
-                if x in AA:
-                    bond.append('AA')
-                elif x in BB:
-                    bond.append('BB')
-                else:
-                    bond.append('AB')
-        else:
-            bond = ['AA']*len(result.index)
-        result['bond'] = bond
-
-        blacklist = []
-        for i in range(N):
-            blacklist.append(f'{i}-{i}_1_000')
-
-        freq = result[
-            ~result['name'].isin(blacklist)
-        ].value_counts(['value', 'bond'])
-
-        if norm:
-            normalizer = [
-                NA if i[1] == 'AA'
-                else (
-                        (N - NA) if i[1] == 'BB' else N
-                )
-                for i in freq.index]
-            freq = (freq
-                    / (4*pi * array([i[0] for i in freq.index])**2)
-                    / normalizer)
-
-        freq.name = (id, round(NA / N, 3))
-        return freq.sort_index()
+        # multiplicity of all sites:
+        mult = [len(i) for i in self.p1_list()]
+        # multiplicities of sublattices:
+        mult_SL = [sum([mult[i] for i in j]) for j in SL]
+        result = {}
+        n = 0
+        for i in range(len(SL)):
+            for j in range(i, len(SL)):
+                if (mult_SL[i] != 0) and (mult_SL[i] != 0):
+                    # distance normalization factor:
+                    f = (
+                        (mult_SL[i] + mult_SL[j])
+                        / (2 if (j == i) else 1)
+                        / vol(self.cell)[0]
+                    ) ** (1/3)
+                    # normalized distances:
+                    nd = (
+                        self.pairs2(dmax / f, SL[i], SL[j]) * f
+                    ).round(3).value_counts()
+                    result[n] = (nd * 2
+                                 / (mult_SL[i] + mult_SL[j])
+                                 / (4 * pi * nd.index**2)
+                                 )
+                    # weights of sublattice pairs
+                    # are encoded under zero index:
+                    result[n].loc[0] = ((mult_SL[i] * mult_SL[j])
+                                        * (1 if (j == i) else 2)
+                                        / sum(mult_SL)**2)
+                    result[n].sort_index(inplace=True)
+                n += 1
+        return DataFrame(result).stack().sort_index()
 
     def poly(self, centr, ligands, dmax, dmin=0.0,
              nmax=None, suffixes=False, plain=False,
@@ -1231,86 +1158,96 @@ def clearkeys(data, loops=None):
     return (data_cleared, loops_cleared)
 
 
-def cumdiff(S1, S2):
-    """Calculates difference between distance distributions
+def cumdiff2(S1, S2):
+    """Calculates r.m.s. difference between cumulative distributions
+
+    Assumes common distance range of distributions!
 
     Parameters
     ----------
     S1 : pandas.Series
         sorted distance statistics
-        (Structure.pairs() output)
+        (Structure.pairs2() output)
     S2 : pandas.Series
         sorted distance statistics
-        (Structure.pairs() output)
+        (Structure.pairs2() output)
+
+    Returns
+    -------
+    float
+        r.m.s. difference between cumulative distributions
+    """
+
+    from pandas import DataFrame
+
+    X = S1.dropna().cumsum()
+    Y = S2.dropna().cumsum()
+    X.name = 'X'
+    Y.name = 'Y'
+    df = DataFrame([X, Y]).transpose().sort_index()
+    if len(df.index) == 0:
+        return 0.
+
+    df['d'] = df.index
+    if len(df.index) > 1:
+        df['d_next'] = df['d'].shift(-1)
+    else:
+        df['d_next'] = df['d']
+    df.ffill(inplace=True)
+    df.fillna(0, inplace=True)
+    df['hor'] = df['d_next'] - df['d']
+    df['vert'] = df['X'] - df['Y']
+
+    return (
+        df['vert']**2 * df['hor'] / df.index.max()
+    ).sum()**0.5
+
+
+def cumdiff_full(S1, S2, M=None):
+    """Calculates weighted r.m.s. difference for ND-PDFs
+
+    Assumes common distance range of distributions!
+
+    Parameters
+    ----------
+    S1 : pandas.Series
+        sorted distance statistics
+        (Structure.pairs_full() output)
+    S2 : pandas.Series
+        sorted distance statistics
+        (Structure.pairs_full() output)
+    M : dict
+        correspondence between sublattices
 
     Returns
     -------
     dict
-        {'AA': diff1, 'AB': diff2, 'BB': diff3,
-        'wS': weighted_sum}
-        difference between cumulative distance
-        distributions for all pair types
-        and weighted sum
+        r.m.s. difference for sublattice pairs
+        and weighted average
     """
 
-    if (S1 is None) or (S2 is None):
-        return None
+    # weights of sublattice pairs:
+    w1 = S1.loc[0.]
+    w2 = S2.loc[0.]
 
-    from pandas import DataFrame, Series
+    if M is None:
+        M = {i: i for i in range(len(w1))}
+    # renormalization:
+    w1 = w1[w1.index.isin(M)]
+    w1 /= w1.sum()
+    w2 = w2[w2.index.isin(M.values())]
+    w2 /= w2.sum()
+    weights = (w1 + w2) / 2
+    diffs = []
+    for i in M:
+        diffs.append(
+            cumdiff2(S1.unstack()[i].iloc[1:],
+                     S2.unstack()[M[i]].iloc[1:])
+        )
 
-    if (len(S1.index.names) == 2):
-        result = {}
-        for i in sorted(set(S1.unstack().columns)
-                        | set(S2.unstack().columns)):
-            if i not in S1.unstack():
-                S1a = Series()
-            else:
-                S1a = S1.unstack()[i]
-            if i not in S2.unstack():
-                S2a = Series()
-            else:
-                S2a = S2.unstack()[i]
-            if (len(S1a) == 0) and (len(S1a) == 0):
-                result[i] = 0
-            else:
-                cd = cumdiff(S1a, S2a)
-                if len(cd.index) == 0:
-                    result[i] = 0
-                else:
-                    result[i] = ((cd['dvert']**2 * cd['dhor']).sum()
-                                 / cd.index.max())**0.5
-        weights = {
-            'AA': float(S1.name[1]) * float(S2.name[1]),
-            'BB': (1 - float(S1.name[1])) * (1 - float(S2.name[1])),
-            'AB': (float(S1.name[1]) * (1 - float(S2.name[1]))
-                   + (1 - float(S1.name[1])) * float(S2.name[1]))
-        }
-        result['wS'] = sum([result[i]*weights[i] for i in result])
-        return result
-    else:
-        X = S1.dropna().cumsum()
-        Y = S2.dropna().cumsum()
-        X.name = 'X'
-        Y.name = 'Y'
-        if len(X) == 0:
-            dlim = Y.index.max()
-        elif len(Y) == 0:
-            dlim = X.index.max()
-        else:
-            dlim = min(X.index.max(), Y.index.max())
-        df = DataFrame([X[X.index <= dlim],
-                        Y[Y.index <= dlim]]).transpose().sort_index()
-        df['d'] = df.index
-        if len(df.index) > 1:
-            df['d_next'] = df['d'].shift(-1)
-        else:
-            df['d_next'] = df['d']
-        df.ffill(inplace=True)
-        df.fillna(0, inplace=True)
-        df['dhor'] = df['d_next'] - df['d']
-        df['dvert'] = df['X'] - df['Y']
-
-        return df
+    return {i: diffs[i] for i in M} | {'w': sum(
+        [diffs[i] * weights[i] for i in M]
+    )}
 
 
 def dhkl(cell, indices):
