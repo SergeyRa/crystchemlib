@@ -791,7 +791,7 @@ class Structure:
 
         return Series(distances).sort_values()
 
-    def pairs_full(self, dmax, SL, prec=3):
+    def pairs_full(self, dmax, SL=None, prec=3):
         """Returns distances in structure
 
         Parameters
@@ -800,6 +800,7 @@ class Structure:
             max distance
         SL : list
             list of sublattices
+            (default None)
         prec : int
             decimals in normalized distances
 
@@ -815,6 +816,11 @@ class Structure:
 
         from numpy import pi
         from pandas import DataFrame
+
+        if SL is None:
+            SL = [
+                list(range(len(self.sites)))
+            ]
 
         # multiplicity of all sites:
         mult = [len(i) for i in self.p1_list()]
@@ -834,7 +840,7 @@ class Structure:
                     # normalized distances:
                     nd = (
                         self.pairs2(dmax / f, SL[i], SL[j]) * f
-                    ).round(3).value_counts()
+                    ).round(prec).value_counts()
                     result[n] = (nd * 2
                                  / (mult_SL[i] + mult_SL[j])
                                  / (4 * pi * nd.index**2)
@@ -1158,7 +1164,7 @@ def clearkeys(data, loops=None):
     return (data_cleared, loops_cleared)
 
 
-def cumdiff2(S1, S2):
+def cumdiff2(S1, S2, raw=False):
     """Calculates r.m.s. difference between cumulative distributions
 
     Assumes common distance range of distributions!
@@ -1166,11 +1172,14 @@ def cumdiff2(S1, S2):
     Parameters
     ----------
     S1 : pandas.Series
-        sorted distance statistics
+        distance statistics
         (Structure.pairs2() output)
     S2 : pandas.Series
-        sorted distance statistics
+        distance statistics
         (Structure.pairs2() output)
+    raw : bool
+        if True, returns raw data
+        (default False)
 
     Returns
     -------
@@ -1180,8 +1189,8 @@ def cumdiff2(S1, S2):
 
     from pandas import DataFrame
 
-    X = S1.dropna().cumsum()
-    Y = S2.dropna().cumsum()
+    X = S1.dropna().sort_index().cumsum()
+    Y = S2.dropna().sort_index().cumsum()
     X.name = 'X'
     Y.name = 'Y'
     df = DataFrame([X, Y]).transpose().sort_index()
@@ -1195,12 +1204,16 @@ def cumdiff2(S1, S2):
         df['d_next'] = df['d']
     df.ffill(inplace=True)
     df.fillna(0, inplace=True)
-    df['hor'] = df['d_next'] - df['d']
-    df['vert'] = df['X'] - df['Y']
+    # weighting by 1/x**2:
+    df['w'] = (df['d_next'] - df['d']) / df['d_next'] / df['d']
+
+    if raw:
+        return df
 
     return (
-        df['vert']**2 * df['hor'] / df.index.max()
-    ).sum()**0.5
+        ((df['X'] - df['Y'])**2 * df['w']).sum()
+        / (1/df.index.min() - 1/df.index.max())
+    )**0.5
 
 
 def cumdiff_full(S1, S2, M=None):
@@ -1211,10 +1224,10 @@ def cumdiff_full(S1, S2, M=None):
     Parameters
     ----------
     S1 : pandas.Series
-        sorted distance statistics
+        distance statistics
         (Structure.pairs_full() output)
     S2 : pandas.Series
-        sorted distance statistics
+        distance statistics
         (Structure.pairs_full() output)
     M : dict
         correspondence between sublattices
@@ -1233,9 +1246,9 @@ def cumdiff_full(S1, S2, M=None):
     if M is None:
         M = {i: i for i in range(len(w1))}
     # renormalization:
-    w1 = w1[w1.index.isin(M)]
+    w1 = w1[w1.index.isin(M)].values
     w1 /= w1.sum()
-    w2 = w2[w2.index.isin(M.values())]
+    w2 = w2[w2.index.isin(M.values())].values
     w2 /= w2.sum()
     weights = (w1 + w2) / 2
     diffs = []
