@@ -810,8 +810,7 @@ class Structure:
             index: sorted (distances, types)
             value: normalized number of distances
             (keys of distance types correspond to
-            sequence of cells in triangular matrix
-            of sublattice pairs)
+            matrix of sublattice pairs)
         """
 
         from numpy import pi
@@ -822,35 +821,24 @@ class Structure:
                 list(range(len(self.sites)))
             ]
 
-        # multiplicity of all sites:
-        mult = [len(i) for i in self.p1_list()]
-        # multiplicities of sublattices:
-        mult_SL = [sum([mult[i] for i in j]) for j in SL]
+        mult = self.p1_list()
+        SLmult = [sum([len(mult[i]) for i in j]) for j in SL]
+        N = sum(SLmult)
         result = {}
         n = 0
         for i in range(len(SL)):
-            for j in range(i, len(SL)):
-                if (mult_SL[i] != 0) and (mult_SL[i] != 0):
+            for j in range(0, len(SL)):
+                if (len(SL[i]) != 0) and (len(SL[i]) != 0):
                     # distance normalization factor:
-                    f = (
-                        (mult_SL[i] + mult_SL[j])
-                        / (2 if (j == i) else 1)
-                        / vol(self.cell)[0]
-                    ) ** (1/3)
+                    f = (N / vol(self.cell)[0]) ** (1/3)
                     # normalized distances:
-                    nd = (
-                        self.pairs2(dmax / f, SL[i], SL[j]) * f
-                    ).round(prec).value_counts()
-                    result[n] = (nd * 2
-                                 / (mult_SL[i] + mult_SL[j])
-                                 / (4 * pi * nd.index**2)
-                                 )
-                    # weights of sublattice pairs
-                    # are encoded under zero index:
-                    result[n].loc[0] = ((mult_SL[i] * mult_SL[j])
-                                        * (1 if (j == i) else 2)
-                                        / sum(mult_SL)**2)
-                    result[n].sort_index(inplace=True)
+                    p = self.pairs2(dmax / f, SL[i], SL[j])
+                    if len(p) > 1:
+                        nd = (p*f).round(prec).value_counts()
+                        result[n] = (nd * N
+                                     / SLmult[i]
+                                     / SLmult[j]
+                                     / (4 * pi * nd.index**2))
                 n += 1
         return DataFrame(result).stack().sort_index()
 
@@ -1184,7 +1172,8 @@ def cumdiff2(S1, S2, raw=False):
     Returns
     -------
     float
-        r.m.s. difference between cumulative distributions
+        weighted by 1/x**2 r.m.s. difference
+        between cumulative distributions
     """
 
     from pandas import DataFrame
@@ -1217,7 +1206,7 @@ def cumdiff2(S1, S2, raw=False):
 
 
 def cumdiff_full(S1, S2, M=None):
-    """Calculates weighted r.m.s. difference for ND-PDFs
+    """Calculates r.m.s. difference for partial RDFs
 
     Assumes common distance range of distributions!
 
@@ -1235,32 +1224,24 @@ def cumdiff_full(S1, S2, M=None):
     Returns
     -------
     dict
-        r.m.s. difference for sublattice pairs
-        and weighted average
+        r.m.s. differences for sublattice pairs
+        and quadratic sum
     """
 
-    # weights of sublattice pairs:
-    w1 = S1.loc[0.]
-    w2 = S2.loc[0.]
-
     if M is None:
-        M = {i: i for i in range(len(w1))}
-    # renormalization:
-    w1 = w1[w1.index.isin(M)].values
-    w1 /= w1.sum()
-    w2 = w2[w2.index.isin(M.values())].values
-    w2 /= w2.sum()
-    weights = (w1 + w2) / 2
+        M = {i: i for i in
+             (set(S1.index.levels[1])
+              & set(S2.index.levels[1]))}
     diffs = []
     for i in M:
         diffs.append(
-            cumdiff2(S1.unstack()[i].iloc[1:],
-                     S2.unstack()[M[i]].iloc[1:])
+            cumdiff2(S1.unstack()[i],
+                     S2.unstack()[M[i]])
         )
 
-    return {i: diffs[i] for i in M} | {'w': sum(
-        [diffs[i] * weights[i] for i in M]
-    )}
+    return {n: diffs[i] for i, n in enumerate(M)} | {
+        's': sum([diffs[i]**2 for i in range(len(M))])**0.5
+    }
 
 
 def dhkl(cell, indices):
