@@ -792,12 +792,12 @@ class Structure:
         return Series(distances).sort_values()
 
     def pairs_full(self, dmax, SL=None, prec=3):
-        """Returns distances in structure
+        """Returns list of normalized distances
 
         Parameters
         ----------
         dmax : float
-            max distance
+            max normalized distance
         SL : list
             list of sublattices
             (default None)
@@ -833,12 +833,14 @@ class Structure:
                     f = (N / vol(self.cell)[0]) ** (1/3)
                     # normalized distances:
                     p = self.pairs2(dmax / f, SL[i], SL[j])
-                    if len(p) > 1:
+                    if len(p) > 0:
                         nd = (p*f).round(prec).value_counts()
                         result[n] = (nd * N
                                      / SLmult[i]
                                      / SLmult[j]
                                      / (4 * pi * nd.index**2))
+                        # weight of sublattice pair:
+                        result[n].loc[-1.] = SLmult[i] * SLmult[j] / N**2
                 n += 1
         return DataFrame(result).stack().sort_index()
 
@@ -1206,7 +1208,7 @@ def cumdiff2(S1, S2, raw=False):
 
 
 def cumdiff_full(S1, S2, M=None):
-    """Calculates r.m.s. difference for partial RDFs
+    """Calculates r.m.s. differences for partial RDFs
 
     Assumes common distance range of distributions!
 
@@ -1225,22 +1227,33 @@ def cumdiff_full(S1, S2, M=None):
     -------
     dict
         r.m.s. differences for sublattice pairs
-        and quadratic sum
+        and weighted sum
     """
+
+    from numpy import array
 
     if M is None:
         M = {i: i for i in
              (set(S1.index.levels[1])
               & set(S2.index.levels[1]))}
+    wS1 = []
+    wS2 = []
     diffs = []
     for i in M:
         diffs.append(
-            cumdiff2(S1.unstack()[i],
-                     S2.unstack()[M[i]])
+            cumdiff2(S1.unstack()[i].iloc[1:],
+                     S2.unstack()[M[i]].iloc[1:])
         )
+        wS1.append(S1.loc[-1., i])
+        wS2.append(S2.loc[-1., M[i]])
+    wS1 = array(wS1)
+    wS2 = array(wS2)
+    wS1 /= wS1.sum()
+    wS2 /= wS2.sum()
+    w = (array(wS1) + array(wS2)) / 2
 
     return {n: diffs[i] for i, n in enumerate(M)} | {
-        's': sum([diffs[i]**2 for i in range(len(M))])**0.5
+        's': sum([diffs[i] * w[i] for i in range(len(M))])
     }
 
 
