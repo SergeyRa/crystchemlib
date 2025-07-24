@@ -791,7 +791,7 @@ class Structure:
 
         return Series(distances).sort_values()
 
-    def pairs_full(self, dmax, SL=None, prec=3):
+    def pairs_full(self, SL=None, dmax=10, prec=2):
         """Returns list of normalized distances
 
         Parameters
