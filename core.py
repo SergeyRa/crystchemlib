@@ -26,7 +26,9 @@ lattrange
 length
     Returns length and its esd
 matrixform
-    Returns matrix form of symmetry operations
+    Converts string notation into augmented matrix
+maxdiag
+    Returns length of the longest diagonal in cell
 newbasis
     Returns transformed basis [a, b, c, al, be, ga] and esds
 orthonorm
@@ -761,7 +763,7 @@ class Structure:
                                          result[-1][-1]+1 + counter)))
         return result
 
-    def pairs2(self, dmax, A, B):
+    def pairs2(self, dmax, A, B, plain=False):
         """Returns distances in structure
 
         Parameters
@@ -772,6 +774,9 @@ class Structure:
             sublattice of central atoms
         B : list
             sublattice of ligands
+        plain : bool
+            ignore cells along z
+            (default False)
 
         Returns
         -------
@@ -786,7 +791,7 @@ class Structure:
         distances = []
         for i in A:
             distances += self.poly(
-                i, B, dmax, dmin=0.01, distonly=True
+                i, B, dmax, dmin=0.01, distonly=True, plain=plain
             )['value']*mult[i]
 
         return Series(distances).sort_values()
@@ -843,6 +848,49 @@ class Structure:
                         result[n].loc[-1.] = SLmult[i] * SLmult[j] / N**2
                 n += 1
         return DataFrame(result).stack().sort_index()
+
+    def pairs_2d(self, dmax=10, prec=2, flatten=False):
+        """Returns list of normalized distances in (001) plain
+
+        Parameters
+        ----------
+        dmax : float
+            max normalized distance
+        prec : int
+            decimals in normalized distances
+        flatten : bool
+            whether apply z=0 for all sites
+            (default False)
+
+        Returns
+        -------
+        pd.Series
+            index: sorted distances
+            value: normalized number of distances
+        """
+
+        from numpy import pi
+        from pandas import Series
+
+        if flatten:
+            from copy import deepcopy
+
+            zeroz = deepcopy(self)
+            for i in zeroz.sites:
+                i.fract[2] = 0
+            return zeroz.pairs_2d(dmax=dmax, prec=prec)
+
+        SL = list(range(len(self.sites)))
+        N = len(self.p1().sites)
+        result = Series()
+        # distance normalization factor:
+        f = (N / vol(self.cell)[0] * dhkl(self.cell, [0, 0, 1])) ** (1/2)
+        # normalized distances:
+        p = self.pairs2(dmax / f, SL, SL, plain=True)
+        if len(p) > 0:
+            nd = (p*f).round(prec).value_counts()
+            result = (nd / N / (2 * pi * nd.index))
+        return result.sort_index()
 
     def poly(self, centr, ligands, dmax, dmin=0.0,
              nmax=None, suffixes=False, plain=False,
@@ -1409,20 +1457,71 @@ def length(cell, v1, v2=(0, 0, 0, 1),
     return (d, d_esd)
 
 
-def matrixform(symop):
-    from sympy import parsing, symbols
-    # generates augmented 4*4 matrix from _space_group_symop_operation_xyz
-    w_aug = []
-    x, y, z = symbols("x, y, z")
+def matrixform(symop, coord='x y z'):
+    """Converts string notation into augmented matrix
+
+    Parameters
+    ----------
+    symop : str
+        CIF-formatted string notation
+        of symmetry operator
+    coord : str
+        space-separated lowercase symbols
+        of coordinates (default 'x y z')
+
+    Returns
+    -------
+    numpy.ndarray
+        augmented matrix of symmetry operator
+    """
+
+    from numpy import array
+    from sympy import parsing, Poly, symbols
+
+    cs = symbols(coord)
+    result = []
     for i in symop.lower().replace(" ", "").replace("\t", "").split(","):
-        expr = parsing.sympy_parser.parse_expr(i)
-        t = expr - expr.coeff(x)*x - expr.coeff(y)*y - expr.coeff(z)*z
-        w_aug.append([float(expr.coeff(x)),
-                      float(expr.coeff(y)),
-                      float(expr.coeff(z)),
-                      float(t)])
-    w_aug.append([0, 0, 0, 1])
-    return w_aug
+        e = parsing.sympy_parser.parse_expr(i)
+        row = []
+        for j in cs:
+            row.append(e.coeff(j))
+        edict = Poly(e, *cs).as_dict()
+        if (0,)*len(cs) in edict:
+            row.append(edict[(0,)*len(cs)])
+        else:
+            row.append(0)
+        result.append(row)
+    result.append([0]*len(cs) + [1])
+    return array(result).astype(float)
+
+
+def maxdiag(cell, plain=False):
+    """Returns length of the longest diagonal in cell
+
+    Parameters
+    ----------
+    cell : list
+        [a, b, c, al, be, ga]
+    plain : bool
+        whether consider diagonals in (001) plain only
+        (default False)
+
+    Returns
+    -------
+    float
+    """
+
+    corners = []
+    if plain:
+        zset = (0, )
+    else:
+        zset = (0, 1)
+    for z in zset:
+        for x in (0, 1):
+            for y in (0, 1):
+                corners.append([x, y, z, 1])
+    return max([length(cell, i, j, skipesd=True)[0]
+                for i in corners for j in corners])
 
 
 def newbasis(cell, P, cell_esd=(0, 0, 0, 0, 0, 0)):
@@ -1456,23 +1555,40 @@ def newbasis(cell, P, cell_esd=(0, 0, 0, 0, 0, 0)):
             [a_esd, b_esd, c_esd, al_esd, be_esd, ga_esd])
 
 
-def orthonorm(cell, frac):
+def orthonorm(cell, fract):
+    """Returns orthonormal coordinates of point
+
+    Parameters
+    ----------
+    cell : list
+        [a, b, c, al, be, ga]
+    fract : list
+        [x, y, z, 1]
+
+    Returns
+    -------
+    numpy.ndarray
+        absolute coordinates in orthonormal basis XYZ
+        (X || x*, Z || z) after McKie & McKie 1986 (p. 154)
+    """
+
     from numpy import array, cos, dot, pi, sin
-    # converts fractional
-    # to absolute coordinates in orthonormal basis XYZ
-    # (X || x*, Z || z) after McKie & McKie 1986 (p. 154)
+
     a, b, c, al, be, ga = [i for i in cell]
     al *= pi/180
     be *= pi/180
     ga *= pi/180
-    # below cos and sin of reciprocal gamma* will be calculated:
+
+    # below cos and sin of reciprocal gamma*:
     cosGA = ((cos(al)*cos(be) - cos(ga))
              / (sin(al)*sin(be)))
     sinGA = (1-cosGA**2)**0.5
+
     M = [[a*sin(be)*sinGA, 0, 0],
          [-a*sin(be)*cosGA, b*sin(al), 0],
          [a*cos(be), b*cos(al), c]]
-    return dot(array(M), array(frac[:3])).tolist()
+
+    return dot(array(M), array(fract[:3])).tolist()
 
 
 def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):

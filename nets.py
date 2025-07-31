@@ -5,6 +5,12 @@ Functions
 densenets : dict
     Clusterizes atomic nets for given hkl
     (monkeypatched as Structure method)
+drawnet : matplotlib.pyplot.Figure
+    Plots 2D Gabriel graph
+    (monkeypatched as Structure method)
+gabriel2d : core.Polyhedron
+    Returns Gabriel neighbors
+    (monkeypatched as Structure method)
 med : float
     Returns mean effective density of nets
     (monkeypatched as Structure method)
@@ -15,7 +21,7 @@ spreadbasis :
     Returns 'spread' basis for given Miller indices
 """
 
-from core import dhkl, equivhkl, length, Structure, vol
+from core import dhkl, equivhkl, length, maxdiag, orthonorm, Structure, vol
 
 
 def densenets(self, indices, structures=True, fig=False):
@@ -140,6 +146,107 @@ def densenets(self, indices, structures=True, fig=False):
 
 
 Structure.densenets = densenets
+
+
+def drawnet(self, ax, cells=(2, 2)):
+    """Plots 2D Gabriel graph
+
+    Parameters
+    ----------
+    ax : matplotlib.pyplot.Axes
+        where to plot
+    cells : tuple
+        number of cells along a and b
+
+    Returns
+    -------
+    matplotlib.pyplot.Figure
+    """
+
+    from itertools import product
+    from numpy import array
+
+    for ni, i in enumerate(self.p1().sites):
+        # plain 'polyhedron' with direct neigbors:
+        p = self.p1().gabriel2d(ni, flatten=True)
+        for tr in product(range(cells[0]), range(cells[1])):
+            i_coord = orthonorm(self.cell,
+                                [i.fract[0]+tr[0], i.fract[1]+tr[1], 0, 1])
+            ax.scatter([i_coord[0]], [i_coord[1]], c='C0', zorder=2)
+            ax.text(i_coord[0], i_coord[1], i.label)
+            for j in p.ligands:
+                j_coord = orthonorm(self.cell,
+                                    [j.fract[0]+tr[0], j.fract[1]+tr[1], 0, 1])
+                ax.plot([i_coord[0], j_coord[0]], [i_coord[1], j_coord[1]],
+                        alpha=0.75, zorder=1)
+
+    uc = array([orthonorm(self.cell, i) for i in [[0, 0, 0, 1],
+                                                  [0, 1, 0, 1],
+                                                  [1, 1, 0, 1],
+                                                  [1, 0, 0, 1],
+                                                  [0, 0, 0, 1]]])
+    ax.plot(uc[:, 0], uc[:, 1], 'k--', alpha=0.5, zorder=0)
+    ax.set_aspect('equal', adjustable='box')
+    return
+
+
+Structure.drawnet = drawnet
+
+
+def gabriel2d(self, centr, ligands=None, flatten=False):
+    """Returns Gabriel neighbors
+
+    Parameters
+    ----------
+    centr : int
+        number of central site in self.sites
+    ligands : list
+        numbers of ligands in self.sites
+        (if None, all sites will be considered);
+        default None
+    flatten : bool
+        whether apply z=0 for all sites
+        (default False)
+
+    Returns
+    -------
+    core.Polyhedron
+    """
+
+    if ligands is None:
+        ligands = list(range(len(self.sites)))
+
+    if flatten:
+        from copy import deepcopy
+
+        zeroz = deepcopy(self)
+        for i in zeroz.sites:
+            i.fract[2] = 0
+        return zeroz.gabriel2d(centr, ligands)
+
+    from numpy import array
+
+    dmax = maxdiag(self.cell, plain=True)
+    p = self.poly(centr=centr, ligands=ligands,
+                  dmax=dmax, dmin=0.01, plain=True)
+    blacklist = []
+    for i in range(len(p.ligands)):
+        for j in range(len(p.ligands)):
+            if i != j:
+                halfway = 0.5 * (array(p.central.fract)
+                                 + array(p.ligands[i].fract))
+                radius = 0.5 * length(self.cell, p.central.fract,
+                                      p.ligands[i].fract, skipesd=True)[0]
+                if length(self.cell, halfway, p.ligands[j].fract,
+                          skipesd=True)[0] <= radius:
+                    blacklist.append(i)
+                    break
+    for i in blacklist[::-1]:
+        p.ligands.pop(i)
+    return p
+
+
+Structure.gabriel2d = gabriel2d
 
 
 def med(self, indices, sublatt=None):
