@@ -1,5 +1,6 @@
 from nets import Structure
 import core as ccl
+import matplotlib.pyplot as plt
 import pandas as pd
 import streamlit as st
 
@@ -94,7 +95,7 @@ if ready:
     df['d_eff, 1/A^2'] = netsAB['density']
     df['width, A'] = netsAB['width']
     df['z'] = netsAB['z']
-    st.dataframe(df, hide_index=True)
+    st.dataframe(df)
     if netsAB['fig'] is not None:
         st.pyplot(netsAB['fig'])
     for i, s in enumerate(netsAB['structure']):
@@ -108,4 +109,13 @@ if ready:
                            f"{indices[0]}{indices[1]}{indices[2]}.cif",
                            use_container_width=True)
     download()
-        
+
+    @st.fragment
+    def draw():
+        col3, col4 = st.columns(2)
+        net = col3.selectbox('Choose net to draw', df.index)
+        fig, ax = plt.subplots(dpi=150)
+        netsAB['structure'][net].drawnet(ax)
+        col4.pyplot(fig)
+        col3.text('(vertices projected to z=0 of spread cell)')
+    draw()

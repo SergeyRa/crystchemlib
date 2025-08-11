@@ -8,6 +8,8 @@ densenets : dict
 drawnet : matplotlib.pyplot.Figure
     Plots 2D Gabriel graph
     (monkeypatched as Structure method)
+gabriel_angles : pandas.Series
+    Returns angles from Gabriel graph
 gabriel2d : core.Polyhedron
     Returns Gabriel neighbors
     (monkeypatched as Structure method)
@@ -17,11 +19,11 @@ med : float
 searchnets : dict
     Returns mean eff. density for hkls in range
     (monkeypatched as Structure method)
-spreadbasis :
+spreadbasis : list
     Returns 'spread' basis for given Miller indices
 """
 
-from core import dhkl, equivhkl, length, maxdiag, orthonorm, Structure, vol
+from core import Structure, orthonorm, length, dhkl, vol, maxdiag, equivhkl
 
 
 def densenets(self, indices, structures=True, fig=False):
@@ -166,31 +168,62 @@ def drawnet(self, ax, cells=(2, 2)):
     from itertools import product
     from numpy import array
 
+    sites = {}
+    for i in self.sites:
+        sites[i.label] = []
+    cell = self.cell
+    # setting c normal to (001) for convenient orthonormal basis:
+    cell[-2] = 90.0
+    cell[-3] = 90.0
     for ni, i in enumerate(self.p1().sites):
         # plain 'polyhedron' with direct neigbors:
         p = self.p1().gabriel2d(ni, flatten=True)
         for tr in product(range(cells[0]), range(cells[1])):
-            i_coord = orthonorm(self.cell,
-                                [i.fract[0]+tr[0], i.fract[1]+tr[1], 0, 1])
-            ax.scatter([i_coord[0]], [i_coord[1]], c='C0', zorder=2)
-            ax.text(i_coord[0], i_coord[1], i.label)
+            i_coord = orthonorm(cell, [i.fract[0]+tr[0],
+                                       i.fract[1]+tr[1], 0, 1])
+            sites[i.label].append(i_coord)
             for j in p.ligands:
-                j_coord = orthonorm(self.cell,
-                                    [j.fract[0]+tr[0], j.fract[1]+tr[1], 0, 1])
+                j_coord = orthonorm(cell, [j.fract[0]+tr[0],
+                                           j.fract[1]+tr[1], 0, 1])
                 ax.plot([i_coord[0], j_coord[0]], [i_coord[1], j_coord[1]],
-                        alpha=0.75, zorder=1)
+                        alpha=0.75, zorder=1, c='0.5')
 
-    uc = array([orthonorm(self.cell, i) for i in [[0, 0, 0, 1],
-                                                  [0, 1, 0, 1],
-                                                  [1, 1, 0, 1],
-                                                  [1, 0, 0, 1],
-                                                  [0, 0, 0, 1]]])
-    ax.plot(uc[:, 0], uc[:, 1], 'k--', alpha=0.5, zorder=0)
-    ax.set_aspect('equal', adjustable='box')
+    uc = array([orthonorm(cell, i) for i in [[0, 0, 0, 1],
+                                             [0, 1, 0, 1],
+                                             [1, 1, 0, 1],
+                                             [1, 0, 0, 1],
+                                             [0, 0, 0, 1]]])
+    for i in sites:
+        ax.scatter([j[0] for j in sites[i]], [j[1] for j in sites[i]], label=i)
+    ax.plot(uc[:, 0], uc[:, 1], 'k--', lw=1)
+    ax.set_aspect('equal')
+    ax.legend(fontsize='x-small')
     return
 
 
 Structure.drawnet = drawnet
+
+
+def gabriel_angles(self):
+    """Returns angles from Gabriel graph
+
+    Returns
+    -------
+    pandas.Series
+        frequency of angles per site
+    """
+
+    from pandas import Series
+
+    result = []
+    N = len(self.p1().sites)
+    for i in range(N):
+        result += gabriel2d(self.p1(), i, flatten=True).listangl()['value']
+
+    return Series(result).round(0).value_counts().sort_index() / N
+
+
+Structure.gabriel_angles = gabriel_angles
 
 
 def gabriel2d(self, centr, ligands=None, flatten=False):
@@ -238,7 +271,7 @@ def gabriel2d(self, centr, ligands=None, flatten=False):
                 radius = 0.5 * length(self.cell, p.central.fract,
                                       p.ligands[i].fract, skipesd=True)[0]
                 if length(self.cell, halfway, p.ligands[j].fract,
-                          skipesd=True)[0] <= radius:
+                          skipesd=True)[0] / radius <= 1.05:  # tolerance
                     blacklist.append(i)
                     break
     for i in blacklist[::-1]:

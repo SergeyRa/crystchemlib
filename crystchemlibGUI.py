@@ -40,7 +40,7 @@ def hash_func(obj):
 
 
 @st.cache_data(hash_funcs={Structure: hash_func})
-def findpoly(structures, centrals, ligands, dmin, dmax, nmax):
+def findpoly(structures, centrals, ligands, dmin, dmax, nmax, symsuff):
     """Finds specified polyhedra in list of Structure instances"""
 
     result = []
@@ -53,7 +53,8 @@ def findpoly(structures, centrals, ligands, dmin, dmax, nmax):
             for j in centrals:
                 c = i.filter('label', [j])
                 if c != []:
-                    p.append(i.poly(c[0], lig, dmax, dmin, nmax))
+                    p.append(i.poly(c[0], lig, dmax, dmin, nmax,
+                                    suffixes=symsuff))
         result.append(p)
     return result
 
@@ -116,6 +117,19 @@ def tcelsius(parsed):
             result.append([(s, 'T, deg C', d[2]-273.15, d[3])])
         else:
             result.append([(s, 'T, deg C', None, None)])
+    return result
+
+
+def vorvol(parsed, label):
+    """Volume of Voronoi polyhedron for site"""
+
+    result = []
+    for source, struct in zip(parsed['source'], parsed['structure']):
+        if struct is None or len(struct.filter('label', [label])) == 0:
+            result.append([(source, label, None, None)])
+        else:
+            site = struct.filter('label', [label])[0]
+            result.append([(source, label, *struct.voronoi(site)['volume'])])
     return result
 
 
@@ -351,6 +365,7 @@ centrals = col5.multiselect("Choose central site",
                             sorted(list(labels)))
 ligands = col6.multiselect("Choose ligands",
                            sorted(list(labels)))
+symsuff = col6.toggle('Use symmetry suffixes')
 
 # functions with single value output:
 fsingle = {'T, C': tcelsius, 'P, GPa': pgpa,
@@ -362,6 +377,9 @@ fsingle = {'T, C': tcelsius, 'P, GPa': pgpa,
            'Polyhedron volume, A^3': volume,
            'Polyhedron volume (corr.), A^3': volume_corr,
            'Weighted mean distance (CHARDI), A': wmd}
+if len(centrals) == 1:
+    fsingle.update({'Voronoi volume, A^3':
+                    lambda x, label=centrals[0]: vorvol(x, label)})
 # functions with multivalue output:
 fmulti = {'Polyhedron angles, deg': angles,
           'Polyhedron bond weights': bond_weights,
@@ -390,7 +408,7 @@ if ty == 'CIF loops':
 
 if st.button('Run', type="primary", use_container_width=True):
     parsed['poly'] = findpoly(parsed['structure'], centrals, ligands,
-                              dmin, dmax, nmax)
+                              dmin, dmax, nmax, symsuff)
     xdata = xopt[tx][fx](parsed) if (fx is not None) else []
     ydata = yopt[ty][fy](parsed) if (fy is not None) else []
     hdata = hidden_lig(parsed)  # check for hidden ligands

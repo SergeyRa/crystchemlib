@@ -35,6 +35,8 @@ orthonorm
     Returns orthonormal coordinates of point
 parsecif
     Returns CIF content
+printcif
+    Converts CIF-based dict to text
 qimport
     Quick wrapper for parsecif
 readesd
@@ -43,6 +45,8 @@ readformula
     Interprets _chemical_formula_sum value
 readstruct
     Returns Structure object from CIF-based dict
+solidangle
+    Returns solid angle for point and polygon
 stringform
     Returns string form of symmetry operation
 vol
@@ -104,6 +108,8 @@ class Polyhedron:
         Returns polyhedron volume and its esd
     polyvol_corr : tuple
         Returns U-corrected polyhedron volume and its esd
+    voronoi : dict
+        Voronoi polyhedron
     wmd : float
         Returns weighted mean distance (CHARDI)
     """
@@ -362,6 +368,100 @@ class Polyhedron:
         r_corr = sum(self.listdist_corr()['value'])
         return (V * (1 + 3*(r_corr - r)/r), esd)
 
+    def voronoi(self, mark='*', wmin=0.001):
+        """Voronoi polyhedron
+
+        Parameters
+        ----------
+        centr : int
+            number of central site in self.sites
+        mark : str
+            suffix for indirect neighbors (default '*')
+        wmin : float
+            solid angle weight threshold
+            (designed to exclude VERY small faces
+             originating from precision issues
+             rather than filter ligands)
+
+        Returns
+        -------
+        dict
+            {'coordination': Polyhedron,
+             'direct_neighbors': list,
+             'faces': ordered list of list of triplets in orthonormal basis,
+             'vertices': list of triplets in orthonormal basis,
+             'volume': (vol, esd),
+             'weight' : list}
+        """
+
+        from copy import deepcopy
+        from numpy import array, delete, pi, sort, vstack, where
+        from numpy.linalg import norm
+        from scipy.spatial import ConvexHull, QhullError, Voronoi
+
+        cenXYZ = orthonorm(self.cell, self.central.fract)
+        ligXYZ = array([orthonorm(self.cell, i.fract) for i in self.ligands])
+        vor = Voronoi(vstack([cenXYZ, ligXYZ]))
+        # all Voronoi neighbors:
+        allneigh = []
+        # vertices of Voronoi faces:
+        faces = {}
+        for i in vor.ridge_dict:
+            if 0 in i:
+                n = i[0] if i[0] != 0 else i[1]
+                # numbering as in p.ligands:
+                allneigh.append(n-1)
+                faces[n-1] = vor.ridge_dict[i]
+        allneigh = sort(array(allneigh))
+        # 'direct' Voronoi neigbors (a.k.a. Gabriel neigbors):
+        dirneigh = array(allneigh)
+        for i in allneigh:
+            for j in allneigh:
+                center = 0.5 * (cenXYZ + ligXYZ[i])
+                radius = 0.5 * norm(cenXYZ - ligXYZ[i])
+                # note precision multiplier for radius:
+                if (i != j) and (norm(ligXYZ[j] - center) <= radius * 1.001):
+                    dirneigh = delete(dirneigh, where(dirneigh == i))
+        coordination = Polyhedron(deepcopy(self.central),
+                                  [deepcopy(self.ligands[i])
+                                   for i in sort(allneigh)],
+                                  self.cell, self.cell_esd)
+        # resetting indices in dirneigh:
+        dirneigh = array([where(allneigh == i)[0][0] for i in dirneigh])
+        vorvol = [None, None]
+        try:
+            vorvol[0] = ConvexHull(
+                vor.vertices[vor.regions[vor.point_region[0]]]
+            ).volume
+            coordvol = coordination.polyvol()
+            # assuming relative volume esd as for coordination polyhedron:
+            vorvol[1] = coordvol[1] / coordvol[0] * vorvol[0]
+        except QhullError:
+            pass
+        faces = [vor.vertices[faces[i]] for i in allneigh]
+
+        weight = []
+        for i in faces:
+            sa, seq = solidangle(cenXYZ, i)
+            weight.append(sa / 4 / pi)
+            i = array(i)[seq]
+        weight = array(weight)
+        if weight.min() < wmin:
+            coordination.ligands.pop(weight.argmin())
+            return coordination.voronoi(mark=mark, wmin=wmin)
+
+        # appending suffix to indirect neighbors:
+        for i in [j for j in range(len(coordination.ligands))
+                  if j not in dirneigh]:
+            coordination.ligands[i].label += mark
+
+        return {'coordination': coordination,
+                'direct_neighbors': dirneigh,
+                'faces': faces,
+                'vertices': vor.vertices[vor.regions[vor.point_region[0]]],
+                'volume': tuple(vorvol),
+                'weight': weight}
+
     def wmd(self):
         """Weighted mean distance (CHARDI)
 
@@ -495,6 +595,8 @@ class Structure:
         Returns sublattice of structure
     transform : Structure
         Changes basis
+    voronoi : dict
+        Voronoi polyhedron
     """
 
     def __init__(self,
@@ -928,8 +1030,8 @@ class Structure:
         from copy import deepcopy
 
         centr_site = deepcopy(self.sites[centr])
-        centr_site.fract = [i % 1 for i in centr_site.fract]
-        # reduction to the first cell
+        # reduction to the first cell:
+        centr_site.fract = [i % 1 for i in centr_site.fract[:3]] + [1]
         liglist = []
         Na, Nb, Nc = lattrange(self.cell, dmax)
         if plain:
@@ -1093,6 +1195,38 @@ class Structure:
             new_sites.append(s)
         return Structure(new_cell, new_cell_esd, new_sites, new_symops)
 
+    def voronoi(self, centr, ligands=None, mark='*', wmin=0.001):
+        """Voronoi polyhedron
+
+        Parameters
+        ----------
+        centr : int
+            number of central site in self.sites
+        ligands : list
+            numbers of ligands in self.sites
+            (if None, all sites are considered);
+            default None
+        mark : str
+            suffix for indirect neighbors (default '*')
+        wmin : float
+            solid angle weight threshold
+
+        Returns
+        -------
+        dict
+            {'coordination': Polyhedron,
+             'direct_neighbors': list,
+             'faces': list of list of triplets in orthonormal basis,
+             'vertices': list of triplets in orthonormal basis,
+             'volume': (vol, esd),
+             'weight' : list}
+        """
+
+        if ligands is None:
+            ligands = list(range(len(self.sites)))
+        p = self.poly(centr, ligands, maxdiag(self.cell), dmin=0.01)
+        return p.voronoi(mark=mark, wmin=wmin)
+
 
 def angle(cell, u, v, w,
           cell_esd=None,
@@ -1168,7 +1302,7 @@ def clearkeys(data, loops=None):
 
     Parameters
     ----------
-    data : dict
+    data : collections.OrderedDict
         CIF-based dict {keys: values}
     loops : list
         [[loop1 keys], [loop2 keys], ...]
@@ -1176,10 +1310,11 @@ def clearkeys(data, loops=None):
     Returns
     -------
     tuple
-        (data_cleared, loops_cleared)
+        (data_cleared : collections.OrderedDict, loops_cleared : list)
     """
 
-    data_cleared = {}
+    from collections import OrderedDict
+    data_cleared = OrderedDict()
     for i in data:
         if type(data[i]) is str:  # ignoring loops (lists)
             if (data[i].strip() == '?') or (data[i].strip() == '.'):
@@ -1613,7 +1748,7 @@ def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):
          "loops": [list1, list2, ...]}
         "name" contains list of datablock names
         "data" contains list of datablock contents
-        as dictionaries {CIF_key: value, ...}
+        as ordered dictionaries {CIF_key: value, ...}
             - looped keys are converted into values of list type
             - all keys are converted to lowercase
             - all values are of str type
@@ -1621,6 +1756,7 @@ def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):
         "loops" contains list of looped keys (as lists)
     """
 
+    from collections import OrderedDict
     from shlex import split
 
     def group(keys, values):
@@ -1696,7 +1832,7 @@ def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):
                     keys = []
                     values = []
                 datablocks.append(i[5:])
-                parsed.append({})
+                parsed.append(OrderedDict())
                 loops.append([])
             elif i.startswith("_") or (i == "loop_"):
                 if flags["values"]:
@@ -1732,6 +1868,63 @@ def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):
         loops[-1].append(keys)
     # note that loop with single key converts into simple key-value pair
     return {"name": datablocks, "data": parsed, "loops": loops}
+
+
+def printcif(data, loops=None, name='I'):
+    """Converts CIF-based dict to text
+
+    Parameters
+    ----------
+    data : collections.OrderedDict
+        CIF-based dict (see parsecif output)
+    loops : list
+        looped keys (see parsecif output)
+    name : str
+        datablock name
+
+    Returns
+    str
+        note that clearkeys routine is used
+    """
+
+    if loops is None:
+        loops = []
+    datacl, loopscl = clearkeys(data, loops)
+    result = f'data_{name}\n'
+    ignorekeys = []
+    for key in datacl.keys():
+        if key in ignorekeys:
+            continue
+        elif type(datacl[key]) is list:
+            # searching loop with key:
+            for i in range(len(loopscl)):
+                if key in loopscl[i]:
+                    loop = loopscl[i]
+                    loopscl.pop(i)
+                    break
+
+            result += 'loop_\n'
+            for i in loop:
+                result += f' {i}\n'
+            for i in range(len(datacl[key])):
+                for j in loop:
+                    # spaces:
+                    if (' ' in datacl[j][i]) or ('\t' in datacl[j][i]):
+                        result += f" '{datacl[j][i]}'"
+                    else:
+                        result += f' {datacl[j][i]}'
+                result += '\n'
+            ignorekeys += loop
+        else:
+            # multi-lines:
+            if '\n' in data[key]:
+                result += f'{key}\n;{data[key]}\n;\n'
+            # spaces:
+            elif (' ' in data[key]) or ('\t' in data[key]):
+                result += f"{key}\t'{data[key]}'\n"
+            else:
+                result += f'{key}\t{data[key]}\n'
+    return result
 
 
 def qimport(path):
@@ -1885,6 +2078,60 @@ def readstruct(data):
             struct.symops = [matrixform(j) for j
                              in data["_symmetry_equiv_pos_as_xyz"]]
     return struct
+
+
+def solidangle(point, polygon):
+    """Returns solid angle for point and polygon
+
+    Parameters
+    ----------
+    point : list
+        triplet xyz
+    polygon : list
+        xyz triplets
+
+    Returns
+    -------
+    tuple
+        (float : solid angle, list : sequence of points)
+    """
+
+    from numpy import array, atan, cross, dot
+    from numpy.linalg import norm
+    from scipy.spatial import ConvexHull, QhullError
+
+    p_arr = array(point)
+    pol_arr = array(polygon)
+    # 2d-flattening of polygon to obtain sequence of vertices;
+    # vectors from 0 to 1 and -1 are used as new basis:
+    newbasis = (pol_arr[[-1, 1]] - pol_arr[0]).transpose()
+    flattened = dot(pol_arr, newbasis)
+    seq = list(range(len(polygon)))
+    S = 0.0
+    try:
+        seq = ConvexHull(flattened).vertices
+        # arranging vertices of polygon:
+        pol_arr = pol_arr[seq]
+        # checking winding:
+        if dot(pol_arr[0] - p_arr,
+               cross(pol_arr[1] - p_arr,
+                     pol_arr[2] - p_arr)) < 0:
+            pol_arr = pol_arr[::-1]
+
+        for i in range(1, len(pol_arr)-1):
+            a = pol_arr[0] - p_arr
+            b = pol_arr[i] - p_arr
+            c = pol_arr[i+1] - p_arr
+            # https://doi.org/10.1109/TBME.1983.325207
+            S += atan(
+                dot(a, cross(b, c)) / (norm(a)*norm(b)*norm(c)
+                                       + dot(a, b)*norm(c)
+                                       + dot(a, c)*norm(b)
+                                       + dot(b, c)*norm(a))
+            ) * 2
+    except QhullError:
+        pass
+    return (S, seq)
 
 
 def stringform(w_aug):
