@@ -1,0 +1,7 @@
+matplotlib == 3.10.3
+numpy == 2.2.6
+pandas == 2.2.3
+plotly == 6.1.0
+scipy == 1.15.3
+streamlit == 1.47.1
+sympy == 1.14.0
