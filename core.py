@@ -284,9 +284,9 @@ class Polyhedron:
             Ulig_esd = lig.u_esd
             dobs = result['value'][i]
             dobs_esd = result['esd'][i]
-            dcorr = (dobs**2 + Ulig - Ucen)**0.5
+            dcorr = (dobs**2 + 3*(Ulig - Ucen))**0.5
             dcorr_esd = (dobs_esd**2 * 4 * dobs**2
-                         + Ulig_esd**2 + Ucen_esd**2)**0.5 / 2 / dcorr
+                         + Ulig_esd**2 * 9 + Ucen_esd**2 * 9)**0.5 / 2 / dcorr
             result["value"][i] = dcorr
             result["esd"][i] = dcorr_esd
         return result
