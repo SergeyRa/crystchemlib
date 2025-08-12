@@ -1222,9 +1222,15 @@ class Structure:
              'weight' : list}
         """
 
+        from numpy import pi
+
         if ligands is None:
             ligands = list(range(len(self.sites)))
-        p = self.poly(centr, ligands, maxdiag(self.cell), dmin=0.01)
+        N = len(self.sublatt(ligands).p1().sites)
+        V = vol(self.cell)[0]
+        # sphere of 100 atoms:
+        r100 = ((V/N * 100) * 3 / 4 / pi)**(1/3)
+        p = self.poly(centr, ligands, r100, dmin=0.01)
         return p.voronoi(mark=mark, wmin=wmin)
 
 

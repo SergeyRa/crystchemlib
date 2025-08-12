@@ -1,13 +1,17 @@
-# *crystchemlib* v.0.9
+# *crystchemlib* v.0.9.3
 Python library for crystallographic and crystal chemical analysis with *streamlit* GUI
 
 ## Maintainer
 Sergey V. Rashchenko (rashchenkos@gmail.com)
 
-## v.0.9 features
+## v.0.9.3 features
 * Installation scripts
 * Handling of incommensurate structures
 * Birch-Murnaghan equations of state fitting
+* GUI for merging CIFs with insertion of custom keys (e.g. for pressure)
+* Visualization of nets in 'Dense atomic nets' module
+* Module for visualization of Voronoi-Dirichlet polyhedra
+* Parametric analysis of Voronoi-Dirichlet volumes in the main GUI
 
 ## Installation
 

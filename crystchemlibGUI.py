@@ -420,6 +420,10 @@ else:
 x1d = []
 y1d = []
 
+if fy == 'Voronoi volume, A^3':
+    st.text('Note: construction of Voronoi-Dirichlet polyhedron'
+            ' considers ALL sites ("Choose ligands" constraints'
+            ' are not applied)')
 xwarn = False
 for x, y in zip(xdata, ydata):
     if x != []:
