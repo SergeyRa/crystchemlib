@@ -50,9 +50,11 @@ if file is not None:
     C = ['']*dom
     for n, d in enumerate(domains):
         A[n] = d.number_input(f'a*, px (domain {n+1})',
-                              0.0, float(im.shape[0]/2), float(im.shape[0]/10))
+                              0.0, float(im.shape[0]/2),
+                              float(im.shape[0]/10), 0.1)
         B[n] = d.number_input(f'b*, px (domain {n+1})',
-                              0.0, float(im.shape[1]/2), float(im.shape[0]/10))
+                              0.0, float(im.shape[1]/2),
+                              float(im.shape[0]/10), 0.1)
         G[n] = d.number_input(f'Gamma*, deg (domain {n+1})', 0, 179, 90)
         R[n] = d.number_input(f'Rotation, deg (domain {n+1})', -359, 359, 0)
         if sat:
