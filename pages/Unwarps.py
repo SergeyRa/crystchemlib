@@ -58,8 +58,8 @@ if file is not None:
         G[n] = d.number_input(f'Gamma*, deg (domain {n+1})', 0, 179, 90)
         R[n] = d.number_input(f'Rotation, deg (domain {n+1})', -359, 359, 0)
         if sat:
-            Qa[n] = d.number_input(f'q_a*, (domain {n+1})', -1.0, 1.0, 0.0)
-            Qb[n] = d.number_input(f'q_b*, (domain {n+1})', -1.0, 1.0, 0.0)
+            Qa[n] = d.number_input(f'q_a* (domain {n+1})', -1.0, 1.0, 0.0)
+            Qb[n] = d.number_input(f'q_b* (domain {n+1})', -1.0, 1.0, 0.0)
         C[n] = d.selectbox(f'Color (domain {n+1})',
                            matplotlib.colors.CSS4_COLORS)
 
