@@ -1832,7 +1832,7 @@ def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):
                 if datablocks != []:
                     flags["values"] = False
                     parsed[-1].update(group(keys, values))
-                    if (len(keys) > 1) and (flags["ignore"] is False):
+                    if (len(values) > 1) and (flags["ignore"] is False):
                         loops[-1].append(keys)
                     flags["ignore"] = True
                     keys = []
@@ -1844,7 +1844,7 @@ def parsecif(source, whitelist=whitelist_structure, ignoreloops=False):
                 if flags["values"]:
                     flags["values"] = False
                     parsed[-1].update(group(keys, values))
-                    if (len(keys) > 1) and (flags["ignore"] is False):
+                    if (len(values) > 1) and (flags["ignore"] is False):
                         loops[-1].append(keys)
                     flags["ignore"] = True
                     keys = []
