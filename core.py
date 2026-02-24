@@ -149,7 +149,7 @@ class Polyhedron:
     def bondweights(self):
         """Returns bond weights in CHARDI approach
 
-        Convergence condition: max bond weight change < 0.01.
+        Convergence condition: max bond weight change < 0.001.
 
         Returns
         -------
@@ -2099,7 +2099,8 @@ def solidangle(point, polygon):
     Returns
     -------
     tuple
-        (float : solid angle, list : sequence of points)
+        (float : solid angle,
+         list : sequence of points in positive winding)
     """
 
     from numpy import array, atan, cross, dot
@@ -2118,23 +2119,24 @@ def solidangle(point, polygon):
         seq = ConvexHull(flattened).vertices
         # arranging vertices of polygon:
         pol_arr = pol_arr[seq]
-        # checking winding:
+        # checking winding sign:
         if dot(pol_arr[0] - p_arr,
                cross(pol_arr[1] - p_arr,
                      pol_arr[2] - p_arr)) < 0:
-            pol_arr = pol_arr[::-1]
+            seq = seq[::-1]
+            pol_arr = pol_arr[seq]
 
         for i in range(1, len(pol_arr)-1):
             a = pol_arr[0] - p_arr
             b = pol_arr[i] - p_arr
             c = pol_arr[i+1] - p_arr
             # https://doi.org/10.1109/TBME.1983.325207
-            S += atan(
+            S += abs(atan(
                 dot(a, cross(b, c)) / (norm(a)*norm(b)*norm(c)
                                        + dot(a, b)*norm(c)
                                        + dot(a, c)*norm(b)
                                        + dot(b, c)*norm(a))
-            ) * 2
+            ) * 2)
     except QhullError:
         pass
     return (S, seq)
