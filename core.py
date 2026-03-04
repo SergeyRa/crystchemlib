@@ -1,5 +1,12 @@
 """Module for analysis of crystal structure geometry
 
+Module variables
+----------------
+bvparm : pandas.DataFrame
+    data from bvparm2020.cif
+whitelist_structure : list
+    CIF keys used in default Structure constructor
+
 Classes
 -------
 Polyhedron
@@ -13,6 +20,8 @@ Functions
 ---------
 angle
     Returns angle and its esd
+bvp
+    Returns bond-valence parameters
 clearkeys
     Removes empty keys from CIF-based dict
 cumdiff
@@ -55,7 +64,21 @@ writesd
     Returns value and its eds as string with parentheses
 """
 
-# CIF keys used in Structure constructor
+from CifFile import ReadCif
+from pandas import DataFrame
+
+
+data = ReadCif('./bvparm2020.cif').first_block()
+ref = dict(zip(data['_valence_ref_id'], data['_valence_ref_reference']))
+bvparm = DataFrame(data.GetLoop('_valence_param_ro'),
+                   columns=data.GetLoop('_valence_param_ro').keys())
+bvparm['_valence_ref_reference'] = [
+    ref[i] for i in bvparm['_valence_param_ref_id']
+]
+for i in bvparm:
+    if i.endswith('valence') or i.endswith('ro') or i.endswith('b'):
+        bvparm[i] = bvparm[i].astype(float)
+
 whitelist_structure = ["_cell_length_a",
                        "_cell_length_b",
                        "_cell_length_c",
@@ -90,6 +113,8 @@ class Polyhedron:
 
     Methods
     -------
+    bondval : dict
+        Returns bond valences
     bondweights : dict
         Returns bond weights in CHARDI approach
     econ : tuple
@@ -145,6 +170,42 @@ class Polyhedron:
                            self.listdist()['esd']):
             lig += f'{i.label} ({i.symbol}) {writesd(j, k, ".3f")}\n'
         return (f'{self.central.label} ({self.central.symbol})\n{lig[:-1]}')
+
+    def bondval(self, refs=None, norm=False):
+        """Returns bond valences
+
+        Parameters
+        ----------
+        refs : list or None
+            to be passed in bvp as {refs} argument
+        norm : bool
+            if True, normalizes output by val1 (default False)
+
+        Returns
+        -------
+        pd.Dataframe
+            {"name": [], "value": [], "esd": [zeroes]}
+        """
+
+        from math import exp
+        from pandas import DataFrame
+
+        result = {"name": [], "value": [], "esd": []}
+        ld = self.listdist(skipesd=True)
+        result["name"] = ld['name']
+        at1 = self.central.symbol
+        val1 = self.central.val
+        for i, d in zip(self.ligands, ld['value']):
+            at2 = i.symbol
+            val2 = i.val
+            p = bvp(at1, at2, val1, val2, refs=refs)
+            if p is None:
+                result['value'].append(None)
+            else:
+                r0, b, val1 = p[:3]
+                result['value'].append(exp((r0-d)/b) / (val1 if norm else 1))
+            result['esd'].append(0)
+        return DataFrame(result)
 
     def bondweights(self):
         """Returns bond weights in CHARDI approach
@@ -391,7 +452,7 @@ class Polyhedron:
              'faces': ordered list of list of triplets in orthonormal basis,
              'vertices': list of triplets in orthonormal basis,
              'volume': (vol, esd),
-             'weight' : list}
+             'weight' : numpy.ndarray}
         """
 
         from copy import deepcopy
@@ -510,11 +571,13 @@ class Site:
         Uiso / Uequiv
     u_esd : float
         esd of Uso / Uequiv
+    val : float
+        site valence
     """
 
     def __init__(self, fract, fract_esd=None,
                  label="H1", symbol="H", occ=1.0, occ_esd=0.0,
-                 u=0.0, u_esd=0.0):
+                 u=0.0, u_esd=0.0, val=None):
         """
         Parameters
         ----------
@@ -532,9 +595,11 @@ class Site:
         occ_esd : float
             occupance esd (default 0.0)
         u : float
-            Uiso / Uequiv
+            Uiso / Uequiv (default None)
         u_esd : float
-            esd of Uso / Uequiv
+            esd of Uso / Uequiv (default None)
+        val : float
+            site valence (default None)
         """
 
         self.fract = fract
@@ -548,6 +613,7 @@ class Site:
         self.occ_esd = occ_esd
         self.u = u
         self.u_esd = u_esd
+        self.val = val
 
     def __repr__(self):
         x, y, z = [writesd(i, j) for i, j in zip(self.fract[:3],
@@ -1079,7 +1145,7 @@ class Structure:
                           self.cell, self.cell_esd)
 
     def resymbol(self):
-        """Standartise chemical element symbols"""
+        """Standardizes chemical element symbols"""
 
         elements = [
             'Ac', 'Ag', 'Al', 'Am', 'Ar', 'As', 'At', 'Au', 'Ba', 'Be', 'Bh',
@@ -1093,7 +1159,7 @@ class Structure:
             'Sm', 'Sn', 'Sr', 'Ta', 'Tb', 'Tc', 'Te', 'Th', 'Ti', 'Tl', 'Tm',
             'Ts', 'Xe', 'Yb', 'Zn', 'Zr',
             'B', 'C', 'F', 'H', 'I', 'K', 'N',
-            'O', 'P', 'S', 'U', 'V', 'W', 'Y'
+            'O', 'P', 'S', 'U', 'V', 'W', 'Y', 'D'
         ]
         for s in self.sites:
             for e in elements:
@@ -1298,6 +1364,53 @@ def angle(cell, u, v, w,
                          + b_esd**2 / b**2
                          + c_esd**2 / c**2)
     return (al, al_esd)
+
+
+def bvp(at1, at2, val1=None, val2=None, refs=None):
+    """Returns bond-valence parameters
+
+    Parameters
+    ----------
+    at1 : str
+        site symbol for the first atom
+    at2 : str
+        site symbol for the second atom
+    val1 : float
+        valence for the first atom (default None)
+    val2 : float
+        valence for the second atom (default None)
+    refs : list
+        allowed _valence_param_ref_id values in bvparm
+        in preference order; if None all are allowed (default None)
+
+    Returns
+    -------
+    tuple
+        (r0, b, val1, val2, ref) or None; val1 and val2 are updated
+        from bvparm if not stated explicitly
+    """
+
+    from pandas import concat
+
+    df = bvparm[(bvparm['_valence_param_atom_1'] == at1)
+                & (bvparm['_valence_param_atom_2'] == at2)]
+    if val1 is not None:
+        df = df[df['_valence_param_atom_1_valence'] == val1]
+    if val2 is not None:
+        df = df[df['_valence_param_atom_2_valence'] == val2]
+    if refs is not None:
+        df = concat(
+            [df[df['_valence_param_ref_id'] == i] for i in refs]
+        )
+
+    if (len(df) == 0):
+        return None
+    else:
+        return (df['_valence_param_ro'].iloc[0],
+                df['_valence_param_b'].iloc[0],
+                df['_valence_param_atom_1_valence'].iloc[0],
+                df['_valence_param_atom_2_valence'].iloc[0],
+                df['_valence_param_ref_id'].iloc[0])
 
 
 def clearkeys(data, loops=None):
