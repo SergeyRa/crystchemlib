@@ -6,14 +6,16 @@ from tifffile import imread
 
 
 st.text('Plot lattice(s) in reciprocal space reconstructions')
-file = st.file_uploader("Choose unwarp image in TIFF format")
+files = st.file_uploader("Choose unwarp image(s) in TIFF format"
+                         " (multiple images will be summed)",
+                         accept_multiple_files=True)
 
-if file is not None:
+if len(files) != 0:
     cm_name = st.sidebar.selectbox('Colormap', matplotlib.colormaps())
     cmap = matplotlib.colormaps[cm_name]
     scale = st.sidebar.selectbox('Scale',
                                  ('Linear', 'Logarithmic', 'Square root'))
-    im = imread(file)
+    im = np.array([imread(file) for file in files]).sum(axis=0)
     im = im[::-1]
     im = im - im.min()  # set min to zero
     if scale == 'Logarithmic':
@@ -55,15 +57,18 @@ if file is not None:
         B[n] = d.number_input(f'b*, px (domain {n+1})',
                               0.0, float(im.shape[1]/2),
                               float(im.shape[0]/10), 0.1)
-        G[n] = d.number_input(f'Gamma*, deg (domain {n+1})', 0, 179, 90)
-        R[n] = d.number_input(f'Rotation, deg (domain {n+1})', -359, 359, 0)
+        G[n] = d.number_input(f'Gamma*, deg (domain {n+1})', 0., 179.99, 90.)
+        R[n] = d.number_input(f'Rotation, deg (domain {n+1})',
+                              -359.99, 359.99, 0.)
         if sat:
-            Qa[n] = d.number_input(f'q_a* (domain {n+1})', -1.0, 1.0, 0.0)
-            Qb[n] = d.number_input(f'q_b* (domain {n+1})', -1.0, 1.0, 0.0)
+            Qa[n] = d.number_input(f'q_a* (domain {n+1})', -1.0, 1.0, 0.0,
+                                   0.001, '%.3f')
+            Qb[n] = d.number_input(f'q_b* (domain {n+1})', -1.0, 1.0, 0.0,
+                                   0.001, '%.3f')
         C[n] = d.selectbox(f'Color (domain {n+1})',
                            matplotlib.colors.CSS4_COLORS)
 
-    fig, ax = plt.subplots(dpi=150)
+    fig, ax = plt.subplots(dpi=300)
     ax.imshow(im, cmap=cm_name, vmin=vmin, vmax=vmax)
     for n in range(len(domains)):
         a = np.array([A[n]*np.cos(R[n]*np.pi/180),
