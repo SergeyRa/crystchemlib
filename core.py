@@ -2,8 +2,6 @@
 
 Module variables
 ----------------
-bvparm : pandas.DataFrame
-    data from bvparm2020.cif
 whitelist_structure : list
     CIF keys used in default Structure constructor
 
@@ -24,8 +22,10 @@ bvp
     Returns bond-valence parameters
 clearkeys
     Removes empty keys from CIF-based dict
-cumdiff
-    Calculates difference between distance distributions
+cumdiff2
+    Calculates r.m.s. difference between cumulative distributions
+cumdiff_full
+    Calculates r.m.s. differences for partial RDFs
 dhkl
     Returns interplanar distance
 equivhkl
@@ -63,21 +63,6 @@ vol
 writesd
     Returns value and its eds as string with parentheses
 """
-
-from CifFile import ReadCif
-from pandas import DataFrame
-
-
-data = ReadCif('./bvparm2020.cif').first_block()
-ref = dict(zip(data['_valence_ref_id'], data['_valence_ref_reference']))
-bvparm = DataFrame(data.GetLoop('_valence_param_ro'),
-                   columns=data.GetLoop('_valence_param_ro').keys())
-bvparm['_valence_ref_reference'] = [
-    ref[i] for i in bvparm['_valence_param_ref_id']
-]
-for i in bvparm:
-    if i.endswith('valence') or i.endswith('ro') or i.endswith('b'):
-        bvparm[i] = bvparm[i].astype(float)
 
 whitelist_structure = ["_cell_length_a",
                        "_cell_length_b",
@@ -649,8 +634,12 @@ class Structure:
         Returns geometrically equivalent structure with P1 space group
     p1_list : list
         Returns numbers of p1() sites equivalent to the original ones
-    pairs : list
+    pairs2 : pandas.Series
         Returns distances in structure
+    pairs_full : pandas.Series
+        Returns list of normalized distances
+    pairs_2d : pandas.Series
+        Returns list of normalized distances in (001) plain
     poly : Polyhedron
         Returns Polyhedron instance with given central site and ligands
     resymbol : None
@@ -948,7 +937,7 @@ class Structure:
 
         Returns
         -------
-        pd.Series
+        pandas.Series
             sorted list of distances
         """
 
@@ -969,17 +958,17 @@ class Structure:
 
         Parameters
         ----------
-        dmax : float
-            max normalized distance
         SL : list
             list of sublattices
             (default None)
+        dmax : float
+            max normalized distance
         prec : int
             decimals in normalized distances
 
         Returns
         -------
-        pd.Series
+        pandas.Series
             index: sorted (distances, types)
             value: normalized number of distances
             (keys of distance types correspond to
@@ -1032,7 +1021,7 @@ class Structure:
 
         Returns
         -------
-        pd.Series
+        pandas.Series
             index: sorted distances
             value: normalized number of distances
         """
@@ -1389,8 +1378,19 @@ def bvp(at1, at2, val1=None, val2=None, refs=None):
         (r0, b, val1, val2, ref) or None; val1 and val2 are updated
         from bvparm if not stated explicitly
     """
+    from CifFile import ReadCif
+    from pandas import DataFrame, concat
 
-    from pandas import concat
+    data = ReadCif('./bvparm2020.cif').first_block()
+    ref = dict(zip(data['_valence_ref_id'], data['_valence_ref_reference']))
+    bvparm = DataFrame(data.GetLoop('_valence_param_ro'),
+                       columns=data.GetLoop('_valence_param_ro').keys())
+    bvparm['_valence_ref_reference'] = [
+        ref[i] for i in bvparm['_valence_param_ref_id']
+    ]
+    for i in bvparm:
+        if i.endswith('valence') or i.endswith('ro') or i.endswith('b'):
+            bvparm[i] = bvparm[i].astype(float)
 
     df = bvparm[(bvparm['_valence_param_atom_1'] == at1)
                 & (bvparm['_valence_param_atom_2'] == at2)]
