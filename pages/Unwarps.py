@@ -37,10 +37,11 @@ if len(files) != 0:
     ymin, ymax = st.sidebar.slider('y limits, px',
                                    0, im.shape[1], (0, im.shape[1]), 1)
     dom = st.sidebar.selectbox('Domains', range(1, 4))
-    N = st.sidebar.selectbox('Cells from origin', range(1, 5))
+    N = st.sidebar.selectbox('Cells from origin', range(1, 6))
     sat = st.sidebar.toggle('Activate satellites')
     if sat:
         Nq = st.sidebar.selectbox('Max order of satellites', range(1, 5))
+    hideticks = st.sidebar.toggle('Hide frame')
 
     domains = st.columns(dom)
     A = [0]*dom
@@ -96,5 +97,8 @@ if len(files) != 0:
             ax.scatter(*np.array(sat_list).T, ec=C[n], fc='none', lw=0.5)
         ax.set_xlim(xmin, xmax)
         ax.set_ylim(ymin, ymax)
+        if hideticks:
+            ax.set_xticks([])
+            ax.set_yticks([])
 
     st.pyplot(fig)
