@@ -86,7 +86,7 @@ class Modf:
         self.esds = esds
 
     def val(self, x4, zero=True):
-        """Returns modulation function value
+        """Returns modulation function value and esd
 
         Parameters
         ----------
@@ -99,8 +99,8 @@ class Modf:
 
         Returns
         -------
-        float
-            modulation function value
+        tuple
+            modulation function value and esd
         """
 
         na = (0.0, 0.0) if zero else (None, None)
