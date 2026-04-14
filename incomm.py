@@ -13,9 +13,16 @@ harmcomp : int
     Component of modulation vector in harmonic
 modv : tuple or None
     Extracts modulation vectors
+pin : Site
+    Pins modulated Site to exact coordinates
+    (monkeypatched as Site method)
 readmodf : list
     Extracts modulation functions
+readstruct_mod : core.Structure
+    Reads modulated structure from CIF-based dict
 """
+
+from core import Site
 
 # CIF keys used
 whitelist_incomm = [
@@ -221,6 +228,31 @@ def modv(data, prefix='_cell'):
         return readesd_v(array(table[items]))
 
 
+def pin(self, X):
+    """Pins modulated Site to exact coordinates
+
+    Parameters
+    ----------
+    X : numpy.ndarray
+        values of modulation phases [x4, x5, ...]
+
+    Returns
+    -------
+    Site
+        new non-modulated site
+    """
+
+    from numpy import hstack, matmul
+    from numpy.linalg import inv
+
+    Xt = matmul(inv(self.modRs), hstack([self.fract[:-1], X, [1]]))[3:3+len(X)]
+
+    return Xt
+
+
+Site.pin = pin
+
+
 def readmodf(data, label, par):
     """Extracts modulation function
 
@@ -235,8 +267,8 @@ def readmodf(data, label, par):
 
     Returns
     -------
-    Modf
-        modulation function
+    list
+        Modf for each q-vector
     """
 
     from core import readesd
@@ -370,3 +402,38 @@ def readmodf(data, label, par):
                 modf.append(Modf('none'))
 
     return modf
+
+
+def readstruct_mod(data):
+    """Reads modulated structure from CIF-based dict
+
+    Parameters
+    ----------
+    data : dict
+        {key: value, ...}
+
+    Returns
+    -------
+    core.Structure
+        with extra attributes
+    """
+
+    from core import matrixform, readstruct
+    from numpy import eye
+
+    result = readstruct(data)
+    result.q = modv(data)
+    if '_space_group_symop_ssg_operation_algebraic' in data:
+        result.Rs = []
+        result.symops = []
+        for i in data['_space_group_symop_ssg_operation_algebraic']:
+            result.Rs.append(matrixform(i, 3+len(result.q[0])))
+            result.symops.append(
+                result.Rs[-1][[0, 1, 2, -1]][:, [0, 1, 2, -1]]
+            )
+    for i in result.sites:
+        i.modxyz = [readmodf(data, i.label, j) for j in 'xyz']
+        i.modocc = readmodf(data, i.label, 'o')
+        i.modRs = eye(3+len(result.q[0])+1)
+
+    return result

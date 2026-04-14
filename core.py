@@ -841,6 +841,8 @@ class Structure:
                                      matmul(array(self.symops[j]),
                                             diag(newsite.fract_esd))]
                 newsite.label += symkey
+                if hasattr(self, 'Rs'):
+                    newsite.modRs = self.Rs[j]
                 equiv.append(newsite)
             for j in range(len(equiv) - 1, 0, -1):
                 kill = False
@@ -1713,7 +1715,7 @@ def length(cell, v1, v2=(0, 0, 0, 1),
     return (d, d_esd)
 
 
-def matrixform(symop, coord='x y z'):
+def matrixform(symop, d=3):
     """Converts string notation into augmented matrix
 
     Parameters
@@ -1721,9 +1723,8 @@ def matrixform(symop, coord='x y z'):
     symop : str
         CIF-formatted string notation
         of symmetry operator
-    coord : str
-        space-separated lowercase symbols
-        of coordinates (default 'x y z')
+    d : int
+        dimension of space group, default 3
 
     Returns
     -------
@@ -1734,7 +1735,11 @@ def matrixform(symop, coord='x y z'):
     from numpy import array
     from sympy import parsing, Poly, symbols
 
-    cs = symbols(coord)
+    if d == 3:
+        cs = symbols('x y z')
+    else:
+        cs = symbols(f'x1:{d+1}')
+
     result = []
     for i in symop.lower().replace(" ", "").replace("\t", "").split(","):
         e = parsing.sympy_parser.parse_expr(i)
