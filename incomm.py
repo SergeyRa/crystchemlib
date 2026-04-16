@@ -13,16 +13,19 @@ harmcomp : int
     Component of modulation vector in harmonic
 modv : tuple or None
     Extracts modulation vectors
-pin : Site
-    Pins modulated Site to exact coordinates
+x4 : Site
+    Defines modulated Site for given x4
     (monkeypatched as Site method)
+t : Polyhedron
+    Defines modulated Polyhedron for given t
+    (monkeypatched as Polyhedron method)
 readmodf : list
     Extracts modulation functions
 readstruct_mod : core.Structure
     Reads modulated structure from CIF-based dict
 """
 
-from core import Site
+from core import Polyhedron, Site
 
 # CIF keys used
 whitelist_incomm = [
@@ -228,8 +231,8 @@ def modv(data, prefix='_cell'):
         return readesd_v(array(table[items]))
 
 
-def pin(self, X):
-    """Pins modulated Site to exact coordinates
+def x4(self, X):
+    """Defines modulated Site for given x4
 
     Parameters
     ----------
@@ -242,15 +245,72 @@ def pin(self, X):
         new non-modulated site
     """
 
-    from numpy import hstack, matmul
+    from copy import deepcopy
+    from numpy import array, hstack, matmul
     from numpy.linalg import inv
 
     Xt = matmul(inv(self.modRs), hstack([self.fract[:-1], X, [1]]))[3:3+len(X)]
+    displ = matmul(
+        self.modRs[[0, 1, 2]][:, [0, 1, 2]],
+        [sum([f.val(x)[0] for f, x in zip(self.modxyz[i], Xt)])
+         for i in range(3)]
+    )
+    modsite = deepcopy(self)
+    for i in ('modxyz', 'modocc', 'modRs'):
+        delattr(modsite, i)
 
-    return Xt
+    # marking whether occupational modulation is defined:
+    occflag = (array([i.form for i in self.modocc]) != 'none')
+    docc = array(
+        [f.val(x, zero=False)[0] for f, x in zip(self.modocc, Xt)]
+    )[occflag]
+    if None in docc:  # outside crenel interval
+        modsite.occ = 0
+        return modsite  # no positional modulation returned
+    else:
+        modsite.occ = self.occ*(1+sum(docc))  # TODO: esd
+    modsite.fract = array(self.fract) + hstack([displ, [0]])  # TODO: esd
+
+    return modsite
 
 
-Site.pin = pin
+Site.x4 = x4
+
+
+def t(self, T):
+    """Defines modulated Polyhedron for given t
+
+    Assumes presence of self.q attribute (see readstruct_mod)
+
+    Parameters
+    ----------
+    T : numpy.ndarray
+        t-values of modulation phases [t(x4), t(x5), ...]
+
+    Returns
+    -------
+    Polyhedron
+        new non-modulated Polyhedron
+    """
+
+    from copy import deepcopy
+    from numpy import dot
+
+    modpoly = deepcopy(self)
+    modpoly.central = self.central.x4(
+        [t + dot(q, self.central.fract[:-1]) for t, q in zip(T, self.q[0])]
+    )
+    modpoly.ligands = [
+        i.x4(
+            [t + dot(q, i.fract[:-1]) for t, q in zip(T, self.q[0])]
+        )
+        for i in self.ligands
+    ]
+
+    return modpoly
+
+
+Polyhedron.t = t
 
 
 def readmodf(data, label, par):
