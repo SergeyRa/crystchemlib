@@ -9,6 +9,8 @@ Modf
 
 Functions
 ---------
+approx : Structure
+    Approximant (monkeypatched as Structure method)
 harmcomp : int
     Component of modulation vector in harmonic
 modv : tuple or None
@@ -25,7 +27,7 @@ readstruct_mod : core.Structure
     Reads modulated structure from CIF-based dict
 """
 
-from core import Polyhedron, Site
+from core import Polyhedron, Site, Structure
 
 # CIF keys used
 whitelist_incomm = [
@@ -54,7 +56,8 @@ whitelist_incomm = [
     '_jana_atom_site_displace_legendre_axis',
     '_jana_atom_site_displace_legendre_param_coeff',
     '_jana_atom_site_displace_legendre_param_order',
-    '_jana_atom_site_fourier_wave_vector_q1_coeff']
+    '_jana_atom_site_fourier_wave_vector_q1_coeff',
+    '_space_group_symop_ssg_operation_algebraic']
 
 
 class Modf:
@@ -127,25 +130,32 @@ class Modf:
             )
 
         elif self.form == 'cren':
-            from numpy import array
+            from numpy import abs, array
             x4 %= 1
             c, w = self.params
-            test = array([x4-1, x4, x4+1])
-            if ((c - w/2 <= test) & (test <= c + w/2)).any():
-                return 1.0, 0.0
-            else:
-                return na
+            c %= 1
+            # possible nearest crenel centers:
+            pncc = array([c-1, c, c+1])
+            # distance from x4 to the nearest crenel center:
+            d = abs(x4-pncc).min()
+            return (1.0, 0.0) if (d <= w/2) else na
 
         elif self.form == 'lege':
-            from numpy import array
+            from numpy import abs, argmin, array
 
             x4 %= 1
             c, w = self.params[1:]
-            test = array([x4-1, x4, x4+1])
-            if ((c - w/2 <= test) & (test <= c + w/2)).any():
+            c %= 1
+            # possible nearest crenel centers:
+            pncc = array([c-1, c, c+1])
+            # number of nearest crenel center in pncc:
+            n = argmin(abs(x4-pncc))
+            # signed distance to the nearest crenel center:
+            d = (x4-pncc)[n]
+            if abs(d) <= w/2:
                 from scipy.special import legendre
 
-                x = 2*(x4 - c)/w
+                x = 2*d/w
                 return (sum([coeff*legendre(order)(x) for order, coeff in
                              self.params[0][:]]),
                         sum([(esd*legendre(order)(x))**2 for order, esd in
@@ -155,6 +165,68 @@ class Modf:
 
         elif self.form == 'none':
             return na
+
+
+def approx(self, abc, occlim=0.0, T0=None):
+    """Approximant
+
+    Parameters
+    ----------
+    abc : tuple
+        (na, nb, nc) unit cells in the approximant
+    occlim : float
+        sites with occupancy below this limit will be omitted
+        (default 0.5)
+    T0 : np.ndarray
+        phase shift in origin along each modulation vector
+        (default None)
+
+    Returns
+    -------
+    Structure
+        approximant with P1 space group
+    """
+
+    from copy import deepcopy
+    from math import ceil
+    from numpy import array, dot, eye
+
+    if T0 is None:
+        T0 = array([0]*len(self.q[0]))
+    a = deepcopy(self.p1())
+    a.symops = [eye(4)]
+    for i, n in enumerate(abc):
+        n = ceil(n)
+        a.cell[i] *= n
+        stop = len(a.sites)
+        for s in a.sites[:stop]:
+            # additional sites from neigbor cells
+            # will be added in each dimension:
+            for j in [-1]+list(range(1, n+1)):
+                newsite = deepcopy(s)
+                newsite.fract[i] += j
+                a.sites.append(newsite)
+    pinned = []
+    for i in a.sites:
+        pinned.append(
+            i.x4([t + dot(q, i.fract[:-1]) for t, q in zip(T0, self.q[0])])
+        )
+    a.sites = []
+    for i in pinned:
+        if (
+                (0 <= i.fract[0] <= abc[0]) and (0 <= i.fract[1] <= abc[1])
+                and (0 <= i.fract[2] <= abc[2]) and (i.occ >= occlim)
+        ):
+            a.sites.append(i)
+            for j, n in enumerate(abc):
+                a.sites[-1].fract[j] /= ceil(n)
+    for i in ('q', 'Rs'):
+        delattr(a, i)
+
+    return a
+
+
+Structure.approx = approx
 
 
 def harmcomp(data, id, q):

@@ -1,5 +1,5 @@
 from core import parsecif, readesd, whitelist_structure
-from incomm import readmodf, modv, whitelist_incomm
+from incomm import readstruct_mod, whitelist_incomm
 import numpy as np
 import pandas as pd
 import plotly.graph_objects as go
@@ -20,41 +20,55 @@ def parsefile(file):
 
 
 st.text(
-    """Supported modulations:
-    \t- harmonics and crenel for occupancy
-    \t- harmonics and Legendre polynomials (in crenel interval) for position
-
-    Loops with site labels and axes must correspond to loops with modulation
-    parameters; use of multiple apostrophes in site labels (e.g. Si1'')
-    is not supported."""
+    'Supported modulations:\n'
+    '\t- harmonics and crenel for occupancy\n'
+    '\t- harmonics and Legendre polynomials (in crenel interval)'
+    ' for position\n'
+    'Loops with site labels and axes must correspond to loops with modulation'
+    " parameters; use of multiple apostrophes in site labels (e.g. Si1'')"
+    ' is not supported.'
 )
 
-col1, col2 = st.columns(2)
-file = col1.file_uploader('Choose CIF file')
+file = st.sidebar.file_uploader('Choose CIF file')
 parsed = parsefile(file)
-datablock = col1.selectbox('Choose datablock', parsed['datablock'])
+datablock = st.sidebar.selectbox('Choose datablock', parsed['datablock'])
 if datablock is not None:
     data = parsed['data'][parsed['datablock'].index(datablock)]
-    modv = modv(data)[0]
-    q = col2.selectbox('Choose q', range(1, len(modv)+1))
-    for i, m in enumerate(modv):
-        col2.text(f'q{i+1}: {str(m)}')
-    site = col2.selectbox('Choose site', data['_atom_site_label'])
+    structure = readstruct_mod(data)
+    q = st.sidebar.selectbox('Choose q', range(1, len(structure.q[0])+1))
+    for i, m in enumerate(structure.q[0]):
+        st.sidebar.text(f'q{i+1}: {str(m)}')
+    st.sidebar.download_button('Export average structure',
+                               structure.cif(),
+                               file_name=file.name[:-4]+'_average.cif')
+    na = st.sidebar.number_input('Cells along a:', 1, 10, 1)
+    nb = st.sidebar.number_input('Cells along b:', 1, 10, 1)
+    nc = st.sidebar.number_input('Cells along c:', 1, 10, 1)
+    st.sidebar.download_button('Export approximant',
+                               structure.approx((na, nb, nc)).cif(),
+                               file_name=file.name[:-4]+f'_{na}x{nb}x{nc}.cif')
+
+    labels = [s.label for s in structure.sites]
+    selected = st.selectbox('Choose central site', labels)
+    ncentral = labels.index(selected)
+    site = structure.sites[ncentral]
     df = pd.DataFrame({'x4': np.linspace(0, 1, 1000)})
-    for p in 'oxyz':
-        df[p], df[p+'_esd'] = np.vectorize(
-            readmodf(data, site, p)[q-1].val)(df.x4, zero=False)
-    occ, occ_esd = readesd(
-        data['_atom_site_occupancy'][data['_atom_site_label'].index(site)]
-    )
-    if readmodf(data, site, 'o')[q-1].form == 'cren':
-        w = readmodf(data, site, 'o')[q-1].params[1]
-        w_esd = readmodf(data, site, 'o')[q-1].esds[1]
+    for i in range(3):
+        df['xyz'[i]], df['xyz'[i]+'_esd'] = np.vectorize(
+            site.modxyz[i][q-1].val
+        )(df['x4'], zero=False)
+    df['o'], df['o_esd'] = np.vectorize(
+            site.modocc[q-1].val
+        )(df['x4'], zero=False)
+    occ, occ_esd = site.occ, site.occ_esd
+    if site.modocc[q-1].form == 'cren':
+        w = site.modocc[q-1].params[1]
+        w_esd = site.modocc[q-1].esds[1]
         occ /= w
         occ_esd = ((occ_esd**2 - w_esd**2 * occ**2) / w**2)**0.5
         df.o = [occ if i == 1 else None for i in df.o]
         df.o_esd = [occ_esd if i is not None else None for i in df.o]
-    elif readmodf(data, site, 'o')[q-1].form == 'none':
+    elif site.modocc[q-1].form == 'none':
         df.o = occ
         df.o_esd = occ_esd
     else:
@@ -62,7 +76,7 @@ if datablock is not None:
         df.o_esd = (occ_esd**2 * (1+df.o)**2 + df.o_esd**2 * occ**2)**0.5
 
     clabel = 'fractional displacement'
-    coord = col2.toggle('Plot absolute displacements')
+    coord = st.toggle('Plot absolute displacements')
     if coord:
         clabel = 'absolute displacement, A'
         a, a_esd = readesd(data['_cell_length_a'])
@@ -75,9 +89,7 @@ if datablock is not None:
         df.y = df.y*b
         df.z = df.z*c
 
-    st.divider()
-
-    col3, col4 = st.columns(2)
+    col1, col2 = st.columns(2)
 
     fig1 = go.Figure(layout={'xaxis': {'title': {'text': 'x4'}},
                              'yaxis': {'title': {'text': 'occupancy'}}})
@@ -94,7 +106,7 @@ if datablock is not None:
                               line={'color': 'black'}))
     fig1.update_xaxes(showgrid=True)
     fig1.update_yaxes(showgrid=True)
-    col3.plotly_chart(fig1)
+    col1.plotly_chart(fig1)
 
     fig2 = go.Figure(layout={'xaxis': {'title': {'text': 'x4'}},
                              'yaxis': {'title': {'text': clabel}}})
@@ -113,7 +125,71 @@ if datablock is not None:
                                   line={'color': colors[i]}))
     fig2.update_xaxes(showgrid=True)
     fig2.update_yaxes(showgrid=True)
-    col4.plotly_chart(fig2)
+    col2.plotly_chart(fig2)
 
-    st.dataframe(df.rename(columns={'o': 'occ',
-                                    'o_esd': 'occ_esd'}))
+    st.download_button(
+        'Export curves as CSV-file',
+        df.rename(columns={'o': 'occ', 'o_esd': 'occ_esd'}).to_csv(None),
+        file_name=site.label+'_modulation.csv',
+        width='stretch'
+    )
+
+    ligands = st.multiselect("Choose ligands", sorted(labels))
+    dmin, dmax = st.slider("Choose bond length range",
+                           0.0, 10.0, (0.1, 3.0), 0.1)
+    if len(ligands) != 0:
+        poly = structure.poly(ncentral, structure.filter('label', ligands),
+                              dmax=dmax, dmin=dmin, suffixes=True)
+        poly.q = structure.q
+        tsteps = 100
+        T = np.array(
+            [np.linspace(0, 1, tsteps) if (i == q-1) else np.zeros(tsteps)
+             for i in range(len(structure.q[0]))]
+        ).T
+        P = [poly.t(t) for t in T]
+
+        dist = [pd.DataFrame(p.listdist()) for p in P]
+        for d, t in zip(dist, T[:, q-1]):
+            d['t'] = t
+            d.set_index(['t', 'name'], inplace=True)
+        dfdist = pd.concat(dist).unstack()['value']
+        pd.options.plotting.backend = 'plotly'
+        fig3 = dfdist.plot()
+        fig3.update_layout(
+            yaxis=dict(
+                title=dict(
+                    text='Distance, A'
+                )
+            ),
+            legend=dict(
+                title=dict(
+                    text=None
+                )
+            )
+        )
+        st.plotly_chart(fig3)
+
+        angles = [pd.DataFrame(p.listangl()) for p in P]
+        for d, t in zip(angles, T[:, q-1]):
+            d['t'] = t
+            d.set_index(['t', 'name'], inplace=True)
+        dfangl = pd.concat(angles).unstack()['value']
+        fig4 = dfangl.plot()
+        fig4.update_layout(
+            yaxis=dict(
+                title=dict(
+                    text='Angle, deg'
+                )
+            ),
+            legend=dict(
+                title=dict(
+                    text=None
+                )
+            )
+        )
+        st.plotly_chart(fig4)
+
+        vol = [p.polyvol()[0] for p in P]
+        dfvol = pd.DataFrame({'Polyhedron volume, A^3': vol, 't': T[:, q-1]})
+        fig4 = dfvol.plot('t', 'Polyhedron volume, A^3')
+        st.plotly_chart(fig4)
