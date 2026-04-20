@@ -74,6 +74,8 @@ class Modf:
 
     Methods
     -------
+    ptv : tuple
+        Peak-to-valley height
     val : tuple
         Returns modulation function value and esd
     """
@@ -97,6 +99,26 @@ class Modf:
         self.form = form
         self.params = params
         self.esds = esds
+
+    def ptv(self):
+        """Peak-to-valley height
+
+        Returns
+        -------
+        tuple
+            (ptv, esd)
+        """
+
+        from scipy.optimize import minimize_scalar
+
+        x4p = minimize_scalar(lambda x: -self.val(x)[0],
+                              bounds=(0, 1), method='bounded').x
+        x4v = minimize_scalar(lambda x: self.val(x)[0],
+                              bounds=(0, 1), method='bounded').x
+        p, p_esd = self.val(x4p)
+        v, v_esd = self.val(x4v)
+        # TODO: improve esd evaluation:
+        return (p-v, (p_esd**2 + v_esd**2)**0.5)
 
     def val(self, x4, zero=True):
         """Returns modulation function value and esd
@@ -293,9 +315,12 @@ def modv(data, prefix='_cell'):
 
         readesd_v = vectorize(readesd)
         items = array([prefix+'_wave_vector_'+i for i in 'xyz'])
+        index = data[prefix+'_wave_vector_seq_id']
+        if len(index) == 1:
+            index = [index]
         table = DataFrame(
             {k: data[k] for k in items[isin(items, list(data.keys()))]},
-            index=data[prefix+'_wave_vector_seq_id']
+            index=index
         )
         for k in items[isin(items, list(data.keys()), invert=True)]:
             table[k] = '0'
