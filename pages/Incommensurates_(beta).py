@@ -52,28 +52,30 @@ if datablock is not None:
     selected = st.selectbox('Choose central site', labels)
     ncentral = labels.index(selected)
     site = structure.sites[ncentral]
-    df = pd.DataFrame({'x4': np.linspace(0, 1, 1000)})
+    df1 = pd.DataFrame({'x4': np.linspace(0, 1, 1000)})
     for i in range(3):
-        df['xyz'[i]], df['xyz'[i]+'_esd'] = np.vectorize(
+        df1['xyz'[i]], df1['xyz'[i]+'_esd'] = np.vectorize(
             site.modxyz[i][q-1].val
-        )(df['x4'], zero=False)
-    df['o'], df['o_esd'] = np.vectorize(
+        )(df1['x4'], zero=False)
+    df1['o'], df1['o_esd'] = np.vectorize(
             site.modocc[q-1].val
-        )(df['x4'], zero=False)
+        )(df1['x4'], zero=False)
     occ, occ_esd = site.occ, site.occ_esd
     if site.modocc[q-1].form == 'cren':
         w = site.modocc[q-1].params[1]
         w_esd = site.modocc[q-1].esds[1]
         occ /= w
         occ_esd = ((occ_esd**2 - w_esd**2 * occ**2) / w**2)**0.5
-        df.o = [occ if i == 1 else None for i in df.o]
-        df.o_esd = [occ_esd if i is not None else None for i in df.o]
+        df1['o'] = [occ if i == 1 else None for i in df1['o']]
+        df1['o_esd'] = [occ_esd if i is not None else None for i in df1['o']]
     elif site.modocc[q-1].form == 'none':
-        df.o = occ
-        df.o_esd = occ_esd
+        df1['o'] = occ
+        df1['o_esd'] = occ_esd
     else:
-        df.o = occ*(1+df.o)
-        df.o_esd = (occ_esd**2 * (1+df.o)**2 + df.o_esd**2 * occ**2)**0.5
+        df1['o'] = occ*(1+df1['o'])
+        df1['o_esd'] = (
+            occ_esd**2 * (1+df1['o'])**2 + df1['o_esd']**2 * occ**2
+        )**0.5
 
     clabel = 'fractional displacement'
     coord = st.toggle('Plot absolute displacements')
@@ -82,26 +84,26 @@ if datablock is not None:
         a, a_esd = readesd(data['_cell_length_a'])
         b, b_esd = readesd(data['_cell_length_b'])
         c, c_esd = readesd(data['_cell_length_c'])
-        df.x_esd = ((df.x_esd * a)**2+(a_esd * df.x)**2)**0.5
-        df.y_esd = ((df.y_esd * b)**2+(b_esd * df.y)**2)**0.5
-        df.z_esd = ((df.z_esd * c)**2+(c_esd * df.z)**2)**0.5
-        df.x = df.x*a
-        df.y = df.y*b
-        df.z = df.z*c
+        df1['x_esd'] = ((df1['x_esd'] * a)**2+(a_esd * df1['x'])**2)**0.5
+        df1['y_esd'] = ((df1['y_esd'] * b)**2+(b_esd * df1['y'])**2)**0.5
+        df1['z_esd'] = ((df1['z_esd'] * c)**2+(c_esd * df1['z'])**2)**0.5
+        df1['x'] = df1['x']*a
+        df1['y'] = df1['y']*b
+        df1['z'] = df1['z']*c
 
     col1, col2 = st.columns(2)
 
     fig1 = go.Figure(layout={'xaxis': {'title': {'text': 'x4'}},
                              'yaxis': {'title': {'text': 'occupancy'}}})
-    fig1.add_trace(go.Scatter(x=df.x4, y=df.o+df.o_esd,
+    fig1.add_trace(go.Scatter(x=df1['x4'], y=df1['o']+df1['o_esd'],
                               showlegend=False,
                               line={'dash': 'dot',
                                     'color': 'black'}))
-    fig1.add_trace(go.Scatter(x=df.x4, y=df.o-df.o_esd,
+    fig1.add_trace(go.Scatter(x=df1['x4'], y=df1['o']-df1['o_esd'],
                               showlegend=False,
                               line={'dash': 'dot',
                                     'color': 'black'}))
-    fig1.add_trace(go.Scatter(x=df.x4, y=df.o,
+    fig1.add_trace(go.Scatter(x=df1['x4'], y=df1['o'],
                               showlegend=False,
                               line={'color': 'black'}))
     fig1.update_xaxes(showgrid=True)
@@ -112,15 +114,15 @@ if datablock is not None:
                              'yaxis': {'title': {'text': clabel}}})
     colors = {'x': 'red', 'y': 'green', 'z': 'blue'}
     for i in 'xyz':
-        fig2.add_trace(go.Scatter(x=df.x4, y=df[i]+df[i+'_esd'],
+        fig2.add_trace(go.Scatter(x=df1['x4'], y=df1[i]+df1[i+'_esd'],
                                   showlegend=False,
                                   line={'dash': 'dot',
                                         'color': colors[i]}))
-        fig2.add_trace(go.Scatter(x=df.x4, y=df[i]-df[i+'_esd'],
+        fig2.add_trace(go.Scatter(x=df1['x4'], y=df1[i]-df1[i+'_esd'],
                                   showlegend=False,
                                   line={'dash': 'dot',
                                         'color': colors[i]}))
-        fig2.add_trace(go.Scatter(x=df.x4, y=df[i],
+        fig2.add_trace(go.Scatter(x=df1['x4'], y=df1[i],
                                   name='d'+i,
                                   line={'color': colors[i]}))
     fig2.update_xaxes(showgrid=True)
@@ -129,19 +131,23 @@ if datablock is not None:
 
     st.download_button(
         'Export curves as CSV-file',
-        df.rename(columns={'o': 'occ', 'o_esd': 'occ_esd'}).to_csv(None),
+        df1.rename(columns={'o': 'occ', 'o_esd': 'occ_esd'}).to_csv(None),
         file_name=site.label+'_modulation.csv',
         width='stretch'
     )
 
-    ligands = st.multiselect("Choose ligands", sorted(labels))
+    ligands = st.multiselect("Choose ligands", labels)
     dmin, dmax = st.slider("Choose bond length range",
                            0.0, 10.0, (0.1, 3.0), 0.1)
     if len(ligands) != 0:
         poly = structure.poly(ncentral, structure.filter('label', ligands),
                               dmax=dmax, dmin=dmin, suffixes=True)
+        options = {'distances': 'Distances, A',
+                   'angles': 'Angles, deg',
+                   'volume': 'Polyhedron volume, A^3'}
+        plot = st.selectbox('Select value for t-plot', options.keys())
         poly.q = structure.q
-        tsteps = 100
+        tsteps = 1000
         T = np.array(
             [np.linspace(0, 1, tsteps) if (i == q-1) else np.zeros(tsteps)
              for i in range(len(structure.q[0]))]
@@ -152,13 +158,31 @@ if datablock is not None:
         for d, t in zip(dist, T[:, q-1]):
             d['t'] = t
             d.set_index(['t', 'name'], inplace=True)
-        dfdist = pd.concat(dist).unstack()['value']
+        df2 = pd.concat(dist).unstack().rename(
+            columns={'value': 'distances', 'esd': 'distances_esd'}
+        )
+
+        angles = [pd.DataFrame(p.listangl()) for p in P]
+        for d, t in zip(angles, T[:, q-1]):
+            d['t'] = t
+            d.set_index(['t', 'name'], inplace=True)
+        df2 = pd.concat([
+            df2, pd.concat(angles).unstack().rename(
+                columns={'value': 'angles', 'esd': 'angles_esd'}
+            )
+        ], axis='columns')
+
+        (df2[('volume', site.label)],
+         df2[('volume_esd', site.label)]) = np.array(
+             [p.polyvol() for p in P]
+         ).T
+
         pd.options.plotting.backend = 'plotly'
-        fig3 = dfdist.plot()
+        fig3 = df2[plot].plot()
         fig3.update_layout(
             yaxis=dict(
                 title=dict(
-                    text='Distance, A'
+                    text=options[plot]
                 )
             ),
             legend=dict(
@@ -169,27 +193,9 @@ if datablock is not None:
         )
         st.plotly_chart(fig3)
 
-        angles = [pd.DataFrame(p.listangl()) for p in P]
-        for d, t in zip(angles, T[:, q-1]):
-            d['t'] = t
-            d.set_index(['t', 'name'], inplace=True)
-        dfangl = pd.concat(angles).unstack()['value']
-        fig4 = dfangl.plot()
-        fig4.update_layout(
-            yaxis=dict(
-                title=dict(
-                    text='Angle, deg'
-                )
-            ),
-            legend=dict(
-                title=dict(
-                    text=None
-                )
-            )
+        st.download_button(
+            'Export curves as CSV-file',
+            df2.to_csv(None),
+            file_name=site.label+'_polyhedron_modulation.csv',
+            width='stretch'
         )
-        st.plotly_chart(fig4)
-
-        vol = [p.polyvol()[0] for p in P]
-        dfvol = pd.DataFrame({'Polyhedron volume, A^3': vol, 't': T[:, q-1]})
-        fig4 = dfvol.plot('t', 'Polyhedron volume, A^3')
-        st.plotly_chart(fig4)
