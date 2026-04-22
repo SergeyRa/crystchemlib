@@ -95,6 +95,8 @@ class Polyhedron:
         [a, b, c, alpha, beta, gamma]
     cell_esd : list
         [a_esd, b_esd, c_esd, alpha_esd, beta_esd, gamma_esd]
+    q : numpy.ndarray
+        modulation vector and its esds
 
     Methods
     -------
@@ -125,7 +127,7 @@ class Polyhedron:
     """
 
     def __init__(self, central, ligands, cell,
-                 cell_esd=None):
+                 cell_esd=None, q=None):
         """
         Parameters
         ----------
@@ -138,6 +140,8 @@ class Polyhedron:
         cell_esd : list
             [a_esd, b_esd, c_esd, alpha_esd, beta_esd, gamma_esd]
             (default None interpreted as [0, 0, 0, 0, 0, 0])
+        q : numpy.ndarray
+            modulation vector and its esds
         """
 
         self.central = central
@@ -147,6 +151,7 @@ class Polyhedron:
             self.cell_esd = [0, 0, 0, 0, 0, 0]
         else:
             self.cell_esd = cell_esd
+        self.q = q
 
     def __repr__(self):
         lig = ''
@@ -621,6 +626,8 @@ class Structure:
         list of Site instances
     symops : list
         list of symmetry operations (4*4 augmented matrices)
+    q : numpy.ndarray
+        modulation vector and its esds
 
     Methods
     -------
@@ -658,7 +665,8 @@ class Structure:
                  cell=None,
                  cell_esd=None,
                  sites=None,
-                 symops=None):
+                 symops=None,
+                 q=None):
         """
         Parameters
         ----------
@@ -673,6 +681,8 @@ class Structure:
         symops : list
             list of symmetry operations (4*4 augmented matrices)
             (default None interpreted as identity)
+        q : numpy.ndarray
+            modulation vector and its esds
         """
 
         if cell is None:
@@ -694,6 +704,7 @@ class Structure:
                             [0, 0, 0, 1]]]
         else:
             self.symops = symops
+        self.q = q
 
     def __repr__(self):
         return self.cif()
@@ -923,7 +934,7 @@ class Structure:
                                          result[-1][-1]+1 + counter)))
         return result
 
-    def pairs2(self, dmax, A, B, plain=False):
+    def pairs2(self, dmax, A, B, plain=False, Nt=1):
         """Returns distances in structure
 
         Parameters
@@ -937,6 +948,9 @@ class Structure:
         plain : bool
             ignore cells along z
             (default False)
+        Nt : int
+            when >1 indicates number of t-points
+            for incommensurate structures
 
         Returns
         -------
@@ -944,19 +958,29 @@ class Structure:
             sorted list of distances
         """
 
+        from numpy import array, linspace
         from pandas import Series
 
         # multiplicities of sites:
         mult = [len(i) for i in self.p1_list()]
         distances = []
         for i in A:
-            distances += self.poly(
-                i, B, dmax, dmin=0.01, distonly=True, plain=plain
-            )['value']*mult[i]
+            if Nt == 1:
+                distances += self.poly(
+                    i, B, dmax, dmin=0.01, distonly=True, plain=plain
+                )['value']*mult[i]
+            else:
+                # note dmax*1.1 to catch modulations near dmax:
+                p = self.poly(i, B, dmax*1.1, dmin=0.01, plain=plain)
+                for t in linspace(0, 1, Nt):
+                    # TODO: now for 3+1 only
+                    # note use of list() for proper multiplication:
+                    tmp = array(list(p.t([t]).listdist()['value'])*mult[i])
+                    distances += list(tmp[tmp <= dmax])
 
         return Series(distances).sort_values()
 
-    def pairs_full(self, SL=None, dmax=10, prec=2):
+    def pairs_full(self, SL=None, dmax=10, prec=2, Nt=1):
         """Returns list of normalized distances
 
         Parameters
@@ -968,6 +992,9 @@ class Structure:
             max normalized distance
         prec : int
             decimals in normalized distances
+        Nt : int
+            when >1 indicates number of t-points
+            for incommensurate structures
 
         Returns
         -------
@@ -997,13 +1024,14 @@ class Structure:
                     # distance normalization factor:
                     f = (N / vol(self.cell)[0]) ** (1/3)
                     # normalized distances:
-                    p = self.pairs2(dmax / f, SL[i], SL[j])
+                    p = self.pairs2(dmax / f, SL[i], SL[j], Nt=Nt)
                     if len(p) > 0:
                         nd = (p*f).round(prec).value_counts()
                         result[n] = (nd * N
                                      / SLmult[i]
                                      / SLmult[j]
-                                     / (4 * pi * nd.index**2))
+                                     / (4 * pi * nd.index**2)
+                                     / Nt)
                         # weight of sublattice pair:
                         result[n].loc[-1.] = SLmult[i] * SLmult[j] / N**2
                 n += 1
@@ -1134,7 +1162,7 @@ class Structure:
         if (nmax is None) or (nmax > len(liglist)):
             nmax = len(liglist)
         return Polyhedron(centr_site, [i[0] for i in liglist[:nmax]],
-                          self.cell, self.cell_esd)
+                          self.cell, self.cell_esd, q=self.q)
 
     def resymbol(self):
         """Standardizes chemical element symbols"""

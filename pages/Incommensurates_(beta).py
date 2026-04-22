@@ -137,14 +137,15 @@ if datablock is not None:
     )
 
     ligands = st.multiselect("Choose ligands", labels)
-    dmin, dmax = st.slider("Choose bond length range",
+    dmin, dmax = st.slider("Choose bond length range (in average structure)",
                            0.0, 10.0, (0.1, 3.0), 0.1)
     if len(ligands) != 0:
         poly = structure.poly(ncentral, structure.filter('label', ligands),
                               dmax=dmax, dmin=dmin, suffixes=True)
         options = {'distances': 'Distances, A',
                    'angles': 'Angles, deg',
-                   'volume': 'Polyhedron volume, A^3'}
+                   'volume': 'Polyhedron volume, A^3',
+                   'wmd': 'Weighted mean distance, A'}
         plot = st.selectbox('Select value for t-plot', options.keys())
         poly.q = structure.q
         tsteps = 1000
@@ -175,6 +176,11 @@ if datablock is not None:
         (df2[('volume', site.label)],
          df2[('volume_esd', site.label)]) = np.array(
              [p.polyvol() for p in P]
+         ).T
+
+        (df2[('wmd', site.label)],
+         df2[('wmd_esd', site.label)]) = np.array(
+             [p.wmd() for p in P]
          ).T
 
         pd.options.plotting.backend = 'plotly'
