@@ -360,7 +360,7 @@ for i in loopkeys:
 col5, col6 = st.columns(2)
 dmin, dmax = col5.slider("Choose bond length range",
                          0.0, 10.0, (0.1, 3.0), 0.1)
-nmax = col6.slider("Choose coordination limit", 1, 18, 16, 1)
+nmax = col6.slider("Choose coordination limit", 1, 32, 16, 1)
 centrals = col5.multiselect("Choose central site",
                             sorted(list(labels)))
 ligands = col6.multiselect("Choose ligands",
