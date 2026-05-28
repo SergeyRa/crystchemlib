@@ -193,7 +193,9 @@ class Polyhedron:
                 result['value'].append(None)
             else:
                 r0, b, val1 = p[:3]
-                result['value'].append(exp((r0-d)/b) / (val1 if norm else 1))
+                result['value'].append(
+                    exp((r0-d)/b) / (val1 if norm else 1) * i.occ
+                )
             result['esd'].append(0)
         return DataFrame(result)
 
@@ -201,6 +203,7 @@ class Polyhedron:
         """Returns bond weights in CHARDI approach
 
         Convergence condition: max bond weight change < 0.001.
+        Max iterations: 100.
 
         Returns
         -------
@@ -208,26 +211,26 @@ class Polyhedron:
             {"name": [], "value": [], "esd": []}
         """
 
-        from math import exp
+        from numpy import abs, array, exp
 
         result = {"name": [], "value": [], "esd": []}
         if len(self.ligands) == 0:
             return result
         ld = self.listdist()
         result['name'] = ld['name']
-        dist = ld['value']
-        dist_esd = ld['esd']
+        dist = array(ld['value'])
+        dist_esd = array(ld['esd'])
         d_ave = min(dist)
-        weight_old = [1.0 for i in dist]
+        occ = array([i.occ for i in self.ligands])
+        weight_old = occ
         for _ in range(100):
-            weight = [exp(1 - (i / d_ave)**6) for i in dist]
-            weight_esd = [i * j * 6*k**5 / d_ave**6
-                          for i, j, k in zip(dist_esd, weight, dist)]
-            # esd of d_ave is ignored
-            delta = [abs(i - j) for i, j in zip(weight, weight_old)]
+            weight = exp(1 - (dist / d_ave)**6) * occ
+            weight_esd = dist_esd * weight * 6*dist**5 / d_ave**6
+            # esds of d_ave and occupancies are ignored
+            delta = abs(weight - weight_old)
             if max(delta) < 0.001:
                 break
-            d_ave = sum([i*j for i, j in zip(dist, weight)]) / sum(weight)
+            d_ave = sum(dist * weight) / sum(weight)
             weight_old = weight
         result['value'] = weight
         result['esd'] = weight_esd
