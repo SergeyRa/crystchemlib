@@ -38,6 +38,10 @@ class Eos:
         Returns eos as Function instance
     info : str
         Returns summary on EoS
+    fE : numpy.ndarray
+        Returns finite Eulerian strain
+    F : numpy.ndarray
+        Returns normalized pressure
     """
 
     def __init__(self, kind, params=None, esds=None):
@@ -119,6 +123,78 @@ class Eos:
                                 eoslist[self.kind][1:]):
             text += f'{name} = {writesd(p, esd)}\n'
         return text
+
+    def fE(self, V, esdV=None):
+        """Returns finite Eulerian strain
+
+        Parameters
+        ----------
+        V : convertable to numpy.ndarray
+            volume(s)
+        esdV : convertable to numpy.ndarray
+            volume(s) esd(s)
+
+        Returns
+        -------
+        numpy.ndarray
+            finite Eulerian strain with esd
+        """
+
+        if not self.kind.startswith('BM'):
+            return None
+
+        from numpy import array, zeros_like
+
+        V0 = self.params[0]
+        esdV0 = self.esds[0]
+        Va = array(V)
+        if esdV is None:
+            esdVa = zeros_like(Va)
+        else:
+            esdVa = array(esdV)
+        f = ((V0/Va)**(2/3) - 1) / 2
+        esdf = 1/3 * (V0/Va)**(2/3) * (
+            (esdVa/Va)**2 + (esdV0/V0)**2
+        )**0.5
+        return array((f, esdf))
+
+    def F(self, P, V, esdP=None, esdV=None):
+        """Returns normalized pressure
+
+        Parameters
+        ----------
+        P : convertable to numpy.ndarray
+            pressure(s)
+        V : convertable to numpy.ndarray
+            volume(s)
+        esdP : convertable to numpy.ndarray
+            pressure(s) esd(s)
+        esdV : convertable to numpy.ndarray
+            volume(s) esd(s)
+
+        Returns
+        -------
+        numpy.ndarray
+            normalized pressure with esd
+        """
+
+        if not self.kind.startswith('BM'):
+            return None
+
+        from numpy import array, zeros_like
+
+        Pa = array(P)
+        if esdP is None:
+            esdPa = zeros_like(Pa)
+        else:
+            esdPa = array(esdP)
+        f, esdf = self.fE(V, esdV)
+        F = Pa / 3 / f / (1 + 2*f)**(5/2)
+        esdF = (
+            (esdf * F/f * (1+7*f)/(1+2*f))**2
+            + (esdPa * F/P)**2
+        )**0.5
+        return array((F, esdF))
 
 
 def pvguess(kind, P, V):
