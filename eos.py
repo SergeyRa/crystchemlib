@@ -7,6 +7,8 @@ Eos
 
 Functions
 ---------
+Ftest : Eos
+    Performs F-test for 2-4 orders of Birch-Murnaghan EoS
 pvguess : list
     Guesses starting parameters for PV-EoS
 pvfit : tuple
@@ -195,6 +197,56 @@ class Eos:
             + (esdPa * F/P)**2
         )**0.5
         return array((F, esdF))
+
+
+def Ftest(P, V, P_esd, V_esd, a=0.05):
+    """Performs F-test for 2-4 orders of Birch-Murnaghan EoS
+
+    Parameters
+    ----------
+    P : numpy.array
+        pressure
+    V : numpy.array
+        volume
+    P_esd : numpy.array
+        pressure esd
+    V_esd : numpy.array
+        volume esd
+    a : float
+        significance level (default 0.05)
+
+    Returns
+    -------
+    tuple
+        (Eos, warnings, residual variance)
+    """
+
+    from scipy.stats import f
+
+    n = len(P)
+
+    def choice(A, B):
+        """Returns statistically better eos
+        (A - simple, B - complex)"""
+
+        if A[2] < B[2]:
+            return A
+        else:
+            mA = n - len(A[0].params)
+            mB = n - len(B[0].params)
+            F = (A[2]*mA - B[2]*mB) / B[2] / (mA-mB)
+            Fc = f.ppf(1-a, mA-mB, mB)
+            print(
+                f'F for {A[0].kind} to {B[0].kind} expansion is {F:.2f}\n'
+                f'(critical value for {a} significance level is {Fc:.2f})\n'
+            )
+            return (A if (F < Fc) else B)
+
+    BM2 = pvfit('BM2', P, V, P_esd, V_esd)
+    BM3 = pvfit('BM3', P, V, P_esd, V_esd)
+    BM4 = pvfit('BM4', P, V, P_esd, V_esd)
+
+    return choice(choice(BM2, BM3), BM4)
 
 
 def pvguess(kind, P, V):
