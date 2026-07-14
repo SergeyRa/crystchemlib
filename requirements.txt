@@ -4,6 +4,7 @@ pandas == 2.2.3
 plotly == 6.1.0
 pycifrw == 5.0.1
 scipy == 1.15.3
+spglib == 2.6.0
 streamlit == 1.56.0
 sympy == 1.14.0
 tifffile == 2025.12.20
