@@ -35,7 +35,8 @@ for d, s in zip(parsed['datablock'], parsed['structure']):
         numbering = {j: i for i, j
                      in enumerate(set([k.symbol for k in structure.sites]))}
         numbers = [numbering[i.symbol] for i in structure.sites]
-        symm = spglib.get_symmetry_dataset((lattice, positions, numbers))
+        symm = spglib.get_symmetry_dataset((lattice, positions, numbers),
+                                           symprec=1e-3)
         sg = symm.number
 
         indep = sorted(set(symm.equivalent_atoms))
@@ -69,7 +70,7 @@ for d, s in zip(parsed['datablock'], parsed['structure']):
         )
         ihd0 = ihd_data[
             (ihd_data['SG №'] == sg) & ihd_data['WP Letter'].isin(wp_l)
-        ]['IHD'].iloc[-1]
+        ]['IHD'].min()
         st.write(f'IHD0 = {ihd0}')
         st.write(f'IHD1 = {ihd0} + {len(indep)} - 1 = {ihd0 + len(indep) - 1}')
 
