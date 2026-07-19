@@ -54,7 +54,7 @@ for d, s in zip(parsed['datablock'], parsed['structure']):
         wp_m = [i[1].multiplicity for i in WP]
         wp_l = [i[1].letter for i in WP]
         labels = [i.label for i in s.sites]
-        X, Y, Z = np.array([i[0] for i in WP]).T
+        X, Y, Z = np.round(np.array([i[0] for i in WP]).T, 6) % 1
 
         col4.dataframe(
             pd.DataFrame(
@@ -64,7 +64,7 @@ for d, s in zip(parsed['datablock'], parsed['structure']):
         )
         st.divider()
 
-        ihd_data = pd.read_csv('ihd.csv')
+        ihd_data = pd.read_csv('ihd.csv', usecols=[1, 2, 3, 4, 6])
         ihd0 = ihd_data[
             (ihd_data['SG №'] == G.number)
             & ihd_data['WP Letter'].isin(wp_l)

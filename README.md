@@ -1,10 +1,10 @@
-# *crystchemlib* v.0.9.5
+# *crystchemlib* v.0.9.6
 Python library for crystallographic and crystal chemical analysis with *streamlit* GUI
 
 ## Maintainer
 Sergey V. Rashchenko (rashchenkos@gmail.com)
 
-## v.0.9.5 features
+## v.0.9.6 features
 * Installation scripts
 * Handling of incommensurate structures
 * Birch-Murnaghan equations of state fitting
@@ -13,7 +13,8 @@ Sergey V. Rashchenko (rashchenkos@gmail.com)
 * Module for visualization of Voronoi-Dirichlet polyhedra
 * Parametric analysis of Voronoi-Dirichlet volumes in the main GUI
 * 'Unwarps' widget for plotting lattice(s) in reciprocal space reconstructions
-* NEW: 'Stereographic' widget for visualization of UB matrices
+* 'Stereographic' widget for visualization of UB matrices
+* NEW: 'IHD' widget for implicit hierarchical depth estimation
 
 ## Installation
 
